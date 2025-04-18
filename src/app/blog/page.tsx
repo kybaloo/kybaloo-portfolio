@@ -3,19 +3,8 @@
 import { useLanguage } from '@/context/LanguageContext';
 import { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
-import Link from 'next/link';
-
-type BlogPost = {
-  id: string;
-  title: string;
-  summary: string;
-  content: string;
-  date: string;
-  author: string;
-  image: string;
-  tags: string[];
-  slug: string;
-};
+import Link from 'next/link';import { BlogPost } from '@/types/blog-post.types';
+;
 
 export default function BlogPage() {
   const { t } = useLanguage();

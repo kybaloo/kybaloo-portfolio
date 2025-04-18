@@ -3,6 +3,7 @@
 import { useState, useEffect } from 'react';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
+import { Project } from '@/types/project.types';
 
 export default function AdminPage() {
   const router = useRouter();
@@ -138,9 +139,9 @@ export default function AdminPage() {
 
 // Projects Manager Component
 function ProjectsManager() {
-  const [projects, setProjects] = useState([]);
+  const [projects, setProjects] = useState<Project[]>([]);
   const [loading, setLoading] = useState(true);
-  const [editingProject, setEditingProject] = useState(null);
+  const [editingProject, setEditingProject] = useState<Project | null>(null);
   const [message, setMessage] = useState('');
 
   useEffect(() => {
@@ -170,7 +171,7 @@ function ProjectsManager() {
     fetchProjects();
   }, []);
 
-  const handleSave = async (project) => {
+  const handleSave = async (project: Project) => {
     // In a real app, you would send this to an API
     setMessage('Fonctionnalité de sauvegarde en cours de développement. Dans une application réelle, cela enregistrerait les modifications dans la base de données.');
     
@@ -184,12 +185,14 @@ function ProjectsManager() {
     setEditingProject(null);
   };
 
-  const handleDelete = async (id) => {
+  const handleDelete = async (id: string | undefined) => {
     // In a real app, you would send this to an API
     setMessage('Fonctionnalité de suppression en cours de développement. Dans une application réelle, cela supprimerait le projet de la base de données.');
     
     // Update the local state for demo purposes
-    setProjects(projects.filter(p => p.id !== id));
+    if (id) {
+      setProjects(projects.filter(p => p.id !== id));
+    }
   };
 
   if (loading) {
@@ -205,7 +208,7 @@ function ProjectsManager() {
       <div className="flex justify-between items-center mb-6">
         <h2 className="text-xl font-bold text-gray-800 dark:text-white">Gestion des Projets</h2>
         <button
-          onClick={() => setEditingProject({})}
+          onClick={() => setEditingProject({} as Project)}
           className="px-4 py-2 bg-green-500 text-white rounded-md hover:bg-green-600 transition-colors"
         >
           Ajouter un projet
@@ -258,8 +261,14 @@ function ProjectsManager() {
 }
 
 // Project Form Component
-function ProjectForm({ project, onSave, onCancel }) {
-  const [formData, setFormData] = useState(project || {
+interface ProjectFormProps {
+  project: Project;
+  onSave: (project: Project) => void;
+  onCancel: () => void;
+}
+
+function ProjectForm({ project, onSave, onCancel }: ProjectFormProps) {
+  const [formData, setFormData] = useState<Project>(project || {
     title: '',
     description: '',
     miniDescription: '',
@@ -271,15 +280,19 @@ function ProjectForm({ project, onSave, onCancel }) {
     featured: false
   });
 
-  const handleChange = (e) => {
-    const { name, value, type, checked } = e.target;
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
+    const { name, value, type } = e.target;
+    const isCheckbox = type === 'checkbox';
+    // Cast to HTMLInputElement uniquement si c'est une checkbox
+    const checked = isCheckbox ? (e.target as HTMLInputElement).checked : undefined;
+    
     setFormData({
       ...formData,
-      [name]: type === 'checkbox' ? checked : value
+      [name]: isCheckbox ? checked : value
     });
   };
 
-  const handleArrayChange = (e, field) => {
+  const handleArrayChange = (e: React.ChangeEvent<HTMLInputElement>, field: keyof Project) => {
     const value = e.target.value;
     setFormData({
       ...formData,
@@ -287,7 +300,7 @@ function ProjectForm({ project, onSave, onCancel }) {
     });
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     onSave(formData);
   };
@@ -442,7 +455,24 @@ function ProjectForm({ project, onSave, onCancel }) {
 }
 
 // Skills Manager Component
+interface Skill {
+  id?: string;
+  name: string;
+  icon: string;
+  level: number;
+  category: string;
+}
+
 function SkillsManager() {
+  const [skills, setSkills] = useState<Skill[]>([]);
+  const [loading, setLoading] = useState(true);
+  const [message, setMessage] = useState('');
+
+  useEffect(() => {
+    // Cette fonctionnalité sera implémentée plus tard
+    setLoading(false);
+  }, []);
+
   return (
     <div className="text-center p-6">
       <h2 className="text-xl font-bold text-gray-800 dark:text-white mb-4">Gestion des Compétences</h2>
@@ -454,7 +484,27 @@ function SkillsManager() {
 }
 
 // Blog Manager Component
+interface BlogPost {
+  id?: string;
+  title: string;
+  slug: string;
+  excerpt: string;
+  content: string;
+  publishDate: string;
+  tags: string[];
+  coverImage: string;
+}
+
 function BlogManager() {
+  const [posts, setPosts] = useState<BlogPost[]>([]);
+  const [loading, setLoading] = useState(true);
+  const [message, setMessage] = useState('');
+
+  useEffect(() => {
+    // Cette fonctionnalité sera implémentée plus tard
+    setLoading(false);
+  }, []);
+
   return (
     <div className="text-center p-6">
       <h2 className="text-xl font-bold text-gray-800 dark:text-white mb-4">Gestion du Blog</h2>
