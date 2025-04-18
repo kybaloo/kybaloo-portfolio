@@ -4,17 +4,9 @@ import { useLanguage } from '@/context/LanguageContext';
 import { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
 import Link from 'next/link';
+import { Project } from '@/types/project.types';
 
-type Project = {
-  id: string;
-  title: string;
-  description: string;
-  image: string;
-  techStack: string[];
-  githubUrl: string;
-  demoUrl?: string;
-  featured: boolean;
-};
+
 
 export default function ProjectsPage() {
   const { t } = useLanguage();
