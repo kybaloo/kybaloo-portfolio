@@ -35,11 +35,11 @@ const About = () => {
               </div>
               <div>
                 <h4 className="font-bold text-gray-700 dark:text-gray-200 mb-2">{t.about.email}</h4>
-                <p className="text-gray-600 dark:text-gray-300">florentin.kybaloo@example.com</p>
+                <p className="text-gray-600 dark:text-gray-300">kybalooflo@gmail.com</p>
               </div>
               <div>
                 <h4 className="font-bold text-gray-700 dark:text-gray-200 mb-2">{t.about.location}</h4>
-                <p className="text-gray-600 dark:text-gray-300">Paris, France</p>
+                <p className="text-gray-600 dark:text-gray-300">Lome, Togo</p>
               </div>
               <div>
                 <h4 className="font-bold text-gray-700 dark:text-gray-200 mb-2">{t.about.availability}</h4>
@@ -66,7 +66,7 @@ const About = () => {
               <div className="absolute -inset-4 bg-purple-500/20 rounded-lg -rotate-6"></div>
               <div className="relative h-full w-full overflow-hidden rounded-lg border-4 border-white dark:border-gray-700 shadow-xl">
                 <Image
-                  src="/about-placeholder.jpg"
+                  src="/about-me.jpg"
                   alt="TCHANGAI Florentin Kybaloo"
                   fill
                   style={{ objectFit: 'cover' }}

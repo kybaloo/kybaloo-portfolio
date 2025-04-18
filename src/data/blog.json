@@ -1,0 +1,32 @@
+[
+  {
+    "id": "machine-learning-web-dev",
+    "title": "Integrating Machine Learning into Web Development",
+    "summary": "Comment intégrer des modèles de machine learning dans vos applications web pour créer des expériences utilisateur plus intelligentes.",
+    "date": "2025-04-10",
+    "image": "/blog/ml-web.jpg",
+    "tags": ["Machine Learning", "Web Development", "JavaScript", "TensorFlow.js"],
+    "content": "# Integrating Machine Learning into Web Development\n\nLorem ipsum dolor sit amet, consectetur adipiscing elit. Sed euismod, nisl vel ultricies lacinia, nisl nisl aliquam nisl, eu aliquam nisl nisl sit amet nisl. Sed euismod, nisl vel ultricies lacinia, nisl nisl aliquam nisl, eu aliquam nisl nisl sit amet nisl.\n\n## Why Use Machine Learning in Web Apps?\n\nLorem ipsum dolor sit amet, consectetur adipiscing elit. Sed euismod, nisl vel ultricies lacinia, nisl nisl aliquam nisl, eu aliquam nisl nisl sit amet nisl. Sed euismod, nisl vel ultricies lacinia, nisl nisl aliquam nisl, eu aliquam nisl nisl sit amet nisl.\n\n## Getting Started with TensorFlow.js\n\nLorem ipsum dolor sit amet, consectetur adipiscing elit. Sed euismod, nisl vel ultricies lacinia, nisl nisl aliquam nisl, eu aliquam nisl nisl sit amet nisl. Sed euismod, nisl vel ultricies lacinia, nisl nisl aliquam nisl, eu aliquam nisl nisl sit amet nisl.",
+    "author": "TCHANGAI Florentin Kybaloo"
+  },
+  {
+    "id": "nextjs-vs-react",
+    "title": "Next.js vs React: Quand utiliser l'un plutôt que l'autre",
+    "summary": "Une analyse comparative de Next.js et React, et comment choisir le framework adapté à votre projet.",
+    "date": "2025-03-15",
+    "image": "/blog/nextjs-react.jpg",
+    "tags": ["Next.js", "React", "Frontend", "Web Development"],
+    "content": "# Next.js vs React: Quand utiliser l'un plutôt que l'autre\n\nLorem ipsum dolor sit amet, consectetur adipiscing elit. Sed euismod, nisl vel ultricies lacinia, nisl nisl aliquam nisl, eu aliquam nisl nisl sit amet nisl. Sed euismod, nisl vel ultricies lacinia, nisl nisl aliquam nisl, eu aliquam nisl nisl sit amet nisl.\n\n## Les avantages de Next.js\n\nLorem ipsum dolor sit amet, consectetur adipiscing elit. Sed euismod, nisl vel ultricies lacinia, nisl nisl aliquam nisl, eu aliquam nisl nisl sit amet nisl. Sed euismod, nisl vel ultricies lacinia, nisl nisl aliquam nisl, eu aliquam nisl nisl sit amet nisl.\n\n## Quand s'en tenir à React\n\nLorem ipsum dolor sit amet, consectetur adipiscing elit. Sed euismod, nisl vel ultricies lacinia, nisl nisl aliquam nisl, eu aliquam nisl nisl sit amet nisl. Sed euismod, nisl vel ultricies lacinia, nisl nisl aliquam nisl, eu aliquam nisl nisl sit amet nisl.",
+    "author": "TCHANGAI Florentin Kybaloo"
+  },
+  {
+    "id": "iot-future",
+    "title": "L'avenir de l'IoT dans le développement d'applications",
+    "summary": "Comment l'Internet des Objets transforme le développement d'applications et crée de nouvelles opportunités.",
+    "date": "2025-02-20",
+    "image": "/blog/iot-future.jpg",
+    "tags": ["IoT", "Web Development", "Future Tech", "Connected Devices"],
+    "content": "# L'avenir de l'IoT dans le développement d'applications\n\nLorem ipsum dolor sit amet, consectetur adipiscing elit. Sed euismod, nisl vel ultricies lacinia, nisl nisl aliquam nisl, eu aliquam nisl nisl sit amet nisl. Sed euismod, nisl vel ultricies lacinia, nisl nisl aliquam nisl, eu aliquam nisl nisl sit amet nisl.\n\n## L'impact de l'IoT sur les applications modernes\n\nLorem ipsum dolor sit amet, consectetur adipiscing elit. Sed euismod, nisl vel ultricies lacinia, nisl nisl aliquam nisl, eu aliquam nisl nisl sit amet nisl. Sed euismod, nisl vel ultricies lacinia, nisl nisl aliquam nisl, eu aliquam nisl nisl sit amet nisl.\n\n## Intégration de l'IoT dans le développement web\n\nLorem ipsum dolor sit amet, consectetur adipiscing elit. Sed euismod, nisl vel ultricies lacinia, nisl nisl aliquam nisl, eu aliquam nisl nisl sit amet nisl. Sed euismod, nisl vel ultricies lacinia, nisl nisl aliquam nisl, eu aliquam nisl nisl sit amet nisl.",
+    "author": "TCHANGAI Florentin Kybaloo"
+  }
+]

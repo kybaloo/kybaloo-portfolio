@@ -1,0 +1,132 @@
+[
+  {
+    "category": "Frontend",
+    "items": [
+      {
+        "name": "React",
+        "level": 90,
+        "icon": "https://cdn.simpleicons.org/react"
+      },
+      {
+        "name": "Vue.js",
+        "level": 85,
+        "icon": "https://cdn.simpleicons.org/vuedotjs"
+      },
+      {
+        "name": "Next.js",
+        "level": 88,
+        "icon": "https://cdn.simpleicons.org/nextdotjs"
+      },
+      {
+        "name": "Tailwind CSS",
+        "level": 92,
+        "icon": "https://cdn.simpleicons.org/tailwindcss"
+      },
+      {
+        "name": "JavaScript",
+        "level": 90,
+        "icon": "https://cdn.simpleicons.org/javascript"
+      },
+      {
+        "name": "TypeScript",
+        "level": 85,
+        "icon": "https://cdn.simpleicons.org/typescript"
+      }
+    ]
+  },
+  {
+    "category": "Backend",
+    "items": [
+      {
+        "name": "Node.js",
+        "level": 88,
+        "icon": "https://cdn.simpleicons.org/nodedotjs"
+      },
+      {
+        "name": "Laravel",
+        "level": 82,
+        "icon": "https://cdn.simpleicons.org/laravel"
+      },
+      {
+        "name": ".NET",
+        "level": 78,
+        "icon": "https://cdn.simpleicons.org/dotnet"
+      },
+      {
+        "name": "Express",
+        "level": 85,
+        "icon": "https://cdn.simpleicons.org/express"
+      },
+      {
+        "name": "PHP",
+        "level": 80,
+        "icon": "https://cdn.simpleicons.org/php"
+      },
+      {
+        "name": "C#",
+        "level": 75,
+        "icon": "https://cdn.simpleicons.org/csharp"
+      }
+    ]
+  },
+  {
+    "category": "Data",
+    "items": [
+      {
+        "name": "SQL Server",
+        "level": 85,
+        "icon": "https://cdn.simpleicons.org/microsoftsqlserver"
+      },
+      {
+        "name": "MongoDB",
+        "level": 83,
+        "icon": "https://cdn.simpleicons.org/mongodb"
+      },
+      {
+        "name": "Excel",
+        "level": 90,
+        "icon": "https://cdn.simpleicons.org/microsoftexcel"
+      },
+      {
+        "name": "PostgreSQL",
+        "level": 80,
+        "icon": "https://cdn.simpleicons.org/postgresql"
+      },
+      {
+        "name": "Power BI",
+        "level": 78,
+        "icon": "https://cdn.simpleicons.org/powerbi"
+      },
+      {
+        "name": "Python",
+        "level": 75,
+        "icon": "https://cdn.simpleicons.org/python"
+      }
+    ]
+  },
+  {
+    "category": "DevOps",
+    "items": [
+      {
+        "name": "Git",
+        "level": 90,
+        "icon": "https://cdn.simpleicons.org/git"
+      },
+      {
+        "name": "Jenkins",
+        "level": 75,
+        "icon": "https://cdn.simpleicons.org/jenkins"
+      },
+      {
+        "name": "Docker",
+        "level": 80,
+        "icon": "https://cdn.simpleicons.org/docker"
+      },
+      {
+        "name": "GitHub Actions",
+        "level": 72,
+        "icon": "https://cdn.simpleicons.org/githubactions"
+      }
+    ]
+  }
+]
