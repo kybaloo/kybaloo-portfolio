@@ -1,36 +1,57 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
 
-## Getting Started
+# 🌐 Kybaloo – Creative Developer Portfolio
 
-First, run the development server:
+Welcome to my personal portfolio, built with **Next.js**, **Tailwind CSS**, and **Framer Motion**. This project showcases my journey as a **Full Stack Web Developer** and **Data Analyst**, including projects, skills, experiences, and ways to get in touch.
+
+## 🚀 Tech Stack
+
+- **Next.js 14**
+- **Tailwind CSS**
+- **Framer Motion**
+- **TypeScript**
+- **Vercel** (deployment)
+
+## 🎯 About Me
+
+I'm **TCHANGAI Kybaloo Florentin**, a passionate full-stack developer and data analyst with strong experience in modern web technologies.
+
+👉 View my resume: [📄 Download CV](./TCHANGAI_Florentin_Resume.pdf)
+
+## 🧱 Sections
+
+- **Hero** – Quick introduction with links to GitHub, CV, LinkedIn
+- **About** – My background, vision, and values
+- **Skills** – Languages, tools, and frameworks I use
+- **Projects** – A selection of real-world and personal projects
+- **Contact** – To collaborate or just say hi
+
+## 🛠 Local Installation
 
 ```bash
+git clone https://github.com/kybaloo/kybaloo-portfolio.git
+cd kybaloo-portfolio
+npm install
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Visit [http://localhost:3000](http://localhost:3000) to see the portfolio.
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+## 🧪 Deployment
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+This portfolio is hosted for free with Vercel.
 
-## Learn More
+🔗 [Live Demo](https://kybaloo-portfolio.vercel.app)
 
-To learn more about Next.js, take a look at the following resources:
+## 📫 Contact
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+- Email: [tchangaiflorentin6@gmail.com](mailto:tchangaiflorentin6@gmail.com)
+- GitHub: [github.com/kybaloo](https://github.com/kybaloo)
+- LinkedIn: [linkedin.com/in/kybaloo](https://linkedin.com/in/kybaloo)
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+---
 
-## Deploy on Vercel
+> “Building useful, performant and beautiful digital experiences is my mission.”
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+---
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+© 2025 Kybaloo. All rights reserved.
