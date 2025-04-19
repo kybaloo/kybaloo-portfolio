@@ -73,7 +73,7 @@ export default function AboutPage() {
                 </div>
                 <div className="flex items-center">
                   <span className="font-medium w-24">{t.about.email}</span>
-                  <span>kybaloo@example.com</span>
+                  <span>kybalooflo@gmail.com</span>
                 </div>
                 <div className="flex items-center">
                   <span className="font-medium w-24">{t.about.location}</span>
