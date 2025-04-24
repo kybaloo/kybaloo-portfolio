@@ -28,8 +28,8 @@ I'm **TCHANGAI Kybaloo Florentin**, a passionate full-stack developer and data a
 ## 🛠 Local Installation
 
 ```bash
-git clone https://github.com/kybaloo/portfolio-v3.git
-cd portfolio-v3
+git clone https://github.com/kybaloo/kybaloo-portfolio.git
+cd kybaloo-portfolio
 npm install
 npm run dev
 ```
