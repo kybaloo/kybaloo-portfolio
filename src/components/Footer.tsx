@@ -1,5 +1,5 @@
-import Link from "next/link";
 import { useLanguage } from "@/context/LanguageContext";
+import Link from "next/link";
 
 const Footer = () => {
   const currentYear = new Date().getFullYear();
@@ -18,7 +18,7 @@ const Footer = () => {
             <p className="max-w-md mb-6 text-gray-400">{t.footer.description}</p>
             <div className="flex space-x-4">
               <a
-                href="https://github.com"
+                href="https://github.com/kybaloo"
                 target="_blank"
                 rel="noopener noreferrer"
                 aria-label="GitHub"
@@ -33,7 +33,7 @@ const Footer = () => {
                 </svg>
               </a>
               <a
-                href="https://linkedin.com"
+                href="https://linkedin.com/in/kybaloo"
                 target="_blank"
                 rel="noopener noreferrer"
                 aria-label="LinkedIn"
@@ -44,7 +44,7 @@ const Footer = () => {
                 </svg>
               </a>
               <a
-                href="https://twitter.com"
+                href="https://twitter.com/FlorentinKybalo"
                 target="_blank"
                 rel="noopener noreferrer"
                 aria-label="Twitter"
@@ -106,7 +106,9 @@ const Footer = () => {
                     d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"
                   />
                 </svg>
-                <span className="text-gray-400">kybaloo@example.com</span>
+                <span className="text-gray-400">
+                  <Link href="mailto:kybalooflo@gmail.com">kybalooflo@gmail.com</Link>
+                </span>
               </li>
               <li className="flex items-start">
                 <svg
