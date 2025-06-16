@@ -1,5 +1,6 @@
 "use client";
 
+import { containerVariants, itemVariants } from "@/types/animations.types";
 import { BlogPost } from "@/types/blog-post.types";
 import { motion } from "framer-motion";
 import Image from "next/image";
@@ -25,29 +26,6 @@ export default function BlogPage() {
 
     fetchBlogPosts();
   }, []);
-
-  // Animation variants
-  const containerVariants = {
-    hidden: { opacity: 0 },
-    visible: {
-      opacity: 1,
-      transition: {
-        staggerChildren: 0.2,
-      },
-    },
-  };
-
-  const itemVariants = {
-    hidden: { y: 20, opacity: 0 },
-    visible: {
-      y: 0,
-      opacity: 1,
-      transition: {
-        type: "spring",
-        stiffness: 300,
-      },
-    },
-  };
 
   // Format date
   const formatDate = (dateString: string) => {
