@@ -487,14 +487,14 @@ interface BlogPost {
 }
 
 function BlogManager() {
-  const [posts, setPosts] = useState<BlogPost[]>([]);
-  const [loading, setLoading] = useState(true);
-  const [message, setMessage] = useState("");
+  // const [posts, setPosts] = useState<BlogPost[]>([]);
+  // const [loading, setLoading] = useState(true);
+  // const [message, setMessage] = useState("");
 
-  useEffect(() => {
-    // Cette fonctionnalité sera implémentée plus tard
-    setLoading(false);
-  }, []);
+  // useEffect(() => {
+  //   //TODO: Cette fonctionnalité sera implémentée plus tard
+  //   setLoading(false);
+  // }, []);
 
   return (
     <div className="p-6 text-center">
