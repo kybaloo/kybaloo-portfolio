@@ -30,8 +30,8 @@
     "miniDescription": "Solution IoT pour la surveillance environnementale urbaine",
     "image": "/project3.jpg",
     "tags": ["IoT", "React", "Python", "TensorFlow", "AWS"],
-    "techStack": ["React", "Node.js", "Python", "TensorFlow", "AWS IoT", "Raspberry Pi"],
-    "liveUrl": "https://expo-mit-2023.com",
+    "techStack": ["Laravel", "Vue.js", "Livewire", "MySQL", "Bootstrap"],
+    "liveUrl": "https://expo.togopride.com",
     "githubUrl": "https://github.com/kybaloo/expo-mit-2023",
     "featured": true
   },
