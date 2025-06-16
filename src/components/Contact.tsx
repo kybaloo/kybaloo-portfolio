@@ -202,7 +202,7 @@ const Contact = () => {
                   </div>
                   <div className="ml-4">
                     <h4 className="text-sm font-medium text-gray-700 dark:text-gray-300">Location</h4>
-                    <p className="text-gray-600 dark:text-gray-400">San Francisco, California</p>
+                    <p className="text-gray-600 dark:text-gray-400">Lomé, Togo</p>
                   </div>
                 </div>
               </div>
