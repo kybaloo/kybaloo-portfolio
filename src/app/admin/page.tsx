@@ -455,14 +455,14 @@ interface Skill {
 }
 
 function SkillsManager() {
-  const [skills, setSkills] = useState<Skill[]>([]);
-  const [loading, setLoading] = useState(true);
-  const [message, setMessage] = useState("");
+  // const [skills, setSkills] = useState<Skill[]>([]);
+  // const [loading, setLoading] = useState(true);
+  // const [message, setMessage] = useState("");
 
-  useEffect(() => {
-    // Cette fonctionnalité sera implémentée plus tard
-    setLoading(false);
-  }, []);
+  // useEffect(() => {
+  //   //Todo: Cette fonctionnalité sera implémentée plus tard
+  //   setLoading(false);
+  // }, []);
 
   return (
     <div className="p-6 text-center">
