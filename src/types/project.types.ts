@@ -3,10 +3,11 @@ export type Project = {
   title: string;
   description: string;
   miniDescription: string;
-  image: string;
-  tags: string[];
+  image?: string;
+  tags?: string[];
   techStack: string[];
-  liveUrl: string;
-  githubUrl: string;
-  featured: boolean;
+  liveUrl?: string;
+  githubUrl?: string;
+  featured?: boolean;
+  demoUrl?: string;
 };
