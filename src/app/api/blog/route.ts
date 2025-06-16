@@ -69,7 +69,7 @@ export async function POST(request: Request) {
     }
 
     // Check if blog post already exists (update) or is new (add)
-    const existingIndex = blogPosts.findIndex((p: any) => p.id === blogPost.id);
+    const existingIndex = blogPosts.findIndex((p: BlogPost) => p.id === blogPost.id);
 
     if (existingIndex >= 0) {
       // Update existing blog post
