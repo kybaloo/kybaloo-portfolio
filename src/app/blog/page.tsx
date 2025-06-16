@@ -163,7 +163,8 @@ export default function BlogPage() {
                 </svg>
                 <h3 className="mb-2 text-xl font-medium">No blog posts yet</h3>
                 <p className="max-w-md mx-auto text-gray-500 dark:text-gray-400">
-                  I'm working on some interesting content. Check back soon for articles about web development, data analysis, and more!
+                  I&apos;m working on some interesting content. Check back soon for articles about web development, data analysis, and
+                  more!
                 </p>
               </div>
             )}
