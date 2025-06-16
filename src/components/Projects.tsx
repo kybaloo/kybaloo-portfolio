@@ -2,23 +2,12 @@
 
 import { useLanguage } from "@/context/LanguageContext";
 import projectsData from "@/data/projects.json";
+import { Project } from "@/types/project.types";
 import Image from "next/image";
 import Link from "next/link";
 import { useEffect, useState } from "react";
 
 // Define the Project type to match our JSON structure
-type Project = {
-  id: string;
-  title: string;
-  description: string;
-  miniDescription: string;
-  image: string;
-  tags: string[];
-  techStack: string[];
-  liveUrl: string;
-  githubUrl: string;
-  featured: boolean;
-};
 
 const Projects = () => {
   const { t } = useLanguage();
@@ -56,7 +45,7 @@ const Projects = () => {
               >
                 <div className="relative w-full h-48 overflow-hidden">
                   <Image
-                    src={project.image}
+                    src={project.image || "/placeholder.png"}
                     alt={project.title}
                     fill
                     style={{ objectFit: "cover" }}
