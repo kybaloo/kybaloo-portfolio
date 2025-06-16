@@ -1,50 +1,47 @@
 "use client";
 
-import { useState, useEffect } from 'react';
-import Link from 'next/link';
-import { useRouter } from 'next/navigation';
-import { Project } from '@/types/project.types';
+import { Project } from "@/types/project.types";
+import Link from "next/link";
+import { useRouter } from "next/navigation";
+import { useEffect, useState } from "react";
 
 export default function AdminPage() {
   const router = useRouter();
-  const [section, setSection] = useState('projects');
-  const [message, setMessage] = useState('');
+  const [section, setSection] = useState("projects");
+  const [message, setMessage] = useState("");
   const [isAuthenticated, setIsAuthenticated] = useState(false);
-  const [password, setPassword] = useState('');
+  const [password, setPassword] = useState("");
 
   // Simple authentication
   const handleLogin = (e: React.FormEvent) => {
     e.preventDefault();
     // This is a simple example - in a real app, you would use a secure authentication method
-    if (password === 'kybaloo123') { // You should change this to your preferred password
+    if (password === "kybaloo123") {
+      // You should change this to your preferred password
       setIsAuthenticated(true);
-      localStorage.setItem('adminAuthenticated', 'true');
+      localStorage.setItem("adminAuthenticated", "true");
     } else {
-      setMessage('Mot de passe incorrect');
+      setMessage("Mot de passe incorrect");
     }
   };
 
   useEffect(() => {
     // Check if user is already authenticated
-    const auth = localStorage.getItem('adminAuthenticated');
-    if (auth === 'true') {
+    const auth = localStorage.getItem("adminAuthenticated");
+    if (auth === "true") {
       setIsAuthenticated(true);
     }
   }, []);
 
   if (!isAuthenticated) {
     return (
-      <div className="min-h-screen flex items-center justify-center bg-gray-100 dark:bg-gray-900">
-        <div className="bg-white dark:bg-gray-800 p-8 rounded-lg shadow-md w-full max-w-md">
-          <h1 className="text-2xl font-bold mb-6 text-center text-gray-800 dark:text-white">Admin Login</h1>
-          {message && (
-            <div className="mb-4 p-3 bg-red-100 text-red-700 rounded-md">
-              {message}
-            </div>
-          )}
+      <div className="flex items-center justify-center min-h-screen bg-gray-100 dark:bg-gray-900">
+        <div className="w-full max-w-md p-8 bg-white rounded-lg shadow-md dark:bg-gray-800">
+          <h1 className="mb-6 text-2xl font-bold text-center text-gray-800 dark:text-white">Admin Login</h1>
+          {message && <div className="p-3 mb-4 text-red-700 bg-red-100 rounded-md">{message}</div>}
           <form onSubmit={handleLogin}>
             <div className="mb-4">
-              <label htmlFor="password" className="block text-gray-700 dark:text-gray-300 mb-2">
+              <label htmlFor="password" className="block mb-2 text-gray-700 dark:text-gray-300">
                 Mot de passe
               </label>
               <input
@@ -52,13 +49,13 @@ export default function AdminPage() {
                 id="password"
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
-                className="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 dark:bg-gray-700 dark:text-white"
+                className="w-full px-3 py-2 border border-gray-300 rounded-md dark:border-gray-600 focus:outline-none focus:ring-2 focus:ring-blue-500 dark:bg-gray-700 dark:text-white"
                 required
               />
             </div>
             <button
               type="submit"
-              className="w-full bg-blue-500 hover:bg-blue-600 text-white font-medium py-2 px-4 rounded-md transition-colors"
+              className="w-full px-4 py-2 font-medium text-white transition-colors bg-blue-500 rounded-md hover:bg-blue-600"
             >
               Se connecter
             </button>
@@ -70,66 +67,66 @@ export default function AdminPage() {
 
   return (
     <div className="min-h-screen bg-gray-100 dark:bg-gray-900">
-      <div className="container mx-auto px-4 py-8">
-        <div className="flex justify-between items-center mb-8">
+      <div className="container px-4 py-8 mx-auto">
+        <div className="flex items-center justify-between mb-8">
           <h1 className="text-3xl font-bold text-gray-800 dark:text-white">Admin Dashboard</h1>
           <div className="flex space-x-4">
-            <Link 
+            <Link
               href="/"
-              className="px-4 py-2 bg-gray-200 dark:bg-gray-700 text-gray-800 dark:text-white rounded-md hover:bg-gray-300 dark:hover:bg-gray-600 transition-colors"
+              className="px-4 py-2 text-gray-800 transition-colors bg-gray-200 rounded-md dark:bg-gray-700 dark:text-white hover:bg-gray-300 dark:hover:bg-gray-600"
             >
               Voir le site
             </Link>
             <button
               onClick={() => {
-                localStorage.removeItem('adminAuthenticated');
+                localStorage.removeItem("adminAuthenticated");
                 setIsAuthenticated(false);
               }}
-              className="px-4 py-2 bg-red-500 text-white rounded-md hover:bg-red-600 transition-colors"
+              className="px-4 py-2 text-white transition-colors bg-red-500 rounded-md hover:bg-red-600"
             >
               Déconnexion
             </button>
           </div>
         </div>
 
-        <div className="bg-white dark:bg-gray-800 rounded-lg shadow-md overflow-hidden">
+        <div className="overflow-hidden bg-white rounded-lg shadow-md dark:bg-gray-800">
           <div className="flex border-b border-gray-200 dark:border-gray-700">
             <button
               className={`px-6 py-3 font-medium ${
-                section === 'projects'
-                  ? 'bg-blue-500 text-white'
-                  : 'bg-transparent text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700'
+                section === "projects"
+                  ? "bg-blue-500 text-white"
+                  : "bg-transparent text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700"
               }`}
-              onClick={() => setSection('projects')}
+              onClick={() => setSection("projects")}
             >
               Projets
             </button>
             <button
               className={`px-6 py-3 font-medium ${
-                section === 'skills'
-                  ? 'bg-blue-500 text-white'
-                  : 'bg-transparent text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700'
+                section === "skills"
+                  ? "bg-blue-500 text-white"
+                  : "bg-transparent text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700"
               }`}
-              onClick={() => setSection('skills')}
+              onClick={() => setSection("skills")}
             >
               Compétences
             </button>
             <button
               className={`px-6 py-3 font-medium ${
-                section === 'blog'
-                  ? 'bg-blue-500 text-white'
-                  : 'bg-transparent text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700'
+                section === "blog"
+                  ? "bg-blue-500 text-white"
+                  : "bg-transparent text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700"
               }`}
-              onClick={() => setSection('blog')}
+              onClick={() => setSection("blog")}
             >
               Blog
             </button>
           </div>
 
           <div className="p-6">
-            {section === 'projects' && <ProjectsManager />}
-            {section === 'skills' && <SkillsManager />}
-            {section === 'blog' && <BlogManager />}
+            {section === "projects" && <ProjectsManager />}
+            {section === "skills" && <SkillsManager />}
+            {section === "blog" && <BlogManager />}
           </div>
         </div>
       </div>
@@ -142,7 +139,7 @@ function ProjectsManager() {
   const [projects, setProjects] = useState<Project[]>([]);
   const [loading, setLoading] = useState(true);
   const [editingProject, setEditingProject] = useState<Project | null>(null);
-  const [message, setMessage] = useState('');
+  const [message, setMessage] = useState("");
 
   useEffect(() => {
     // In a real app, you would fetch this from an API
@@ -150,20 +147,20 @@ function ProjectsManager() {
     const fetchProjects = async () => {
       try {
         // In a real app, this would be an API call
-        const response = await fetch('/api/projects');
+        const response = await fetch("/api/projects");
         const data = await response.json();
         setProjects(data);
       } catch (error) {
-        console.error('Error fetching projects:', error);
+        console.error("Error fetching projects:", error);
         // For demo purposes, load from the imported data
-        import('@/data/projects.json')
+        import("@/data/projects.json")
           .then((data) => {
             setProjects(data.default);
             setLoading(false);
           })
           .catch((err) => {
-            console.error('Error loading projects data:', err);
-            setMessage('Erreur lors du chargement des projets');
+            console.error("Error loading projects data:", err);
+            setMessage("Erreur lors du chargement des projets");
           });
       }
     };
@@ -173,66 +170,62 @@ function ProjectsManager() {
 
   const handleSave = async (project: Project) => {
     // In a real app, you would send this to an API
-    setMessage('Fonctionnalité de sauvegarde en cours de développement. Dans une application réelle, cela enregistrerait les modifications dans la base de données.');
-    
+    setMessage(
+      "Fonctionnalité de sauvegarde en cours de développement. Dans une application réelle, cela enregistrerait les modifications dans la base de données."
+    );
+
     // Update the local state for demo purposes
     if (editingProject) {
-      setProjects(projects.map(p => p.id === project.id ? project : p));
+      setProjects(projects.map((p) => (p.id === project.id ? project : p)));
     } else {
       setProjects([...projects, { ...project, id: `project-${Date.now()}` }]);
     }
-    
+
     setEditingProject(null);
   };
 
   const handleDelete = async (id: string | undefined) => {
     // In a real app, you would send this to an API
-    setMessage('Fonctionnalité de suppression en cours de développement. Dans une application réelle, cela supprimerait le projet de la base de données.');
-    
+    setMessage(
+      "Fonctionnalité de suppression en cours de développement. Dans une application réelle, cela supprimerait le projet de la base de données."
+    );
+
     // Update the local state for demo purposes
     if (id) {
-      setProjects(projects.filter(p => p.id !== id));
+      setProjects(projects.filter((p) => p.id !== id));
     }
   };
 
   if (loading) {
     return (
-      <div className="flex justify-center items-center h-40">
-        <div className="animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 border-blue-500"></div>
+      <div className="flex items-center justify-center h-40">
+        <div className="w-12 h-12 border-t-2 border-b-2 border-blue-500 rounded-full animate-spin"></div>
       </div>
     );
   }
 
   return (
     <div>
-      <div className="flex justify-between items-center mb-6">
+      <div className="flex items-center justify-between mb-6">
         <h2 className="text-xl font-bold text-gray-800 dark:text-white">Gestion des Projets</h2>
         <button
           onClick={() => setEditingProject({} as Project)}
-          className="px-4 py-2 bg-green-500 text-white rounded-md hover:bg-green-600 transition-colors"
+          className="px-4 py-2 text-white transition-colors bg-green-500 rounded-md hover:bg-green-600"
         >
           Ajouter un projet
         </button>
       </div>
 
-      {message && (
-        <div className="mb-4 p-3 bg-blue-100 text-blue-700 rounded-md">
-          {message}
-        </div>
-      )}
+      {message && <div className="p-3 mb-4 text-blue-700 bg-blue-100 rounded-md">{message}</div>}
 
       {editingProject ? (
-        <ProjectForm 
-          project={editingProject} 
-          onSave={handleSave} 
-          onCancel={() => setEditingProject(null)} 
-        />
+        <ProjectForm project={editingProject} onSave={handleSave} onCancel={() => setEditingProject(null)} />
       ) : (
         <div className="grid grid-cols-1 gap-4">
           {projects.map((project) => (
-            <div 
-              key={project.id} 
-              className="border border-gray-200 dark:border-gray-700 rounded-lg p-4 flex justify-between items-center"
+            <div
+              key={project.id}
+              className="flex items-center justify-between p-4 border border-gray-200 rounded-lg dark:border-gray-700"
             >
               <div>
                 <h3 className="font-medium text-gray-800 dark:text-white">{project.title}</h3>
@@ -241,13 +234,13 @@ function ProjectsManager() {
               <div className="flex space-x-2">
                 <button
                   onClick={() => setEditingProject(project)}
-                  className="px-3 py-1 bg-blue-500 text-white rounded-md hover:bg-blue-600 transition-colors"
+                  className="px-3 py-1 text-white transition-colors bg-blue-500 rounded-md hover:bg-blue-600"
                 >
                   Modifier
                 </button>
                 <button
                   onClick={() => handleDelete(project.id)}
-                  className="px-3 py-1 bg-red-500 text-white rounded-md hover:bg-red-600 transition-colors"
+                  className="px-3 py-1 text-white transition-colors bg-red-500 rounded-md hover:bg-red-600"
                 >
                   Supprimer
                 </button>
@@ -268,27 +261,29 @@ interface ProjectFormProps {
 }
 
 function ProjectForm({ project, onSave, onCancel }: ProjectFormProps) {
-  const [formData, setFormData] = useState<Project>(project || {
-    title: '',
-    description: '',
-    miniDescription: '',
-    image: '',
-    tags: [],
-    techStack: [],
-    liveUrl: '',
-    githubUrl: '',
-    featured: false
-  });
+  const [formData, setFormData] = useState<Project>(
+    project || {
+      title: "",
+      description: "",
+      miniDescription: "",
+      image: "",
+      tags: [],
+      techStack: [],
+      liveUrl: "",
+      githubUrl: "",
+      featured: false,
+    }
+  );
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
     const { name, value, type } = e.target;
-    const isCheckbox = type === 'checkbox';
+    const isCheckbox = type === "checkbox";
     // Cast to HTMLInputElement uniquement si c'est une checkbox
     const checked = isCheckbox ? (e.target as HTMLInputElement).checked : undefined;
-    
+
     setFormData({
       ...formData,
-      [name]: isCheckbox ? checked : value
+      [name]: isCheckbox ? checked : value,
     });
   };
 
@@ -296,7 +291,7 @@ function ProjectForm({ project, onSave, onCancel }: ProjectFormProps) {
     const value = e.target.value;
     setFormData({
       ...formData,
-      [field]: value.split(',').map(item => item.trim())
+      [field]: value.split(",").map((item) => item.trim()),
     });
   };
 
@@ -308,7 +303,7 @@ function ProjectForm({ project, onSave, onCancel }: ProjectFormProps) {
   return (
     <form onSubmit={handleSubmit} className="space-y-4">
       <div>
-        <label htmlFor="title" className="block text-gray-700 dark:text-gray-300 mb-1">
+        <label htmlFor="title" className="block mb-1 text-gray-700 dark:text-gray-300">
           Titre
         </label>
         <input
@@ -317,13 +312,13 @@ function ProjectForm({ project, onSave, onCancel }: ProjectFormProps) {
           name="title"
           value={formData.title}
           onChange={handleChange}
-          className="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 dark:bg-gray-700 dark:text-white"
+          className="w-full px-3 py-2 border border-gray-300 rounded-md dark:border-gray-600 focus:outline-none focus:ring-2 focus:ring-blue-500 dark:bg-gray-700 dark:text-white"
           required
         />
       </div>
 
       <div>
-        <label htmlFor="miniDescription" className="block text-gray-700 dark:text-gray-300 mb-1">
+        <label htmlFor="miniDescription" className="block mb-1 text-gray-700 dark:text-gray-300">
           Mini Description
         </label>
         <input
@@ -332,13 +327,13 @@ function ProjectForm({ project, onSave, onCancel }: ProjectFormProps) {
           name="miniDescription"
           value={formData.miniDescription}
           onChange={handleChange}
-          className="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 dark:bg-gray-700 dark:text-white"
+          className="w-full px-3 py-2 border border-gray-300 rounded-md dark:border-gray-600 focus:outline-none focus:ring-2 focus:ring-blue-500 dark:bg-gray-700 dark:text-white"
           required
         />
       </div>
 
       <div>
-        <label htmlFor="description" className="block text-gray-700 dark:text-gray-300 mb-1">
+        <label htmlFor="description" className="block mb-1 text-gray-700 dark:text-gray-300">
           Description complète
         </label>
         <textarea
@@ -347,13 +342,13 @@ function ProjectForm({ project, onSave, onCancel }: ProjectFormProps) {
           value={formData.description}
           onChange={handleChange}
           rows={3}
-          className="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 dark:bg-gray-700 dark:text-white"
+          className="w-full px-3 py-2 border border-gray-300 rounded-md dark:border-gray-600 focus:outline-none focus:ring-2 focus:ring-blue-500 dark:bg-gray-700 dark:text-white"
           required
         />
       </div>
 
       <div>
-        <label htmlFor="image" className="block text-gray-700 dark:text-gray-300 mb-1">
+        <label htmlFor="image" className="block mb-1 text-gray-700 dark:text-gray-300">
           Image URL
         </label>
         <input
@@ -362,39 +357,39 @@ function ProjectForm({ project, onSave, onCancel }: ProjectFormProps) {
           name="image"
           value={formData.image}
           onChange={handleChange}
-          className="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 dark:bg-gray-700 dark:text-white"
+          className="w-full px-3 py-2 border border-gray-300 rounded-md dark:border-gray-600 focus:outline-none focus:ring-2 focus:ring-blue-500 dark:bg-gray-700 dark:text-white"
           required
         />
       </div>
 
       <div>
-        <label htmlFor="tags" className="block text-gray-700 dark:text-gray-300 mb-1">
-          Tags (séparés par des virgules)
+        <label htmlFor="tags" className="block mb-1 text-gray-700 dark:text-gray-300">
+          Tags
         </label>
         <input
           type="text"
           id="tags"
-          value={formData.tags.join(', ')}
-          onChange={(e) => handleArrayChange(e, 'tags')}
-          className="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 dark:bg-gray-700 dark:text-white"
+          value={formData.tags?.join(", ") || ""}
+          onChange={(e) => handleArrayChange(e, "tags")}
+          className="w-full px-3 py-2 border border-gray-300 rounded-md dark:border-gray-600 focus:outline-none focus:ring-2 focus:ring-blue-500 dark:bg-gray-700 dark:text-white"
         />
       </div>
 
       <div>
-        <label htmlFor="techStack" className="block text-gray-700 dark:text-gray-300 mb-1">
-          Tech Stack (séparés par des virgules)
+        <label htmlFor="techStack" className="block mb-1 text-gray-700 dark:text-gray-300">
+          Tech Stack
         </label>
         <input
           type="text"
           id="techStack"
-          value={formData.techStack.join(', ')}
-          onChange={(e) => handleArrayChange(e, 'techStack')}
-          className="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 dark:bg-gray-700 dark:text-white"
+          value={formData.techStack?.join(", ") || ""}
+          onChange={(e) => handleArrayChange(e, "techStack")}
+          className="w-full px-3 py-2 border border-gray-300 rounded-md dark:border-gray-600 focus:outline-none focus:ring-2 focus:ring-blue-500 dark:bg-gray-700 dark:text-white"
         />
       </div>
 
       <div>
-        <label htmlFor="liveUrl" className="block text-gray-700 dark:text-gray-300 mb-1">
+        <label htmlFor="liveUrl" className="block mb-1 text-gray-700 dark:text-gray-300">
           URL de démonstration
         </label>
         <input
@@ -403,12 +398,12 @@ function ProjectForm({ project, onSave, onCancel }: ProjectFormProps) {
           name="liveUrl"
           value={formData.liveUrl}
           onChange={handleChange}
-          className="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 dark:bg-gray-700 dark:text-white"
+          className="w-full px-3 py-2 border border-gray-300 rounded-md dark:border-gray-600 focus:outline-none focus:ring-2 focus:ring-blue-500 dark:bg-gray-700 dark:text-white"
         />
       </div>
 
       <div>
-        <label htmlFor="githubUrl" className="block text-gray-700 dark:text-gray-300 mb-1">
+        <label htmlFor="githubUrl" className="block mb-1 text-gray-700 dark:text-gray-300">
           URL GitHub
         </label>
         <input
@@ -417,7 +412,7 @@ function ProjectForm({ project, onSave, onCancel }: ProjectFormProps) {
           name="githubUrl"
           value={formData.githubUrl}
           onChange={handleChange}
-          className="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 dark:bg-gray-700 dark:text-white"
+          className="w-full px-3 py-2 border border-gray-300 rounded-md dark:border-gray-600 focus:outline-none focus:ring-2 focus:ring-blue-500 dark:bg-gray-700 dark:text-white"
         />
       </div>
 
@@ -428,9 +423,9 @@ function ProjectForm({ project, onSave, onCancel }: ProjectFormProps) {
           name="featured"
           checked={formData.featured}
           onChange={handleChange}
-          className="h-4 w-4 text-blue-600 focus:ring-blue-500 border-gray-300 rounded"
+          className="w-4 h-4 text-blue-600 border-gray-300 rounded focus:ring-blue-500"
         />
-        <label htmlFor="featured" className="ml-2 block text-gray-700 dark:text-gray-300">
+        <label htmlFor="featured" className="block ml-2 text-gray-700 dark:text-gray-300">
           Projet mis en avant
         </label>
       </div>
@@ -439,14 +434,11 @@ function ProjectForm({ project, onSave, onCancel }: ProjectFormProps) {
         <button
           type="button"
           onClick={onCancel}
-          className="px-4 py-2 bg-gray-300 dark:bg-gray-600 text-gray-800 dark:text-white rounded-md hover:bg-gray-400 dark:hover:bg-gray-500 transition-colors"
+          className="px-4 py-2 text-gray-800 transition-colors bg-gray-300 rounded-md dark:bg-gray-600 dark:text-white hover:bg-gray-400 dark:hover:bg-gray-500"
         >
           Annuler
         </button>
-        <button
-          type="submit"
-          className="px-4 py-2 bg-blue-500 text-white rounded-md hover:bg-blue-600 transition-colors"
-        >
+        <button type="submit" className="px-4 py-2 text-white transition-colors bg-blue-500 rounded-md hover:bg-blue-600">
           Enregistrer
         </button>
       </div>
@@ -466,7 +458,7 @@ interface Skill {
 function SkillsManager() {
   const [skills, setSkills] = useState<Skill[]>([]);
   const [loading, setLoading] = useState(true);
-  const [message, setMessage] = useState('');
+  const [message, setMessage] = useState("");
 
   useEffect(() => {
     // Cette fonctionnalité sera implémentée plus tard
@@ -474,8 +466,8 @@ function SkillsManager() {
   }, []);
 
   return (
-    <div className="text-center p-6">
-      <h2 className="text-xl font-bold text-gray-800 dark:text-white mb-4">Gestion des Compétences</h2>
+    <div className="p-6 text-center">
+      <h2 className="mb-4 text-xl font-bold text-gray-800 dark:text-white">Gestion des Compétences</h2>
       <p className="text-gray-600 dark:text-gray-400">
         Cette fonctionnalité est en cours de développement. Vous pourrez bientôt ajouter et modifier vos compétences ici.
       </p>
@@ -498,7 +490,7 @@ interface BlogPost {
 function BlogManager() {
   const [posts, setPosts] = useState<BlogPost[]>([]);
   const [loading, setLoading] = useState(true);
-  const [message, setMessage] = useState('');
+  const [message, setMessage] = useState("");
 
   useEffect(() => {
     // Cette fonctionnalité sera implémentée plus tard
@@ -506,8 +498,8 @@ function BlogManager() {
   }, []);
 
   return (
-    <div className="text-center p-6">
-      <h2 className="text-xl font-bold text-gray-800 dark:text-white mb-4">Gestion du Blog</h2>
+    <div className="p-6 text-center">
+      <h2 className="mb-4 text-xl font-bold text-gray-800 dark:text-white">Gestion du Blog</h2>
       <p className="text-gray-600 dark:text-gray-400">
         Cette fonctionnalité est en cours de développement. Vous pourrez bientôt ajouter et modifier vos articles de blog ici.
       </p>
