@@ -40,7 +40,7 @@ Visit [http://localhost:3000](http://localhost:3000) to see the portfolio.
 
 This portfolio is hosted for free with Vercel.
 
-🔗 [Live Demo](https://kybaloo-portfolio.vercel.app)
+🔗 [Live Demo](https://kybaloo.vercel.app)
 
 ## 📫 Contact
 
