@@ -1,0 +1,20 @@
+[
+  {
+    "id": "01",
+    "title": "Design",
+    "icon": "✏️",
+    "description": "Creating beautiful, user-centered designs that combine aesthetics with functionality. From wireframes to final UI/UX designs that deliver exceptional user experiences."
+  },
+  {
+    "id": "02", 
+    "title": "Development",
+    "icon": "</>",
+    "description": "Building robust, scalable web applications using modern technologies. Full-stack development with focus on performance, security, and clean code architecture."
+  },
+  {
+    "id": "03",
+    "title": "Marketing", 
+    "icon": "💻",
+    "description": "Digital marketing strategies to boost your online presence. SEO optimization, content strategy, and performance analytics to grow your business."
+  }
+]
