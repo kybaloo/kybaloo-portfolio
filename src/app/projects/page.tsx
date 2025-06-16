@@ -1,10 +1,10 @@
 "use client";
 
 import { useLanguage } from "@/context/LanguageContext";
-import { useState, useEffect } from "react";
-import { motion } from "framer-motion";
 import { Project } from "@/types/project.types";
+import { motion, Variants } from "framer-motion";
 import Image from "next/image";
+import { useEffect, useState } from "react";
 
 export default function ProjectsPage() {
   const { t } = useLanguage();
@@ -28,7 +28,7 @@ export default function ProjectsPage() {
   }, []);
 
   // Animation variants
-  const containerVariants = {
+  const containerVariants: Variants = {
     hidden: { opacity: 0 },
     visible: {
       opacity: 1,
@@ -38,13 +38,13 @@ export default function ProjectsPage() {
     },
   };
 
-  const itemVariants = {
+  const itemVariants: Variants = {
     hidden: { y: 20, opacity: 0 },
     visible: {
       y: 0,
       opacity: 1,
       transition: {
-        type: "spring",
+        type: "spring" as const,
         stiffness: 300,
       },
     },
