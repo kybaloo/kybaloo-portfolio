@@ -6,8 +6,6 @@ import { motion } from 'framer-motion';
 import Link from 'next/link';
 import { Project } from '@/types/project.types';
 
-
-
 export default function ProjectsPage() {
   const { t } = useLanguage();
   const [projects, setProjects] = useState<Project[]>([]);
