@@ -2,7 +2,6 @@
 
 import { Project } from "@/types/project.types";
 import Link from "next/link";
-import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 
 export default function AdminPage() {
@@ -445,15 +444,6 @@ function ProjectForm({ project, onSave, onCancel }: ProjectFormProps) {
   );
 }
 
-// Skills Manager Component
-interface Skill {
-  id?: string;
-  name: string;
-  icon: string;
-  level: number;
-  category: string;
-}
-
 function SkillsManager() {
   // const [skills, setSkills] = useState<Skill[]>([]);
   // const [loading, setLoading] = useState(true);
@@ -472,18 +462,6 @@ function SkillsManager() {
       </p>
     </div>
   );
-}
-
-// Blog Manager Component
-interface BlogPost {
-  id?: string;
-  title: string;
-  slug: string;
-  excerpt: string;
-  content: string;
-  publishDate: string;
-  tags: string[];
-  coverImage: string;
 }
 
 function BlogManager() {
