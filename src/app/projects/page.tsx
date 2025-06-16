@@ -1,43 +1,43 @@
 "use client";
 
-import { useLanguage } from '@/context/LanguageContext';
-import { useState, useEffect } from 'react';
-import { motion } from 'framer-motion';
-import Link from 'next/link';
-import { Project } from '@/types/project.types';
+import { useLanguage } from "@/context/LanguageContext";
+import { useState, useEffect } from "react";
+import { motion } from "framer-motion";
+import { Project } from "@/types/project.types";
+import Image from "next/image";
 
 export default function ProjectsPage() {
   const { t } = useLanguage();
   const [projects, setProjects] = useState<Project[]>([]);
   const [loading, setLoading] = useState(true);
-  
+
   useEffect(() => {
     async function fetchProjects() {
       try {
-        const response = await fetch('/api/projects');
+        const response = await fetch("/api/projects");
         const data = await response.json();
         setProjects(data);
         setLoading(false);
       } catch (error) {
-        console.error('Error fetching projects:', error);
+        console.error("Error fetching projects:", error);
         setLoading(false);
       }
     }
-    
+
     fetchProjects();
   }, []);
-  
+
   // Animation variants
   const containerVariants = {
     hidden: { opacity: 0 },
     visible: {
       opacity: 1,
       transition: {
-        staggerChildren: 0.2
-      }
-    }
+        staggerChildren: 0.2,
+      },
+    },
   };
-  
+
   const itemVariants = {
     hidden: { y: 20, opacity: 0 },
     visible: {
@@ -45,51 +45,51 @@ export default function ProjectsPage() {
       opacity: 1,
       transition: {
         type: "spring",
-        stiffness: 300
-      }
-    }
+        stiffness: 300,
+      },
+    },
   };
-  
-  const featuredProjects = projects.filter(project => project.featured);
-  const otherProjects = projects.filter(project => !project.featured);
-  
+
+  const featuredProjects = projects.filter((project) => project.featured);
+  const otherProjects = projects.filter((project) => !project.featured);
+
   return (
     <main className="min-h-screen py-20">
-      <motion.div 
-        className="container mx-auto px-4 sm:px-6 lg:px-8"
+      <motion.div
+        className="container px-4 mx-auto sm:px-6 lg:px-8"
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
         transition={{ duration: 0.5 }}
       >
-        <motion.h1 
-          className="text-4xl font-bold mb-4 text-center bg-gradient-to-r from-blue-500 to-purple-600 bg-clip-text text-transparent"
+        <motion.h1
+          className="mb-4 text-4xl font-bold text-center text-transparent bg-gradient-to-r from-blue-500 to-purple-600 bg-clip-text"
           initial={{ y: -50, opacity: 0 }}
           animate={{ y: 0, opacity: 1 }}
           transition={{ delay: 0.2, type: "spring", stiffness: 200 }}
         >
           {t.projects.title}
         </motion.h1>
-        
-        <motion.p 
-          className="text-center text-gray-600 dark:text-gray-300 max-w-3xl mx-auto mb-16"
+
+        <motion.p
+          className="max-w-3xl mx-auto mb-16 text-center text-gray-600 dark:text-gray-300"
           initial={{ y: 20, opacity: 0 }}
           animate={{ y: 0, opacity: 1 }}
           transition={{ delay: 0.3, duration: 0.5 }}
         >
           {t.projects.description}
         </motion.p>
-        
+
         {loading ? (
-          <div className="flex justify-center items-center h-64">
-            <div className="animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 border-blue-500"></div>
+          <div className="flex items-center justify-center h-64">
+            <div className="w-12 h-12 border-t-2 border-b-2 border-blue-500 rounded-full animate-spin"></div>
           </div>
         ) : (
           <>
             {featuredProjects.length > 0 && (
               <section className="mb-20">
-                <h2 className="text-2xl font-bold mb-8">{t.projects.featuredProjects}</h2>
-                <motion.div 
-                  className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8"
+                <h2 className="mb-8 text-2xl font-bold">{t.projects.featuredProjects}</h2>
+                <motion.div
+                  className="grid grid-cols-1 gap-8 md:grid-cols-2 lg:grid-cols-3"
                   variants={containerVariants}
                   initial="hidden"
                   animate="visible"
@@ -97,50 +97,47 @@ export default function ProjectsPage() {
                   {featuredProjects.map((project) => (
                     <motion.div
                       key={project.id}
-                      className="bg-white dark:bg-gray-800 rounded-xl overflow-hidden shadow-lg"
+                      className="overflow-hidden bg-white shadow-lg dark:bg-gray-800 rounded-xl"
                       variants={itemVariants}
-                      whileHover={{ 
+                      whileHover={{
                         y: -5,
-                        boxShadow: '0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04)'
+                        boxShadow: "0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04)",
                       }}
                     >
                       <div className="h-48 overflow-hidden">
-                        <img 
-                          src={project.image} 
-                          alt={project.title} 
-                          className="w-full h-full object-cover transition-transform duration-500 hover:scale-110"
+                        <Image
+                          src={project.image || "/placeholder-image.jpg"}
+                          alt={project.title}
+                          width={400}
+                          height={200}
+                          className="object-cover w-full h-full transition-transform duration-500 hover:scale-110"
                         />
                       </div>
                       <div className="p-6">
-                        <h3 className="text-xl font-bold mb-2">{project.title}</h3>
-                        <p className="text-gray-600 dark:text-gray-300 mb-4 line-clamp-3">
-                          {project.description}
-                        </p>
+                        <h3 className="mb-2 text-xl font-bold">{project.title}</h3>
+                        <p className="mb-4 text-gray-600 dark:text-gray-300 line-clamp-3">{project.description}</p>
                         <div className="flex flex-wrap gap-2 mb-4">
                           {project.techStack.map((tech, index) => (
-                            <span 
-                              key={index}
-                              className="px-2 py-1 bg-gray-100 dark:bg-gray-700 rounded-md text-xs font-medium"
-                            >
+                            <span key={index} className="px-2 py-1 text-xs font-medium bg-gray-100 rounded-md dark:bg-gray-700">
                               {tech}
                             </span>
                           ))}
                         </div>
                         <div className="flex justify-between mt-4">
-                          <a 
+                          <a
                             href={project.githubUrl}
                             target="_blank"
                             rel="noopener noreferrer"
-                            className="text-blue-500 hover:text-blue-700 font-medium"
+                            className="font-medium text-blue-500 hover:text-blue-700"
                           >
                             GitHub
                           </a>
                           {project.demoUrl && (
-                            <a 
+                            <a
                               href={project.demoUrl}
                               target="_blank"
                               rel="noopener noreferrer"
-                              className="bg-gradient-to-r from-blue-500 to-purple-600 text-white px-4 py-2 rounded-lg hover:opacity-90 transition-opacity"
+                              className="px-4 py-2 text-white transition-opacity rounded-lg bg-gradient-to-r from-blue-500 to-purple-600 hover:opacity-90"
                             >
                               {t.projects.liveDemo}
                             </a>
@@ -152,12 +149,12 @@ export default function ProjectsPage() {
                 </motion.div>
               </section>
             )}
-            
+
             {otherProjects.length > 0 && (
               <section>
-                <h2 className="text-2xl font-bold mb-8">{t.projects.otherProjects}</h2>
-                <motion.div 
-                  className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6"
+                <h2 className="mb-8 text-2xl font-bold">{t.projects.otherProjects}</h2>
+                <motion.div
+                  className="grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-3"
                   variants={containerVariants}
                   initial="hidden"
                   animate="visible"
@@ -165,44 +162,39 @@ export default function ProjectsPage() {
                   {otherProjects.map((project) => (
                     <motion.div
                       key={project.id}
-                      className="bg-white dark:bg-gray-800 rounded-lg p-6 shadow-md"
+                      className="p-6 bg-white rounded-lg shadow-md dark:bg-gray-800"
                       variants={itemVariants}
                       whileHover={{ y: -5 }}
                     >
-                      <h3 className="text-lg font-bold mb-2">{project.title}</h3>
-                      <p className="text-gray-600 dark:text-gray-300 mb-4 text-sm line-clamp-2">
-                        {project.description}
-                      </p>
+                      <h3 className="mb-2 text-lg font-bold">{project.title}</h3>
+                      <p className="mb-4 text-sm text-gray-600 dark:text-gray-300 line-clamp-2">{project.description}</p>
                       <div className="flex flex-wrap gap-2 mb-4">
                         {project.techStack.slice(0, 3).map((tech, index) => (
-                          <span 
-                            key={index}
-                            className="px-2 py-1 bg-gray-100 dark:bg-gray-700 rounded-md text-xs font-medium"
-                          >
+                          <span key={index} className="px-2 py-1 text-xs font-medium bg-gray-100 rounded-md dark:bg-gray-700">
                             {tech}
                           </span>
                         ))}
                         {project.techStack.length > 3 && (
-                          <span className="px-2 py-1 bg-gray-100 dark:bg-gray-700 rounded-md text-xs font-medium">
+                          <span className="px-2 py-1 text-xs font-medium bg-gray-100 rounded-md dark:bg-gray-700">
                             +{project.techStack.length - 3}
                           </span>
                         )}
                       </div>
                       <div className="flex justify-between mt-4">
-                        <a 
+                        <a
                           href={project.githubUrl}
                           target="_blank"
                           rel="noopener noreferrer"
-                          className="text-blue-500 hover:text-blue-700 font-medium text-sm"
+                          className="text-sm font-medium text-blue-500 hover:text-blue-700"
                         >
                           GitHub
                         </a>
                         {project.demoUrl && (
-                          <a 
+                          <a
                             href={project.demoUrl}
                             target="_blank"
                             rel="noopener noreferrer"
-                            className="text-purple-500 hover:text-purple-700 font-medium text-sm"
+                            className="text-sm font-medium text-purple-500 hover:text-purple-700"
                           >
                             {t.projects.liveDemo}
                           </a>
@@ -213,13 +205,13 @@ export default function ProjectsPage() {
                 </motion.div>
               </section>
             )}
-            
-            <div className="text-center mt-16">
-              <a 
+
+            <div className="mt-16 text-center">
+              <a
                 href="https://github.com/kybaloo"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="inline-block bg-gradient-to-r from-blue-500 to-purple-600 text-white font-medium px-6 py-3 rounded-lg hover:opacity-90 transition-opacity"
+                className="inline-block px-6 py-3 font-medium text-white transition-opacity rounded-lg bg-gradient-to-r from-blue-500 to-purple-600 hover:opacity-90"
               >
                 {t.projects.viewMore}
               </a>
