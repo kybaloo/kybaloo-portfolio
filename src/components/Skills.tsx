@@ -34,7 +34,7 @@ const Skills = () => {
     switch(category) {
       case 'Frontend': return t.skills.frontend;
       case 'Backend': return t.skills.backend;
-      case 'Database': return t.skills.data || 'Database';
+      case 'Database': return t.skills.data || 'Data';
       case 'DevOps & Cloud': return t.skills.devops || 'DevOps & Cloud';
       case 'Other': return t.skills.tools;
       default: return category;
