@@ -29,7 +29,6 @@ const Skills = () => {
     setSkillCategories(skillsData as SkillCategory[]);
     setLoading(false);
   }, []);
-
   // Map category names to translations
   const getCategoryTitle = (category: string) => {
     switch (category) {
@@ -38,9 +37,9 @@ const Skills = () => {
       case "Backend":
         return t.skills.backend;
       case "Database":
-        return t.skills.data || "Data";
-      case "DevOps & Cloud":
-        return t.skills.devops || "DevOps & Cloud";
+        return t.skills.data || "Database";
+      case "DevOps":
+        return t.skills.devops || "DevOps";
       case "Other":
         return t.skills.tools;
       default:
@@ -142,11 +141,14 @@ const Skills = () => {
                         },
                       }}
                     >
+                      {" "}
                       {skill.icon && (
                         <div className="flex items-center justify-center w-8 h-8 mr-3 overflow-hidden">
                           <Image
                             src={skill.icon}
                             alt={skill.name}
+                            width={24}
+                            height={24}
                             className="w-6 h-6"
                             onError={(e) => {
                               // Fallback to a generic icon if the icon fails to load
