@@ -1,11 +1,10 @@
 "use client";
 
 import { useLanguage } from "@/context/LanguageContext";
-import { useState, useEffect } from "react";
 import skillsData from "@/data/skills.json";
 import { motion } from "framer-motion";
 import Image from "next/image";
-import { containerVariants, itemVariants } from "@/types/animations.types";
+import { useEffect, useState } from "react";
 
 // Define types to match our JSON structure
 type Skill = {
@@ -68,7 +67,7 @@ const Skills = () => {
     visible: {
       y: 0,
       opacity: 1,
-      transition: { type: "spring", stiffness: 300 },
+      transition: { type: "spring" as const, stiffness: 300 },
     },
   };
 
