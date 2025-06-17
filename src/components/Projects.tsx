@@ -185,7 +185,7 @@ const Projects = () => {
 
         <div className="mt-12 text-center">
           <Link
-            href="https://github.com"
+            href="https://github.com/kybaloo?tab=repositories"
             target="_blank"
             rel="noopener noreferrer"
             className="inline-flex items-center px-6 py-3 font-medium text-white transition-colors bg-gray-800 rounded-lg hover:bg-gray-700 dark:bg-gray-700 dark:hover:bg-gray-600"
