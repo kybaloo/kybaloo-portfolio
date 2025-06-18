@@ -1,17 +1,42 @@
 [
   {
+    "id": "expo-mit-2023",
+    "title": "Expo MIT 2023 - Togo Local producers exhibition",
+    "description": "'Made in Togo Expo 2023' is an annual exhibition showcasing Togo's businesses, craftsmen, producers and processors.",
+    "miniDescription": "IoT environmental monitoring solution presented at MIT Expo 2023",
+    "image": "/projects/expo-mit-2023.png",
+    "images": ["/projects/expo-mit-2023.png", "/projects/home-expo-mit-2023.png", "/projects/about-expo-mit-2023.png"],
+    "tags": ["PHP", "Laravel", "Vue.js", "MySQL", "Livewire"],
+    "techStack": ["PHP", "Laravel", "Vue.js", "MySQL", "Livewire", "CPanel", "REST APIs"],
+    "liveUrl": "https://expo.togopride.com",
+    "githubUrl": "#",
+    "featured": true,
+    "event": "MIT Expo 2023",
+    "duration": "2023",
+    "features": ["Real-time blogging", "Event scheduling", "Exhibitor registration", "Interactive maps"]
+  },
+  {
     "id": "smartloan-ecobank",
     "title": "SmartLoan - Ecobank Digital Lending Platform",
     "description": "A comprehensive digital lending platform developed for Ecobank Transnational Incorporated. This innovative solution streamlines the loan application process, integrates with core banking systems, and provides real-time credit scoring and risk assessment capabilities.",
     "miniDescription": "Digital lending platform with automated credit scoring and risk assessment",
     "image": "/project1.jpg",
+    "images": ["/project1.jpg", "/project1-2.svg", "/project1-3.svg", "/project1-4.svg"],
     "tags": ["PHP", "Laravel", "Vue.js", "SQL Server", "Power BI"],
     "techStack": ["PHP", "Laravel", "Vue.js", "Livewire", "SQL Server", "Power BI", "REST APIs"],
-    "liveUrl": "https://ecobank.com/smartloan",
+    "liveUrl": "https://ecobank.com/",
     "githubUrl": "#",
     "featured": true,
     "company": "Ecobank Transnational Incorporated",
-    "duration": "2023 - Present"
+    "duration": "2023 - Present",
+    "features": [
+      "Automated loan processing",
+      "Real-time credit scoring",
+      "KYC integration",
+      "Digital document upload",
+      "SMS & email notifications",
+      "Admin dashboard"
+    ]
   },
   {
     "id": "attendance-management-system",
@@ -19,26 +44,21 @@
     "description": "An advanced attendance tracking system featuring facial recognition technology, real-time monitoring, and comprehensive reporting. The system includes mobile applications for both Android and iOS platforms, admin dashboard for HR management, and integration capabilities with existing HRMS systems.",
     "miniDescription": "AI-powered attendance system with facial recognition and mobile apps",
     "image": "/project2.jpg",
+    "images": ["/project2.jpg", "/project2-2.svg", "/project2-3.svg"],
     "tags": ["React", "Node.js", "Python", "TensorFlow", "PostgreSQL"],
     "techStack": ["React", "Node.js", "Express", "Python", "TensorFlow", "PostgreSQL", "React Native"],
     "liveUrl": "https://attendance-demo.com",
     "githubUrl": "https://github.com/kybaloo/attendance-management",
     "featured": true,
-    "duration": "2023"
-  },
-  {
-    "id": "expo-mit-2023",
-    "title": "Expo MIT 2023 - IoT Environmental Monitoring",
-    "description": "An innovative IoT solution for environmental monitoring in urban areas, presented at MIT Expo 2023. The project combines sensor networks, real-time data analytics, and machine learning algorithms to track air quality, noise levels, and other environmental factors across metropolitan areas.",
-    "miniDescription": "IoT environmental monitoring solution presented at MIT Expo 2023",
-    "image": "/project3.jpg",
-    "tags": ["IoT", "Python", "React", "Machine Learning", "AWS"],
-    "techStack": ["Python", "React", "Django", "PostgreSQL", "AWS IoT", "TensorFlow", "Docker"],
-    "liveUrl": "https://expo.togopride.com",
-    "githubUrl": "https://github.com/kybaloo/expo-mit-2023",
-    "featured": true,
-    "event": "MIT Expo 2023",
-    "duration": "2023"
+    "duration": "2023",
+    "features": [
+      "Facial recognition",
+      "Mobile apps (iOS/Android)",
+      "Real-time monitoring",
+      "Automated reports",
+      "GPS tracking",
+      "Offline mode support"
+    ]
   },
   {
     "id": "ecobank-core-systems",
