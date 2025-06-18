@@ -2,6 +2,7 @@
 
 import { useLanguage } from "@/context/LanguageContext";
 import Image from "next/image";
+import Link from "next/link";
 
 const Hero = () => {
   const { t } = useLanguage();
@@ -26,22 +27,22 @@ const Hero = () => {
             </h1>
             <div className="mb-4">
               <h2 className="text-2xl font-semibold text-gray-700 dark:text-gray-300">{t.hero.subtitle}</h2>
-              <p className="text-lg text-blue-600 dark:text-blue-400 font-medium">{t.hero.currentRole}</p>
+              {/* <p className="text-lg text-blue-600 dark:text-blue-400 font-medium">{t.hero.currentRole}</p> */}
             </div>
             <p className="max-w-lg mb-8 text-lg text-gray-600 dark:text-gray-300">{t.hero.description}</p>
             <div className="flex flex-wrap gap-4">
-              <a
+              <Link
                 href="/#projects"
                 className="px-6 py-3 font-medium text-white transition-colors bg-blue-600 rounded-lg hover:bg-blue-700"
               >
                 {t.hero.viewWork}
-              </a>
-              <a
-                href="/#contact"
+              </Link>
+              <Link
+                href="/contact"
                 className="px-6 py-3 font-medium text-blue-600 transition-colors bg-transparent border border-blue-600 rounded-lg dark:text-blue-400 hover:bg-blue-600/10"
               >
                 {t.hero.contactMe}
-              </a>
+              </Link>
             </div>{" "}
             <div className="flex items-center gap-6 mt-12">
               <a href="https://github.com/kybaloo" target="_blank" rel="noopener noreferrer" aria-label="GitHub">
