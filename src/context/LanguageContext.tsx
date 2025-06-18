@@ -24,6 +24,7 @@ export const enTranslations = {
       "4+ years of experience building scalable web applications and transforming data into actionable insights. Specialized in React, Vue.js, Laravel, and business intelligence solutions.",
     viewWork: "View My Work",
     contactMe: "Get In Touch",
+    scheduleCall: "Schedule a Call",
   },
   about: {
     title: "About Me",
@@ -40,6 +41,8 @@ export const enTranslations = {
     location: "Location",
     currentRole: "Current Role",
     downloadResume: "Download Resume",
+    downloadResumeFrench: "French Version",
+    downloadResumeEnglish: "English Version",
     linkedinProfile: "LinkedIn Profile",
     withLove: "with ❤️",
     availability: "Availability",
@@ -142,6 +145,7 @@ export const frTranslations = {
       "4+ années d'expérience dans la création d'applications web évolutives et la transformation de données en insights exploitables. Spécialisé en React, Vue.js, Laravel et solutions de business intelligence.",
     viewWork: "Voir Mes Projets",
     contactMe: "Me Contacter",
+    scheduleCall: "Planifier un Appel",
   },
   about: {
     title: "À Propos de Moi",
@@ -158,6 +162,8 @@ export const frTranslations = {
     location: "Localisation",
     currentRole: "Poste Actuel",
     downloadResume: "Télécharger CV",
+    downloadResumeFrench: "Version Française",
+    downloadResumeEnglish: "Version Anglaise",
     linkedinProfile: "Profil LinkedIn",
     withLove: "avec ❤️",
     availability: "Disponibilité",
