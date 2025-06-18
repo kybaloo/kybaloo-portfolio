@@ -1,231 +1,207 @@
 "use client";
 
+import { motion } from "framer-motion";
+import { ArrowLeft, Download, Eye } from "lucide-react";
 import Link from "next/link";
-import { useRef } from "react";
 
-const ResumePage = () => {
-  const resumeRef = useRef<HTMLDivElement>(null);
-
-  const handlePrint = () => {
-    window.print();
-  };
-
+export default function ResumePage() {
   return (
-    <div className="min-h-screen bg-gray-50 dark:bg-gray-900 py-8">
-      <div className="container mx-auto px-4">
-        <div className="mb-6 text-center">
-          <button
-            onClick={handlePrint}
-            className="inline-flex items-center px-6 py-3 font-medium text-white transition-colors bg-blue-600 rounded-lg hover:bg-blue-700 mr-4"
-          >
-            <svg className="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                strokeWidth={2}
-                d="M17 17h2a2 2 0 002-2v-4a2 2 0 00-2-2H5a2 2 0 00-2 2v4a2 2 0 002 2h2m2 4h6a2 2 0 002-2v-4a2 2 0 00-2-2H9a2 2 0 00-2 2v4a2 2 0 002 2zm8-12V5a2 2 0 00-2-2H9a2 2 0 00-2 2v4h10z"
-              />
-            </svg>
-            Print Resume
-          </button>
+    <main className="min-h-screen py-20">
+      <div className="container mx-auto px-4 sm:px-6 lg:px-8">
+        {/* Back Button */}
+        <motion.div className="mb-8" initial={{ opacity: 0, x: -50 }} animate={{ opacity: 1, x: 0 }} transition={{ duration: 0.5 }}>
           <Link
             href="/"
-            className="inline-flex items-center px-6 py-3 font-medium text-blue-600 transition-colors bg-transparent border border-blue-600 rounded-lg hover:bg-blue-600/10"
+            className="inline-flex items-center text-blue-600 dark:text-blue-400 hover:text-blue-700 dark:hover:text-blue-300 transition-colors"
           >
-            ← Back to Portfolio
+            <ArrowLeft className="w-5 h-5 mr-2" />
+            Retour au portfolio
           </Link>
-        </div>
+        </motion.div>
 
-        <div
-          ref={resumeRef}
-          className="max-w-4xl mx-auto bg-white dark:bg-gray-800 shadow-lg rounded-lg print:shadow-none print:rounded-none"
+        {/* Header */}
+        <motion.div
+          className="text-center mb-16"
+          initial={{ opacity: 0, y: -50 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.5 }}
         >
-          {/* Header */}
-          <div className="bg-blue-600 text-white p-8 print:bg-blue-800">
-            <div className="text-center">
-              <h1 className="text-4xl font-bold mb-2">TCHANGAI Florentin Kybaloo</h1>
-              <h2 className="text-xl mb-4">Full Stack Web Developer & Data Analyst</h2>
-              <div className="flex flex-wrap justify-center gap-4 text-sm">
-                <span>📧 kybalooflo@gmail.com</span>
-                <span>📍 Lomé, Togo</span>
-                <span>💼 Web & SQL Developer at Ecobank</span>
+          <h1 className="text-4xl font-bold mb-4 bg-gradient-to-r from-blue-500 to-purple-600 bg-clip-text text-transparent">
+            Mon CV / My Resume
+          </h1>
+          <div className="w-24 h-1 mx-auto bg-blue-500 rounded-full"></div>
+          <p className="mt-4 text-lg text-gray-600 dark:text-gray-300">Téléchargez mon CV en français ou en anglais</p>
+        </motion.div>
+
+        {/* CV Options */}
+        <motion.div
+          className="grid grid-cols-1 md:grid-cols-2 gap-8 max-w-4xl mx-auto"
+          initial={{ opacity: 0, y: 50 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ delay: 0.2, duration: 0.5 }}
+        >
+          {/* French CV */}
+          <div className="bg-white dark:bg-gray-800 rounded-xl shadow-lg p-8 text-center">
+            <div className="mb-6">
+              <div className="w-16 h-16 mx-auto mb-4 bg-gradient-to-r from-blue-500 to-blue-600 rounded-full flex items-center justify-center">
+                <span className="text-2xl font-bold text-white">FR</span>
               </div>
+              <h2 className="text-2xl font-bold text-gray-800 dark:text-white mb-2">CV Français</h2>
+              <p className="text-gray-600 dark:text-gray-300">
+                Version française de mon curriculum vitae avec toutes mes expériences et compétences.
+              </p>
+            </div>
+
+            <div className="space-y-3">
+              <a
+                href="/cv-francais.txt"
+                className="w-full inline-flex items-center justify-center px-6 py-3 font-medium text-white bg-gradient-to-r from-blue-500 to-blue-600 rounded-lg hover:opacity-90 transition-opacity"
+                download="CV_TCHANGAI_Kybaloo_Francais.txt"
+              >
+                <Download className="w-5 h-5 mr-2" />
+                Télécharger CV (FR)
+              </a>
+              <a
+                href="/cv-francais.txt"
+                className="w-full inline-flex items-center justify-center px-6 py-3 font-medium text-blue-600 dark:text-blue-400 border border-blue-600 dark:border-blue-400 rounded-lg hover:bg-blue-600/10 transition-colors"
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                <Eye className="w-5 h-5 mr-2" />
+                Voir en ligne
+              </a>
             </div>
           </div>
 
-          <div className="p-8 space-y-8">
-            {/* Professional Summary */}
-            <section>
-              <h3 className="text-2xl font-bold text-blue-600 mb-4 border-b-2 border-blue-600 pb-2">Professional Summary</h3>
-              <p className="text-gray-700 dark:text-gray-300 leading-relaxed">
-                Experienced Full Stack Web Developer and Data Analyst with 4+ years of expertise in building scalable web applications
-                and transforming data into actionable business insights. Currently serving as Web & SQL Developer at Ecobank
-                Transnational Incorporated, delivering enterprise-level solutions that serve millions of users across Africa.
-                Proficient in modern web technologies, database management, and business intelligence tools.
+          {/* English Resume */}
+          <div className="bg-white dark:bg-gray-800 rounded-xl shadow-lg p-8 text-center">
+            <div className="mb-6">
+              <div className="w-16 h-16 mx-auto mb-4 bg-gradient-to-r from-purple-500 to-purple-600 rounded-full flex items-center justify-center">
+                <span className="text-2xl font-bold text-white">EN</span>
+              </div>
+              <h2 className="text-2xl font-bold text-gray-800 dark:text-white mb-2">English Resume</h2>
+              <p className="text-gray-600 dark:text-gray-300">
+                English version of my resume with all my professional experiences and skills.
               </p>
-            </section>
+            </div>
 
-            {/* Work Experience */}
-            <section>
-              <h3 className="text-2xl font-bold text-blue-600 mb-4 border-b-2 border-blue-600 pb-2">Work Experience</h3>
-
-              <div className="space-y-6">
-                <div>
-                  <div className="flex justify-between items-start mb-2">
-                    <div>
-                      <h4 className="text-lg font-bold text-gray-900 dark:text-white">Web & SQL Developer</h4>
-                      <p className="text-blue-600 font-semibold">Ecobank Transnational Incorporated</p>
-                    </div>
-                    <span className="text-gray-600 dark:text-gray-400">Sep 2022 - Present</span>
-                  </div>
-                  <ul className="list-disc list-inside text-gray-700 dark:text-gray-300 space-y-1 ml-4">
-                    <li>Developed SmartLoan digital lending platform processing $50M+ in loan applications</li>
-                    <li>Designed real-time analytics dashboards using Power BI and Tableau</li>
-                    <li>Optimized database queries resulting in 40% performance improvement</li>
-                    <li>Led integration of core banking systems with external APIs</li>
-                    <li>Mentored junior developers and conducted code reviews</li>
-                  </ul>
-                </div>
-
-                <div>
-                  <div className="flex justify-between items-start mb-2">
-                    <div>
-                      <h4 className="text-lg font-bold text-gray-900 dark:text-white">Full Stack Web Developer</h4>
-                      <p className="text-blue-600 font-semibold">Freelance Developer</p>
-                    </div>
-                    <span className="text-gray-600 dark:text-gray-400">Jan 2021 - Aug 2022</span>
-                  </div>
-                  <ul className="list-disc list-inside text-gray-700 dark:text-gray-300 space-y-1 ml-4">
-                    <li>Built 20+ custom web applications using React, Vue.js, and Laravel</li>
-                    <li>Developed attendance management system with facial recognition</li>
-                    <li>Created business intelligence dashboards for data-driven decisions</li>
-                    <li>Maintained 98% client satisfaction rate with on-time delivery</li>
-                  </ul>
-                </div>
-              </div>
-            </section>
-
-            {/* Key Projects */}
-            <section>
-              <h3 className="text-2xl font-bold text-blue-600 mb-4 border-b-2 border-blue-600 pb-2">Key Projects</h3>
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                <div>
-                  <h4 className="font-bold text-gray-900 dark:text-white">SmartLoan Platform</h4>
-                  <p className="text-sm text-gray-600 dark:text-gray-400 mb-1">Ecobank Digital Lending Solution</p>
-                  <p className="text-gray-700 dark:text-gray-300 text-sm">
-                    Digital lending platform with automated credit scoring and risk assessment
-                  </p>
-                </div>
-                <div>
-                  <h4 className="font-bold text-gray-900 dark:text-white">Attendance Management System</h4>
-                  <p className="text-sm text-gray-600 dark:text-gray-400 mb-1">AI-Powered HR Solution</p>
-                  <p className="text-gray-700 dark:text-gray-300 text-sm">
-                    Facial recognition attendance system with mobile apps and real-time monitoring
-                  </p>
-                </div>
-                <div>
-                  <h4 className="font-bold text-gray-900 dark:text-white">Expo MIT 2023</h4>
-                  <p className="text-sm text-gray-600 dark:text-gray-400 mb-1">IoT Environmental Monitoring</p>
-                  <p className="text-gray-700 dark:text-gray-300 text-sm">
-                    IoT solution for urban environmental monitoring presented at MIT Expo
-                  </p>
-                </div>
-                <div>
-                  <h4 className="font-bold text-gray-900 dark:text-white">BI Analytics Dashboard</h4>
-                  <p className="text-sm text-gray-600 dark:text-gray-400 mb-1">Business Intelligence Solution</p>
-                  <p className="text-gray-700 dark:text-gray-300 text-sm">
-                    Real-time dashboard with predictive analytics and automated reporting
-                  </p>
-                </div>
-              </div>
-            </section>
-
-            {/* Technical Skills */}
-            <section>
-              <h3 className="text-2xl font-bold text-blue-600 mb-4 border-b-2 border-blue-600 pb-2">Technical Skills</h3>
-              <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-                <div>
-                  <h4 className="font-bold text-gray-900 dark:text-white mb-2">Frontend</h4>
-                  <p className="text-gray-700 dark:text-gray-300 text-sm">
-                    JavaScript, TypeScript, React, Vue.js, Next.js, HTML5, CSS3, Tailwind CSS, Bootstrap
-                  </p>
-                </div>
-                <div>
-                  <h4 className="font-bold text-gray-900 dark:text-white mb-2">Backend</h4>
-                  <p className="text-gray-700 dark:text-gray-300 text-sm">
-                    PHP, Laravel, Node.js, Express.js, .NET, C#, Python, REST APIs
-                  </p>
-                </div>
-                <div>
-                  <h4 className="font-bold text-gray-900 dark:text-white mb-2">Database & Analytics</h4>
-                  <p className="text-gray-700 dark:text-gray-300 text-sm">
-                    SQL Server, MySQL, PostgreSQL, MongoDB, Power BI, Tableau, Excel
-                  </p>
-                </div>
-              </div>
-            </section>
-
-            {/* Education & Certifications */}
-            <section>
-              <h3 className="text-2xl font-bold text-blue-600 mb-4 border-b-2 border-blue-600 pb-2">Education & Achievements</h3>
-              <div className="space-y-4">
-                <div>
-                  <h4 className="font-bold text-gray-900 dark:text-white">Computer Science & Software Engineering</h4>
-                  <p className="text-gray-700 dark:text-gray-300">Specialized in web development and data analysis</p>
-                </div>
-                <div>
-                  <h4 className="font-bold text-gray-900 dark:text-white">MIT Expo 2023 Participant</h4>
-                  <p className="text-gray-700 dark:text-gray-300">Presented IoT environmental monitoring solution</p>
-                </div>
-                <div>
-                  <h4 className="font-bold text-gray-900 dark:text-white">Professional Achievements</h4>
-                  <ul className="list-disc list-inside text-gray-700 dark:text-gray-300 text-sm space-y-1 ml-4">
-                    <li>4+ years of professional web development experience</li>
-                    <li>50+ successful projects delivered</li>
-                    <li>Expert in 15+ programming languages and frameworks</li>
-                    <li>100% client satisfaction rate</li>
-                  </ul>
-                </div>
-              </div>
-            </section>
+            <div className="space-y-3">
+              <a
+                href="/cv-english.txt"
+                className="w-full inline-flex items-center justify-center px-6 py-3 font-medium text-white bg-gradient-to-r from-purple-500 to-purple-600 rounded-lg hover:opacity-90 transition-opacity"
+                download="Resume_TCHANGAI_Kybaloo_English.txt"
+              >
+                <Download className="w-5 h-5 mr-2" />
+                Download Resume (EN)
+              </a>
+              <a
+                href="/cv-english.txt"
+                className="w-full inline-flex items-center justify-center px-6 py-3 font-medium text-purple-600 dark:text-purple-400 border border-purple-600 dark:border-purple-400 rounded-lg hover:bg-purple-600/10 transition-colors"
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                <Eye className="w-5 h-5 mr-2" />
+                View Online
+              </a>
+            </div>
           </div>
-        </div>
+        </motion.div>
+
+        {/* Additional Information */}
+        <motion.div
+          className="max-w-2xl mx-auto mt-16 text-center"
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          transition={{ delay: 0.4, duration: 0.5 }}
+        >
+          <div className="bg-gray-50 dark:bg-gray-800/50 rounded-xl p-8">
+            <h3 className="text-xl font-bold text-gray-800 dark:text-white mb-4">Informations sur les CV</h3>
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-6 text-sm text-gray-600 dark:text-gray-300">
+              <div>
+                <h4 className="font-semibold mb-2">Format</h4>
+                <p>Fichiers texte (.txt) lisibles sur tous les appareils</p>
+              </div>
+              <div>
+                <h4 className="font-semibold mb-2">Contenu</h4>
+                <p>Expériences, formation, compétences et réalisations</p>
+              </div>
+              <div>
+                <h4 className="font-semibold mb-2">Mise à jour</h4>
+                <p>Dernière mise à jour : Juin 2025</p>
+              </div>
+              <div>
+                <h4 className="font-semibold mb-2">Contact</h4>
+                <p>kybalooflo@gmail.com pour toute question</p>
+              </div>
+            </div>
+          </div>
+        </motion.div>
+
+        {/* Quick Access to Portfolio Sections */}
+        <motion.div
+          className="max-w-4xl mx-auto mt-16"
+          initial={{ opacity: 0, y: 50 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ delay: 0.6, duration: 0.5 }}
+        >
+          <h3 className="text-2xl font-bold text-center text-gray-800 dark:text-white mb-8">Explorer mon portfolio</h3>
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+            <Link
+              href="/about"
+              className="bg-white dark:bg-gray-800 rounded-xl shadow-lg p-6 text-center hover:shadow-xl transition-shadow"
+            >
+              <div className="w-12 h-12 mx-auto mb-4 bg-blue-100 dark:bg-blue-900/30 rounded-full flex items-center justify-center">
+                <svg className="w-6 h-6 text-blue-600 dark:text-blue-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    strokeWidth={2}
+                    d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"
+                  />
+                </svg>
+              </div>
+              <h4 className="font-semibold text-gray-800 dark:text-white">À propos</h4>
+              <p className="text-sm text-gray-600 dark:text-gray-300">Mon parcours et mes expériences</p>
+            </Link>
+
+            <Link
+              href="/projects"
+              className="bg-white dark:bg-gray-800 rounded-xl shadow-lg p-6 text-center hover:shadow-xl transition-shadow"
+            >
+              <div className="w-12 h-12 mx-auto mb-4 bg-purple-100 dark:bg-purple-900/30 rounded-full flex items-center justify-center">
+                <svg className="w-6 h-6 text-purple-600 dark:text-purple-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    strokeWidth={2}
+                    d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 012-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10"
+                  />
+                </svg>
+              </div>
+              <h4 className="font-semibold text-gray-800 dark:text-white">Projets</h4>
+              <p className="text-sm text-gray-600 dark:text-gray-300">Mes réalisations techniques</p>
+            </Link>
+
+            <Link
+              href="/contact"
+              className="bg-white dark:bg-gray-800 rounded-xl shadow-lg p-6 text-center hover:shadow-xl transition-shadow"
+            >
+              <div className="w-12 h-12 mx-auto mb-4 bg-green-100 dark:bg-green-900/30 rounded-full flex items-center justify-center">
+                <svg className="w-6 h-6 text-green-600 dark:text-green-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    strokeWidth={2}
+                    d="M3 8l7.89 4.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"
+                  />
+                </svg>
+              </div>
+              <h4 className="font-semibold text-gray-800 dark:text-white">Contact</h4>
+              <p className="text-sm text-gray-600 dark:text-gray-300">Restons en contact</p>
+            </Link>
+          </div>
+        </motion.div>
       </div>
-
-      <style jsx global>{`
-        @media print {
-          body * {
-            visibility: hidden;
-          }
-
-          .print\\:shadow-none {
-            box-shadow: none !important;
-          }
-
-          .print\\:rounded-none {
-            border-radius: 0 !important;
-          }
-
-          .print\\:bg-blue-800 {
-            background-color: #1e40af !important;
-            -webkit-print-color-adjust: exact;
-            color-adjust: exact;
-          }
-
-          [data-resume-container] * {
-            visibility: visible;
-          }
-
-          [data-resume-container] {
-            position: absolute;
-            left: 0;
-            top: 0;
-            width: 100%;
-          }
-        }
-      `}</style>
-    </div>
+    </main>
   );
-};
-
-export default ResumePage;
+}
