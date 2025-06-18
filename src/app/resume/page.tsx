@@ -1,5 +1,6 @@
 "use client";
 
+import Link from "next/link";
 import { useRef } from "react";
 
 const ResumePage = () => {
@@ -27,12 +28,12 @@ const ResumePage = () => {
             </svg>
             Print Resume
           </button>
-          <a
+          <Link
             href="/"
             className="inline-flex items-center px-6 py-3 font-medium text-blue-600 transition-colors bg-transparent border border-blue-600 rounded-lg hover:bg-blue-600/10"
           >
             ← Back to Portfolio
-          </a>
+          </Link>
         </div>
 
         <div
