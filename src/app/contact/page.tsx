@@ -364,7 +364,7 @@ export default function ContactPage() {
                 </a>
 
                 <a
-                  href="mailto:kybaloo@example.com"
+                  href="mailto:kybalooflo@gmail.com"
                   className="flex items-center p-3 transition-colors rounded-lg hover:bg-gray-100 dark:hover:bg-gray-700"
                 >
                   <div className="flex items-center justify-center w-10 h-10 mr-3 bg-gray-100 rounded-full dark:bg-gray-700">
