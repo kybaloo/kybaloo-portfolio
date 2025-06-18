@@ -29,7 +29,7 @@ const Hero = () => {
               <h2 className="text-2xl font-semibold text-gray-700 dark:text-gray-300">{t.hero.subtitle}</h2>
               {/* <p className="text-lg text-blue-600 dark:text-blue-400 font-medium">{t.hero.currentRole}</p> */}
             </div>
-            <p className="max-w-lg mb-8 text-lg text-gray-600 dark:text-gray-300">{t.hero.description}</p>
+            <p className="max-w-lg mb-8 text-lg text-gray-600 dark:text-gray-300">{t.hero.description}</p>{" "}
             <div className="flex flex-wrap gap-4">
               <Link
                 href="/#projects"
@@ -43,7 +43,7 @@ const Hero = () => {
               >
                 {t.hero.contactMe}
               </Link>
-            </div>{" "}
+            </div>
             <div className="flex items-center gap-6 mt-12">
               <a href="https://github.com/kybaloo" target="_blank" rel="noopener noreferrer" aria-label="GitHub">
                 <svg
@@ -68,7 +68,7 @@ const Hero = () => {
                 >
                   <path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433c-1.144 0-2.063-.926-2.063-2.065 0-1.138.92-2.063 2.063-2.063 1.14 0 2.064.925 2.064 2.063 0 1.139-.925 2.065-2.064 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.454C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.225 0z" />
                 </svg>
-              </a>
+              </a>{" "}
               <a href="https://www.freelancer.com/u/Kybaloo" target="_blank" rel="noopener noreferrer" aria-label="Freelancer">
                 <svg
                   className="w-6 h-6 text-gray-700 transition-colors dark:text-gray-300 hover:text-blue-500"
@@ -76,7 +76,7 @@ const Hero = () => {
                   viewBox="0 0 24 24"
                   aria-hidden="true"
                 >
-                  <path d="M14.096 3.076l1.634 2.292L24 3.076M5.503 20.924l4.474-4.374-2.692-2.89m6.133-10.584L11.027 5.23l4.022.15M14.096 3.076C7.732-.002-.095 7.874.003 14.238L14.096 3.076m-.001 17.848c6.364 3.078 14.191-4.798 14.093-11.162L14.095 20.924" />
+                  <path d="M20 6h-2.18c.11-.31.18-.65.18-1a2.996 2.996 0 0 0-5.5-1.65l-.5.67-.5-.68C10.96 2.54 10.05 2 9 2 7.34 2 6 3.34 6 5c0 .35.07.69.18 1H4c-1.11 0-1.99.89-1.99 2L2 19c0 1.11.89 2 2 2h16c1.11 0 2-.89 2-2V8c0-1.11-.89-2-2-2zm-5-2c.55 0 1 .45 1 1s-.45 1-1 1-1-.45-1-1 .45-1 1-1zM9 4c.55 0 1 .45 1 1s-.45 1-1 1-1-.45-1-1 .45-1 1-1z" />
                 </svg>
               </a>
             </div>
