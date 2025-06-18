@@ -1,8 +1,6 @@
 "use client";
 
-import About from "@/components/About";
 // import Contact from "@/components/Contact";
-import Experience from "@/components/Experience";
 import Footer from "@/components/Footer";
 import Hero from "@/components/Hero";
 import Projects from "@/components/Projects";
@@ -16,8 +14,6 @@ export default function Home() {
     <div className="min-h-screen">
       <motion.main initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ duration: 0.5 }}>
         <Hero />
-        <About />
-        <Experience />
         <Services services={servicesData} />
         <Skills />
         <Projects />
