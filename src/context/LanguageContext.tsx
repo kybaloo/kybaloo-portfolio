@@ -41,6 +41,9 @@ export const enTranslations = {
     currentRole: "Current Role",
     downloadResume: "Download Resume",
     linkedinProfile: "LinkedIn Profile",
+    withLove: "with ❤️",
+    availability: "Availability",
+    availabilityStatus: "Open to new opportunities",
   },
   experience: {
     title: "Work Experience",
@@ -156,6 +159,9 @@ export const frTranslations = {
     currentRole: "Poste Actuel",
     downloadResume: "Télécharger CV",
     linkedinProfile: "Profil LinkedIn",
+    withLove: "avec ❤️",
+    availability: "Disponibilité",
+    availabilityStatus: "Disponible pour de nouvelles opportunités",
   },
   experience: {
     title: "Expérience Professionnelle",
