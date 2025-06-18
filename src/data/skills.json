@@ -80,7 +80,7 @@
       {
         "name": "SQL Server",
         "level": 95,
-        "icon": "https://cdn.simpleicons.org/microsoftsqlserver/CC2927"
+        "icon": "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/microsoftsqlserver/microsoftsqlserver-plain.svg"
       },
       {
         "name": "MySQL",
@@ -100,7 +100,7 @@
       {
         "name": "Oracle",
         "level": 75,
-        "icon": "https://cdn.simpleicons.org/oracle/F80000"
+        "icon": "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/oracle/oracle-original.svg"
       }
     ]
   },
@@ -110,12 +110,12 @@
       {
         "name": "Power BI",
         "level": 92,
-        "icon": "https://cdn.simpleicons.org/powerbi/F2C811"
+        "icon": "https://raw.githubusercontent.com/microsoft/PowerBI-Icons/main/SVG/Power-BI.svg"
       },
       {
         "name": "Tableau",
         "level": 88,
-        "icon": "https://cdn.simpleicons.org/tableau/E97627"
+        "icon": "https://cdn.worldvectorlogo.com/logos/tableau-software.svg"
       },
       {
         "name": "Excel",
@@ -145,12 +145,12 @@
       {
         "name": "AWS",
         "level": 80,
-        "icon": "https://cdn.simpleicons.org/amazonaws/FF9900"
+        "icon": "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/amazonwebservices/amazonwebservices-plain-wordmark.svg"
       },
       {
         "name": "Azure",
         "level": 75,
-        "icon": "https://cdn.simpleicons.org/microsoftazure/0078D4"
+        "icon": "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/azure/azure-original.svg"
       },
       {
         "name": "Docker",
@@ -175,12 +175,12 @@
       {
         "name": "Visual Studio",
         "level": 88,
-        "icon": "https://cdn.simpleicons.org/visualstudio/5C2D91"
+        "icon": "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/visualstudio/visualstudio-plain.svg"
       },
       {
         "name": "VS Code",
         "level": 95,
-        "icon": "https://cdn.simpleicons.org/visualstudiocode/007ACC"
+        "icon": "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/vscode/vscode-original.svg"
       },
       {
         "name": "Postman",
