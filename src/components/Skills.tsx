@@ -69,9 +69,14 @@ const Skills = () => {
       transition: { type: "spring" as const, stiffness: 300 },
     },
   };
-
   return (
-    <motion.section id="skills" className="py-20" initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ duration: 0.5 }}>
+    <motion.section
+      id="skills"
+      className="py-20 bg-white dark:bg-gray-900"
+      initial={{ opacity: 0 }}
+      animate={{ opacity: 1 }}
+      transition={{ duration: 0.5 }}
+    >
       <div className="container px-4 mx-auto sm:px-6 lg:px-8">
         <motion.div
           className="mb-16 text-center"
@@ -79,16 +84,14 @@ const Skills = () => {
           animate={{ y: 0, opacity: 1 }}
           transition={{ duration: 0.7, delay: 0.2 }}
         >
-          <h2 className="mb-4 text-3xl font-bold text-transparent bg-gradient-to-r from-blue-500 to-purple-600 bg-clip-text">
-            {t.skills.title}
-          </h2>
+          <h2 className="mb-4 text-4xl font-bold text-gray-800 dark:text-white">{t.skills.title}</h2>
           <motion.div
             className="w-24 h-1 mx-auto rounded-full bg-gradient-to-r from-blue-500 to-purple-600"
             initial={{ width: 0 }}
-            animate={{ width: 96 }} // 24rem = 96px
+            animate={{ width: 96 }}
             transition={{ delay: 0.3, duration: 0.5 }}
           ></motion.div>
-          <p className="max-w-2xl mx-auto mt-6 text-gray-600 dark:text-gray-300">{t.skills.description}</p>
+          <p className="max-w-2xl mx-auto mt-6 text-lg text-gray-600 dark:text-gray-300">{t.skills.description}</p>
         </motion.div>
 
         {loading ? (
@@ -97,7 +100,7 @@ const Skills = () => {
           </div>
         ) : (
           <motion.div
-            className="grid grid-cols-1 gap-8 md:grid-cols-2 lg:grid-cols-3"
+            className="grid grid-cols-1 gap-8 lg:grid-cols-2 xl:grid-cols-3"
             variants={containerVariants}
             initial="hidden"
             animate="visible"

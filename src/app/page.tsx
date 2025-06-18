@@ -1,7 +1,7 @@
 "use client";
 
-import About from "@/components/About";
-import Contact from "@/components/Contact";
+import Blog from "@/components/Blog";
+// import Contact from "@/components/Contact";
 import Footer from "@/components/Footer";
 import Hero from "@/components/Hero";
 import Projects from "@/components/Projects";
@@ -15,13 +15,14 @@ export default function Home() {
     <div className="min-h-screen">
       <motion.main initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ duration: 0.5 }}>
         <Hero />
-        <About />
         <Services services={servicesData} />
         <Skills />
         <Projects />
-        <Contact />
-      </motion.main>
+        <Blog />
+        {/* <Contact /> */}
+      </motion.main>{" "}
       <Footer />
+      {/* <ThemeDebugger /> */}
     </div>
   );
 }

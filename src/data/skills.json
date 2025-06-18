@@ -1,66 +1,71 @@
 [
   {
-    "category": "Frontend",
+    "category": "Frontend Development",
     "items": [
       {
-        "name": "React",
-        "level": 90,
-        "icon": "https://cdn.simpleicons.org/react?viewbox=auto"
+        "name": "JavaScript",
+        "level": 95,
+        "icon": "https://cdn.simpleicons.org/javascript/F7DF1E"
       },
       {
-        "name": "Vue.js",
-        "level": 85,
-        "icon": "https://cdn.simpleicons.org/vuedotjs?viewbox=auto"
+        "name": "TypeScript",
+        "level": 88,
+        "icon": "https://cdn.simpleicons.org/typescript/3178C6"
+      },
+      {
+        "name": "React",
+        "level": 92,
+        "icon": "https://cdn.simpleicons.org/react/61DAFB"
       },
       {
         "name": "Next.js",
+        "level": 90,
+        "icon": "https://cdn.simpleicons.org/nextdotjs/000000"
+      },
+      {
+        "name": "Vue.js",
         "level": 88,
-        "icon": "https://cdn.simpleicons.org/nextdotjs?viewbox=auto"
+        "icon": "https://cdn.simpleicons.org/vuedotjs/4FC08D"
       },
       {
         "name": "Tailwind CSS",
         "level": 92,
-        "icon": "https://cdn.simpleicons.org/tailwindcss?viewbox=auto"
-      },
-      {
-        "name": "JavaScript",
-        "level": 90,
-        "icon": "https://cdn.simpleicons.org/javascript?viewbox=auto"
-      },
-      {
-        "name": "TypeScript",
-        "level": 85,
-        "icon": "https://cdn.simpleicons.org/typescript?viewbox=auto"
+        "icon": "https://cdn.simpleicons.org/tailwindcss/06B6D4"
       }
     ]
   },
   {
-    "category": "Backend",
+    "category": "Backend Development",
     "items": [
       {
-        "name": "Node.js",
-        "level": 88,
-        "icon": "https://cdn.simpleicons.org/nodedotjs?viewbox=auto"
+        "name": "PHP",
+        "level": 92,
+        "icon": "https://cdn.simpleicons.org/php/777BB4"
       },
       {
         "name": "Laravel",
+        "level": 90,
+        "icon": "https://cdn.simpleicons.org/laravel/FF2D20"
+      },
+      {
+        "name": "Node.js",
+        "level": 85,
+        "icon": "https://cdn.simpleicons.org/nodedotjs/339933"
+      },
+      {
+        "name": "Express.js",
         "level": 82,
-        "icon": "https://cdn.simpleicons.org/laravel?viewbox=auto"
+        "icon": "https://cdn.simpleicons.org/express/000000"
       },
       {
         "name": ".NET",
         "level": 78,
-        "icon": "https://cdn.simpleicons.org/dotnet?viewbox=auto"
+        "icon": "https://cdn.simpleicons.org/dotnet/512BD4"
       },
       {
-        "name": "Express",
-        "level": 85,
-        "icon": "https://cdn.simpleicons.org/express?viewbox=auto"
-      },
-      {
-        "name": "PHP",
+        "name": "Python",
         "level": 80,
-        "icon": "https://cdn.simpleicons.org/php?viewbox=auto"
+        "icon": "https://cdn.simpleicons.org/python/3776AB"
       },
       {
         "name": "C#",
@@ -70,62 +75,127 @@
     ]
   },
   {
-    "category": "Data",
+    "category": "Database Management",
     "items": [
       {
+        "name": "SQL Server",
+        "level": 95,
+        "icon": "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/microsoftsqlserver/microsoftsqlserver-plain.svg"
+      },
+      {
         "name": "MySQL",
-        "level": 85,
-        "icon": "https://cdn.simpleicons.org/mysql?viewbox=auto"
-      },
-      {
-        "name": "MongoDB",
-        "level": 83,
-        "icon": "https://cdn.simpleicons.org/mongodb?viewbox=auto"
-      },
-      {
-        "name": "Pandas",
         "level": 90,
-        "icon": "https://cdn.simpleicons.org/pandas?viewbox=auto"
+        "icon": "https://cdn.simpleicons.org/mysql/4479A1"
       },
       {
         "name": "PostgreSQL",
+        "level": 85,
+        "icon": "https://cdn.simpleicons.org/postgresql/336791"
+      },
+      {
+        "name": "MongoDB",
         "level": 80,
-        "icon": "https://cdn.simpleicons.org/postgresql?viewbox=auto"
+        "icon": "https://cdn.simpleicons.org/mongodb/47A248"
       },
       {
-        "name": "NumPy",
-        "level": 78,
-        "icon": "https://cdn.simpleicons.org/numpy?viewbox=auto"
-      },
-      {
-        "name": "Python",
+        "name": "Oracle",
         "level": 75,
-        "icon": "https://cdn.simpleicons.org/python?viewbox=auto"
+        "icon": "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/oracle/oracle-original.svg"
       }
     ]
   },
   {
-    "category": "DevOps",
+    "category": "Data Analysis & BI",
     "items": [
       {
-        "name": "Git",
-        "level": 90,
-        "icon": "https://cdn.simpleicons.org/git?viewbox=auto"
+        "name": "Power BI",
+        "level": 92,
+        "icon": "https://raw.githubusercontent.com/microsoft/PowerBI-Icons/main/SVG/Power-BI.svg"
       },
       {
-        "name": "Jenkins",
+        "name": "Tableau",
+        "level": 88,
+        "icon": "https://cdn.worldvectorlogo.com/logos/tableau-software.svg"
+      },
+      {
+        "name": "Excel",
+        "level": 95,
+        "icon": "https://cdn.worldvectorlogo.com/logos/microsoft-excel-2013.svg"
+      },
+      {
+        "name": "Python",
+        "level": 82,
+        "icon": "https://cdn.simpleicons.org/python/3776AB"
+      },
+      {
+        "name": "R",
         "level": 75,
-        "icon": "https://cdn.simpleicons.org/jenkins?viewbox=auto"
+        "icon": "https://cdn.simpleicons.org/r/276DC3"
+      },
+      {
+        "name": "Pandas",
+        "level": 85,
+        "icon": "https://cdn.simpleicons.org/pandas/150458"
+      }
+    ]
+  },
+  {
+    "category": "Cloud & DevOps",
+    "items": [
+      {
+        "name": "AWS",
+        "level": 80,
+        "icon": "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/amazonwebservices/amazonwebservices-plain-wordmark.svg"
+      },
+      {
+        "name": "Azure",
+        "level": 75,
+        "icon": "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/azure/azure-original.svg"
       },
       {
         "name": "Docker",
-        "level": 80,
-        "icon": "https://cdn.simpleicons.org/docker?viewbox=auto"
+        "level": 78,
+        "icon": "https://cdn.simpleicons.org/docker/2496ED"
       },
       {
-        "name": "GitHub Actions",
-        "level": 72,
-        "icon": "https://cdn.simpleicons.org/githubactions?viewbox=auto"
+        "name": "Git",
+        "level": 92,
+        "icon": "https://cdn.simpleicons.org/git/F05032"
+      },
+      {
+        "name": "GitHub",
+        "level": 90,
+        "icon": "https://cdn.simpleicons.org/github/181717"
+      }
+    ]
+  },
+  {
+    "category": "Tools & Software",
+    "items": [
+      {
+        "name": "Visual Studio",
+        "level": 88,
+        "icon": "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/visualstudio/visualstudio-plain.svg"
+      },
+      {
+        "name": "VS Code",
+        "level": 95,
+        "icon": "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/vscode/vscode-original.svg"
+      },
+      {
+        "name": "Postman",
+        "level": 85,
+        "icon": "https://cdn.simpleicons.org/postman/FF6C37"
+      },
+      {
+        "name": "Figma",
+        "level": 75,
+        "icon": "https://cdn.simpleicons.org/figma/F24E1E"
+      },
+      {
+        "name": "Jira",
+        "level": 80,
+        "icon": "https://cdn.simpleicons.org/jira/0052CC"
       }
     ]
   }

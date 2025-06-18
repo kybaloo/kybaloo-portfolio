@@ -1,11 +1,12 @@
 "use client";
 
+import CalendlyWidget from "@/components/CalendlyWidget";
 import { useLanguage } from "@/context/LanguageContext";
 import { motion } from "framer-motion";
 import { useState } from "react";
 
 export default function ContactPage() {
-  const { t } = useLanguage();
+  const { t, language } = useLanguage();
   const [formData, setFormData] = useState({
     name: "",
     email: "",
@@ -364,7 +365,7 @@ export default function ContactPage() {
                 </a>
 
                 <a
-                  href="mailto:kybaloo@example.com"
+                  href="mailto:kybalooflo@gmail.com"
                   className="flex items-center p-3 transition-colors rounded-lg hover:bg-gray-100 dark:hover:bg-gray-700"
                 >
                   <div className="flex items-center justify-center w-10 h-10 mr-3 bg-gray-100 rounded-full dark:bg-gray-700">
@@ -379,10 +380,31 @@ export default function ContactPage() {
                   </div>
                   <span className="font-medium">Email</span>
                 </a>
-              </div>
+              </div>{" "}
             </motion.div>
           </motion.div>
         </div>
+
+        {/* Calendly Section */}
+        <motion.div
+          className="mt-16 text-center"
+          initial={{ y: 50, opacity: 0 }}
+          animate={{ y: 0, opacity: 1 }}
+          transition={{ delay: 0.8, duration: 0.5 }}
+        >
+          <div className="p-8 bg-gradient-to-br from-blue-50 to-purple-50 dark:from-gray-800 dark:to-gray-900 rounded-xl border border-gray-200 dark:border-gray-700">
+            {" "}
+            <h2 className="text-2xl font-bold mb-4 text-gray-900 dark:text-white">
+              {language === "fr" ? "Préférez un appel ?" : "Prefer a call?"}
+            </h2>
+            <p className="text-gray-600 dark:text-gray-300 mb-6 max-w-2xl mx-auto">
+              {language === "fr"
+                ? "Planifiez un appel directement dans mon calendrier. C'est souvent plus efficace pour discuter de projets complexes."
+                : "Schedule a call directly in my calendar. It's often more efficient for discussing complex projects."}
+            </p>
+            <CalendlyWidget />
+          </div>
+        </motion.div>
       </motion.div>
     </main>
   );

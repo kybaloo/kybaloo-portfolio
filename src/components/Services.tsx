@@ -1,45 +1,38 @@
 "use client";
 
 import { Service } from "@/types/service.types";
+import { Code2, Globe, Palette, Smartphone } from "lucide-react";
 
 interface ServicesProps {
   services: Service[];
 }
 
+const iconMapping = {
+  Code2: <Code2 className="w-12 h-12 text-blue-600" />,
+  Palette: <Palette className="w-12 h-12 text-purple-600" />,
+  Globe: <Globe className="w-12 h-12 text-green-600" />,
+  Smartphone: <Smartphone className="w-12 h-12 text-orange-600" />,
+};
+
 export default function Services({ services }: ServicesProps) {
   return (
-    <section className="py-20 bg-black text-white">
+    <section id="services" className="py-20 bg-gray-50 dark:bg-gray-900">
       <div className="container mx-auto px-6">
-        {/* Services Header */}
-        <div className="mb-16">
-          <p className="text-gray-400 text-sm uppercase tracking-wider mb-4">○ SERVICES</p>
-          <h2 className="text-5xl md:text-6xl font-light">
-            What I <span className="text-purple-500">Do</span>
-          </h2>
+        <div className="text-center mb-16">
+          <h2 className="text-4xl font-bold text-gray-800 dark:text-white mb-4">Mes Services</h2>
+          <p className="text-xl text-gray-600 dark:text-gray-300 max-w-3xl mx-auto">
+            Je propose une gamme complète de services pour concrétiser vos projets digitaux
+          </p>
         </div>
-
-        {/* Services Grid */}
-        <div className="space-y-6">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
           {services.map((service) => (
             <div
               key={service.id}
-              className="bg-gray-800/50 border border-gray-700 rounded-lg p-8 hover:border-purple-500/50 transition-all duration-300 group"
+              className="bg-white dark:bg-gray-800 p-8 rounded-xl shadow-lg hover:shadow-xl transition-all duration-300 text-center group hover:scale-105"
             >
-              <div className="flex items-start justify-between">
-                {/* Left side - Number and Title */}
-                <div className="flex items-center gap-8">
-                  <span className="text-2xl font-light text-gray-400">{service.id}/</span>
-                  <div className="flex items-center gap-4">
-                    <span className="text-2xl">{service.icon}</span>
-                    <h3 className="text-2xl font-light text-white group-hover:text-purple-300 transition-colors">{service.title}</h3>
-                  </div>
-                </div>
-
-                {/* Right side - Description */}
-                <div className="max-w-md">
-                  <p className="text-gray-400 leading-relaxed">{service.description}</p>
-                </div>
-              </div>
+              <div className="mb-6 flex justify-center">{iconMapping[service.icon as keyof typeof iconMapping]}</div>
+              <h3 className="text-xl font-semibold text-gray-800 dark:text-white mb-4">{service.title}</h3>
+              <p className="text-gray-600 dark:text-gray-300 leading-relaxed">{service.description}</p>
             </div>
           ))}
         </div>

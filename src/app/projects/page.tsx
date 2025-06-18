@@ -1,15 +1,15 @@
 "use client";
 
-import { useLanguage } from "@/context/LanguageContext";
 import { Project } from "@/types/project.types";
-import { motion, Variants } from "framer-motion";
+import { motion } from "framer-motion";
 import Image from "next/image";
 import { useEffect, useState } from "react";
 
 export default function ProjectsPage() {
-  const { t } = useLanguage();
   const [projects, setProjects] = useState<Project[]>([]);
   const [loading, setLoading] = useState(true);
+  const [selectedProject, setSelectedProject] = useState<Project | null>(null);
+  const [currentImageIndex, setCurrentImageIndex] = useState(0);
 
   useEffect(() => {
     async function fetchProjects() {
@@ -27,198 +27,348 @@ export default function ProjectsPage() {
     fetchProjects();
   }, []);
 
-  // Animation variants
-  const containerVariants: Variants = {
-    hidden: { opacity: 0 },
-    visible: {
-      opacity: 1,
-      transition: {
-        staggerChildren: 0.2,
-      },
-    },
+  const openModal = (project: Project) => {
+    setSelectedProject(project);
+    setCurrentImageIndex(0);
   };
 
-  const itemVariants: Variants = {
-    hidden: { y: 20, opacity: 0 },
-    visible: {
-      y: 0,
-      opacity: 1,
-      transition: {
-        type: "spring" as const,
-        stiffness: 300,
-      },
-    },
+  const closeModal = () => {
+    setSelectedProject(null);
+    setCurrentImageIndex(0);
   };
 
-  const featuredProjects = projects.filter((project) => project.featured);
-  const otherProjects = projects.filter((project) => !project.featured);
+  const nextImage = () => {
+    if (selectedProject && selectedProject.images) {
+      setCurrentImageIndex((prev) => (prev === selectedProject.images!.length - 1 ? 0 : prev + 1));
+    }
+  };
+
+  const prevImage = () => {
+    if (selectedProject && selectedProject.images) {
+      setCurrentImageIndex((prev) => (prev === 0 ? selectedProject.images!.length - 1 : prev - 1));
+    }
+  };
 
   return (
     <main className="min-h-screen py-20">
-      <motion.div
-        className="container px-4 mx-auto sm:px-6 lg:px-8"
-        initial={{ opacity: 0 }}
-        animate={{ opacity: 1 }}
-        transition={{ duration: 0.5 }}
-      >
-        <motion.h1
-          className="mb-4 text-4xl font-bold text-center text-transparent bg-gradient-to-r from-blue-500 to-purple-600 bg-clip-text"
-          initial={{ y: -50, opacity: 0 }}
-          animate={{ y: 0, opacity: 1 }}
-          transition={{ delay: 0.2, type: "spring", stiffness: 200 }}
+      <div className="container px-4 mx-auto sm:px-6 lg:px-8">
+        {/* Header Section */}
+        <motion.div
+          className="text-center mb-16"
+          initial={{ opacity: 0, y: -50 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.6 }}
         >
-          {t.projects.title}
-        </motion.h1>
+          <h1 className="text-5xl font-bold mb-6 bg-gradient-to-r from-blue-500 via-purple-500 to-pink-500 bg-clip-text text-transparent">
+            Portfolio & Projets
+          </h1>
+          <div className="w-32 h-1 mx-auto bg-gradient-to-r from-blue-500 to-purple-500 rounded-full mb-8"></div>{" "}
+          <p className="text-xl text-gray-600 dark:text-gray-300 max-w-4xl mx-auto leading-relaxed">
+            Découvrez une sélection de mes projets les plus significatifs. De la conception à la mise en production, chaque projet
+            reflète ma passion pour le développement et l&apos;innovation technologique.
+          </p>
+        </motion.div>
 
-        <motion.p
-          className="max-w-3xl mx-auto mb-16 text-center text-gray-600 dark:text-gray-300"
-          initial={{ y: 20, opacity: 0 }}
-          animate={{ y: 0, opacity: 1 }}
-          transition={{ delay: 0.3, duration: 0.5 }}
-        >
-          {t.projects.description}
-        </motion.p>
-
+        {/* Loading State */}
         {loading ? (
           <div className="flex items-center justify-center h-64">
-            <div className="w-12 h-12 border-t-2 border-b-2 border-blue-500 rounded-full animate-spin"></div>
+            <div className="relative">
+              <div className="w-16 h-16 border-4 border-gray-200 dark:border-gray-700 rounded-full animate-spin border-t-blue-500"></div>
+              <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2">
+                <div className="w-6 h-6 bg-blue-500 rounded-full animate-pulse"></div>
+              </div>
+            </div>
           </div>
         ) : (
           <>
-            {featuredProjects.length > 0 && (
-              <section className="mb-20">
-                <h2 className="mb-8 text-2xl font-bold">{t.projects.featuredProjects}</h2>
+            {/* Projects Grid */}
+            <motion.div
+              className="grid grid-cols-1 md:grid-cols-2 gap-8 mb-16"
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              transition={{ delay: 0.4, duration: 0.6 }}
+            >
+              {projects.map((project, index) => (
                 <motion.div
-                  className="grid grid-cols-1 gap-8 md:grid-cols-2 lg:grid-cols-3"
-                  variants={containerVariants}
-                  initial="hidden"
-                  animate="visible"
+                  key={project.id}
+                  className="group bg-white dark:bg-gray-800 rounded-2xl shadow-lg hover:shadow-2xl transition-all duration-500 overflow-hidden border border-gray-100 dark:border-gray-700"
+                  initial={{ opacity: 0, y: 50 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ delay: index * 0.1, duration: 0.6 }}
+                  whileHover={{ y: -10, scale: 1.02 }}
+                  onClick={() => openModal(project)}
                 >
-                  {featuredProjects.map((project) => (
-                    <motion.div
-                      key={project.id}
-                      className="overflow-hidden bg-white shadow-lg dark:bg-gray-800 rounded-xl"
-                      variants={itemVariants}
-                      whileHover={{
-                        y: -5,
-                        boxShadow: "0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04)",
-                      }}
-                    >
-                      <div className="h-48 overflow-hidden">
-                        <Image
-                          src={project.image || "/placeholder-image.jpg"}
-                          alt={project.title}
-                          width={400}
-                          height={200}
-                          className="object-cover w-full h-full transition-transform duration-500 hover:scale-110"
-                        />
+                  {/* Project Image */}
+                  <div className="relative h-64 overflow-hidden">
+                    <Image
+                      src={project.images?.[0] || project.image || "/placeholder-image.jpg"}
+                      alt={project.title}
+                      fill
+                      className="object-cover transition-transform duration-700 group-hover:scale-110"
+                    />
+                    <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+                    <div className="absolute top-4 right-4">
+                      <span className="px-3 py-1 bg-white/90 dark:bg-gray-800/90 text-xs font-semibold rounded-full">
+                        {project.category || "Web"}
+                      </span>
+                    </div>
+                    {project.featured && (
+                      <div className="absolute top-4 left-4">
+                        <span className="px-3 py-1 bg-gradient-to-r from-yellow-400 to-orange-500 text-white text-xs font-semibold rounded-full">
+                          ⭐ Featured
+                        </span>
                       </div>
-                      <div className="p-6">
-                        <h3 className="mb-2 text-xl font-bold">{project.title}</h3>
-                        <p className="mb-4 text-gray-600 dark:text-gray-300 line-clamp-3">{project.description}</p>
-                        <div className="flex flex-wrap gap-2 mb-4">
-                          {project.techStack.map((tech, index) => (
-                            <span key={index} className="px-2 py-1 text-xs font-medium bg-gray-100 rounded-md dark:bg-gray-700">
-                              {tech}
-                            </span>
-                          ))}
-                        </div>
-                        <div className="flex justify-between mt-4">
-                          <a
-                            href={project.githubUrl}
-                            target="_blank"
-                            rel="noopener noreferrer"
-                            className="font-medium text-blue-500 hover:text-blue-700"
-                          >
-                            GitHub
-                          </a>
-                          {project.demoUrl && (
-                            <a
-                              href={project.demoUrl}
-                              target="_blank"
-                              rel="noopener noreferrer"
-                              className="px-4 py-2 text-white transition-opacity rounded-lg bg-gradient-to-r from-blue-500 to-purple-600 hover:opacity-90"
-                            >
-                              {t.projects.liveDemo}
-                            </a>
-                          )}
-                        </div>
-                      </div>
-                    </motion.div>
-                  ))}
-                </motion.div>
-              </section>
-            )}
+                    )}
+                  </div>
 
-            {otherProjects.length > 0 && (
-              <section>
-                <h2 className="mb-8 text-2xl font-bold">{t.projects.otherProjects}</h2>
-                <motion.div
-                  className="grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-3"
-                  variants={containerVariants}
-                  initial="hidden"
-                  animate="visible"
-                >
-                  {otherProjects.map((project) => (
-                    <motion.div
-                      key={project.id}
-                      className="p-6 bg-white rounded-lg shadow-md dark:bg-gray-800"
-                      variants={itemVariants}
-                      whileHover={{ y: -5 }}
-                    >
-                      <h3 className="mb-2 text-lg font-bold">{project.title}</h3>
-                      <p className="mb-4 text-sm text-gray-600 dark:text-gray-300 line-clamp-2">{project.description}</p>
-                      <div className="flex flex-wrap gap-2 mb-4">
-                        {project.techStack.slice(0, 3).map((tech, index) => (
-                          <span key={index} className="px-2 py-1 text-xs font-medium bg-gray-100 rounded-md dark:bg-gray-700">
-                            {tech}
-                          </span>
-                        ))}
-                        {project.techStack.length > 3 && (
-                          <span className="px-2 py-1 text-xs font-medium bg-gray-100 rounded-md dark:bg-gray-700">
-                            +{project.techStack.length - 3}
-                          </span>
-                        )}
-                      </div>
-                      <div className="flex justify-between mt-4">
+                  {/* Project Content */}
+                  <div className="p-8">
+                    <div className="flex items-start justify-between mb-4">
+                      <h3 className="text-2xl font-bold text-gray-800 dark:text-white group-hover:text-blue-600 dark:group-hover:text-blue-400 transition-colors">
+                        {project.title}
+                      </h3>
+                      <button className="text-gray-400 hover:text-blue-500 transition-colors">
+                        <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                          <path
+                            strokeLinecap="round"
+                            strokeLinejoin="round"
+                            strokeWidth={2}
+                            d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"
+                          />
+                        </svg>
+                      </button>
+                    </div>
+
+                    <p className="text-gray-600 dark:text-gray-300 mb-6 line-clamp-3 leading-relaxed">{project.description}</p>
+
+                    {/* Tech Stack */}
+                    <div className="flex flex-wrap gap-2 mb-6">
+                      {project.techStack.slice(0, 4).map((tech, techIndex) => (
+                        <span
+                          key={techIndex}
+                          className="px-3 py-1 text-sm bg-gradient-to-r from-blue-50 to-purple-50 dark:from-blue-900/20 dark:to-purple-900/20 text-blue-700 dark:text-blue-300 rounded-full border border-blue-200 dark:border-blue-700"
+                        >
+                          {tech}
+                        </span>
+                      ))}
+                      {project.techStack.length > 4 && (
+                        <span className="px-3 py-1 text-sm bg-gray-100 dark:bg-gray-700 text-gray-600 dark:text-gray-300 rounded-full">
+                          +{project.techStack.length - 4}
+                        </span>
+                      )}
+                    </div>
+
+                    {/* Action Buttons */}
+                    <div className="flex gap-3">
+                      {project.demoUrl && (
                         <a
-                          href={project.githubUrl}
+                          href={project.demoUrl}
                           target="_blank"
                           rel="noopener noreferrer"
-                          className="text-sm font-medium text-blue-500 hover:text-blue-700"
+                          className="flex-1 px-4 py-2 bg-gradient-to-r from-blue-500 to-purple-600 text-white text-center rounded-lg hover:opacity-90 transition-opacity font-medium"
+                          onClick={(e) => e.stopPropagation()}
                         >
-                          GitHub
+                          Démo live
                         </a>
-                        {project.demoUrl && (
-                          <a
-                            href={project.demoUrl}
-                            target="_blank"
-                            rel="noopener noreferrer"
-                            className="text-sm font-medium text-purple-500 hover:text-purple-700"
-                          >
-                            {t.projects.liveDemo}
-                          </a>
-                        )}
-                      </div>
-                    </motion.div>
-                  ))}
+                      )}
+                      <a
+                        href={project.githubUrl}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="px-4 py-2 border border-gray-300 dark:border-gray-600 text-gray-700 dark:text-gray-300 rounded-lg hover:bg-gray-50 dark:hover:bg-gray-700 transition-colors font-medium"
+                        onClick={(e) => e.stopPropagation()}
+                      >
+                        GitHub
+                      </a>
+                    </div>
+                  </div>
                 </motion.div>
-              </section>
-            )}
+              ))}
+            </motion.div>
 
-            <div className="mt-16 text-center">
-              <a
-                href="https://github.com/kybaloo"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="inline-block px-6 py-3 font-medium text-white transition-opacity rounded-lg bg-gradient-to-r from-blue-500 to-purple-600 hover:opacity-90"
-              >
-                {t.projects.viewMore}
-              </a>
-            </div>
+            {/* Stats Section */}
+            <motion.div
+              className="bg-gradient-to-r from-blue-50 to-purple-50 dark:from-gray-800 dark:to-gray-700 rounded-2xl p-8 mb-16"
+              initial={{ opacity: 0, y: 50 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: 0.6, duration: 0.6 }}
+            >
+              <div className="grid grid-cols-2 md:grid-cols-4 gap-8 text-center">
+                <div>
+                  <div className="text-3xl font-bold text-blue-600 dark:text-blue-400 mb-2">{projects.length}+</div>
+                  <div className="text-gray-600 dark:text-gray-300">Projets réalisés</div>
+                </div>
+                <div>
+                  <div className="text-3xl font-bold text-purple-600 dark:text-purple-400 mb-2">15+</div>
+                  <div className="text-gray-600 dark:text-gray-300">Technologies</div>
+                </div>
+                <div>
+                  <div className="text-3xl font-bold text-green-600 dark:text-green-400 mb-2">4+</div>
+                  <div className="text-gray-600 dark:text-gray-300">Années d&apos;expérience</div>
+                </div>
+                <div>
+                  <div className="text-3xl font-bold text-orange-600 dark:text-orange-400 mb-2">100%</div>
+                  <div className="text-gray-600 dark:text-gray-300">Clients satisfaits</div>
+                </div>
+              </div>
+            </motion.div>
+
+            {/* Call to Action */}
+            <motion.div
+              className="text-center"
+              initial={{ opacity: 0, y: 50 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: 0.8, duration: 0.6 }}
+            >
+              <div className="bg-white dark:bg-gray-800 rounded-2xl p-8 shadow-lg border border-gray-100 dark:border-gray-700">
+                <h2 className="text-2xl font-bold text-gray-800 dark:text-white mb-4">Prêt à donner vie à votre projet ?</h2>{" "}
+                <p className="text-gray-600 dark:text-gray-300 mb-6 max-w-2xl mx-auto">
+                  Discutons de votre prochaine idée et construisons quelque chose d&apos;extraordinaire ensemble.
+                </p>
+                <div className="flex flex-col sm:flex-row gap-4 justify-center">
+                  <a
+                    href="/contact"
+                    className="px-8 py-3 bg-gradient-to-r from-blue-500 to-purple-600 text-white font-medium rounded-lg hover:opacity-90 transition-opacity"
+                  >
+                    Commencer un projet
+                  </a>
+                  <a
+                    href="https://github.com/kybaloo"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="px-8 py-3 border border-blue-600 text-blue-600 dark:text-blue-400 dark:border-blue-400 font-medium rounded-lg hover:bg-blue-600/10 transition-colors"
+                  >
+                    Voir plus sur GitHub
+                  </a>
+                </div>
+              </div>
+            </motion.div>
           </>
         )}
-      </motion.div>
+
+        {/* Modal */}
+        {selectedProject && (
+          <motion.div
+            className="fixed inset-0 bg-black/80 backdrop-blur-sm flex items-center justify-center p-4 z-50"
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            onClick={closeModal}
+          >
+            <motion.div
+              className="bg-white dark:bg-gray-800 rounded-2xl max-w-4xl w-full max-h-[90vh] overflow-y-auto"
+              initial={{ scale: 0.8, opacity: 0 }}
+              animate={{ scale: 1, opacity: 1 }}
+              exit={{ scale: 0.8, opacity: 0 }}
+              onClick={(e) => e.stopPropagation()}
+            >
+              {/* Modal Header */}
+              <div className="flex justify-between items-center p-6 border-b border-gray-200 dark:border-gray-700">
+                <h2 className="text-2xl font-bold text-gray-800 dark:text-white">{selectedProject.title}</h2>
+                <button onClick={closeModal} className="text-gray-500 hover:text-gray-700 dark:text-gray-400 dark:hover:text-gray-200">
+                  <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
+                  </svg>
+                </button>
+              </div>
+
+              {/* Modal Content */}
+              <div className="p-6">
+                {/* Image Carousel */}
+                {selectedProject.images && selectedProject.images.length > 0 && (
+                  <div className="relative mb-6">
+                    <div className="relative h-80 rounded-xl overflow-hidden">
+                      <Image
+                        src={selectedProject.images[currentImageIndex]}
+                        alt={`${selectedProject.title} - Image ${currentImageIndex + 1}`}
+                        fill
+                        className="object-cover"
+                      />
+                    </div>
+
+                    {selectedProject.images.length > 1 && (
+                      <>
+                        <button
+                          onClick={prevImage}
+                          className="absolute left-4 top-1/2 transform -translate-y-1/2 bg-black/50 text-white p-2 rounded-full hover:bg-black/70 transition-colors"
+                        >
+                          <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
+                          </svg>
+                        </button>
+                        <button
+                          onClick={nextImage}
+                          className="absolute right-4 top-1/2 transform -translate-y-1/2 bg-black/50 text-white p-2 rounded-full hover:bg-black/70 transition-colors"
+                        >
+                          <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
+                          </svg>
+                        </button>
+
+                        {/* Image indicators */}
+                        <div className="flex justify-center mt-4 gap-2">
+                          {selectedProject.images.map((_, index) => (
+                            <button
+                              key={index}
+                              onClick={() => setCurrentImageIndex(index)}
+                              className={`w-3 h-3 rounded-full transition-colors ${
+                                index === currentImageIndex ? "bg-blue-500" : "bg-gray-300 dark:bg-gray-600"
+                              }`}
+                            />
+                          ))}
+                        </div>
+                      </>
+                    )}
+                  </div>
+                )}
+
+                {/* Project Details */}
+                <div className="space-y-6">
+                  <div>
+                    <h3 className="text-lg font-semibold text-gray-800 dark:text-white mb-2">Description</h3>
+                    <p className="text-gray-600 dark:text-gray-300 leading-relaxed">{selectedProject.description}</p>
+                  </div>
+
+                  <div>
+                    <h3 className="text-lg font-semibold text-gray-800 dark:text-white mb-2">Technologies utilisées</h3>
+                    <div className="flex flex-wrap gap-2">
+                      {selectedProject.techStack.map((tech, index) => (
+                        <span
+                          key={index}
+                          className="px-3 py-1 bg-gradient-to-r from-blue-100 to-purple-100 dark:from-blue-900/20 dark:to-purple-900/20 text-blue-700 dark:text-blue-300 rounded-full text-sm border border-blue-200 dark:border-blue-700"
+                        >
+                          {tech}
+                        </span>
+                      ))}
+                    </div>
+                  </div>
+
+                  <div className="flex gap-4 pt-4">
+                    {selectedProject.demoUrl && (
+                      <a
+                        href={selectedProject.demoUrl}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="px-6 py-3 bg-gradient-to-r from-blue-500 to-purple-600 text-white rounded-lg hover:opacity-90 transition-opacity font-medium"
+                      >
+                        Voir la démo
+                      </a>
+                    )}
+                    <a
+                      href={selectedProject.githubUrl}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="px-6 py-3 border border-gray-300 dark:border-gray-600 text-gray-700 dark:text-gray-300 rounded-lg hover:bg-gray-50 dark:hover:bg-gray-700 transition-colors font-medium"
+                    >
+                      Code source
+                    </a>
+                  </div>
+                </div>
+              </div>
+            </motion.div>
+          </motion.div>
+        )}
+      </div>
     </main>
   );
 }

@@ -1,0 +1,56 @@
+# Resume - TCHANGAI Florentin Kybaloo (English)
+
+## Personal Information
+- **Name:** TCHANGAI Florentin Kybaloo
+- **Email:** kybalooflo@gmail.com
+- **Location:** Lomé, Togo
+- **Current Role:** Web & SQL Developer
+
+## Professional Experience
+
+### Ecobank Transnational Incorporated (September 2022 - Present)
+**Web & SQL Developer** - Lomé, Togo
+
+- Developed and maintained SmartLoan digital lending platform, processing over $50M in loan applications
+- Designed and implemented real-time data analytics dashboards using Power BI and Tableau
+- Optimized database queries resulting in 40% improvement in application performance
+- Led integration of core banking systems with external APIs and third-party services
+- Mentored junior developers and conducted code reviews for quality assurance
+
+**Technologies:** PHP, Laravel, Vue.js, SQL Server, Power BI, .NET, C#, REST APIs
+
+### Freelance Developer (January 2021 - August 2022)
+**Full Stack Web Developer** - Remote
+
+- Built 20+ custom web applications using React, Vue.js, and Laravel
+- Developed attendance management system with facial recognition technology
+- Created business intelligence dashboards for data-driven decision making
+- Implemented e-commerce solutions with payment gateway integrations
+- Maintained 98% client satisfaction rate with on-time project delivery
+
+**Technologies:** React, Vue.js, Node.js, Laravel, MySQL, MongoDB, Python, TensorFlow
+
+### Tech Solutions Togo (June 2020 - December 2020)
+**Junior Developer Intern** - Lomé, Togo
+
+- Assisted in development of 5+ web applications using PHP and JavaScript
+- Learned database design and SQL optimization techniques
+- Participated in agile development process and daily standups
+- Contributed to bug fixes and feature enhancements
+
+**Technologies:** PHP, JavaScript, HTML5, CSS3, MySQL, Bootstrap
+
+## Education
+- **Master in Software Architecture** - ESGIS (2018-2020)
+- **Bachelor in Software Engineering** - ESGIS (2015-2018)
+
+## Technical Skills
+- **Frontend:** JavaScript, TypeScript, React, Vue.js, HTML5, CSS3, Tailwind CSS
+- **Backend:** PHP, Laravel, Node.js, Python, .NET, C#
+- **Databases:** SQL Server, MySQL, PostgreSQL, MongoDB
+- **BI Tools:** Power BI, Tableau, Excel
+- **Cloud & DevOps:** AWS, Azure, Docker, Git
+
+## Languages
+- **French:** Native
+- **English:** Professional

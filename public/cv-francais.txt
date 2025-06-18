@@ -1,0 +1,45 @@
+# CV - TCHANGAI Florentin Kybaloo (Français)
+
+## Informations Personnelles
+- **Nom :** TCHANGAI Florentin Kybaloo
+- **Email :** kybalooflo@gmail.com
+- **Localisation :** Lomé, Togo
+- **Poste actuel :** Développeur Web & SQL
+
+## Expérience Professionnelle
+
+### Ecobank Transnational Incorporated (Septembre 2022 - Présent)
+**Développeur Web & SQL** - Lomé, Togo
+
+- Développement et maintenance de la plateforme SmartLoan, traitant plus de 50M$ de demandes de prêts
+- Conception de tableaux de bord d'analyse de données en temps réel avec Power BI et Tableau
+- Optimisation des requêtes de base de données améliorant les performances de 40%
+- Intégration des systèmes bancaires centraux avec des APIs externes
+- Mentorat des développeurs juniors et revue de code
+
+**Technologies :** PHP, Laravel, Vue.js, SQL Server, Power BI, .NET, C#, REST APIs
+
+### Développeur Freelance (Janvier 2021 - Août 2022)
+**Développeur Full Stack** - Remote
+
+- Création de 20+ applications web personnalisées avec React, Vue.js et Laravel
+- Développement d'un système de gestion des présences avec reconnaissance faciale
+- Implémentation de solutions e-commerce avec intégration de passerelles de paiement
+- Maintien d'un taux de satisfaction client de 98%
+
+**Technologies :** React, Vue.js, Node.js, Laravel, MySQL, MongoDB, Python, TensorFlow
+
+## Formation
+- **Master en Architecture Logicielle** - ESGIS (2018-2020)
+- **Licence en Génie Logiciel** - ESGIS (2015-2018)
+
+## Compétences
+- **Frontend :** JavaScript, TypeScript, React, Vue.js, HTML5, CSS3, Tailwind CSS
+- **Backend :** PHP, Laravel, Node.js, Python, .NET, C#
+- **Bases de données :** SQL Server, MySQL, PostgreSQL, MongoDB
+- **Outils BI :** Power BI, Tableau, Excel
+- **Cloud & DevOps :** AWS, Azure, Docker, Git
+
+## Langues
+- **Français :** Natif
+- **Anglais :** Professionnel
