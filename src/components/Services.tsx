@@ -16,23 +16,23 @@ const iconMapping = {
 
 export default function Services({ services }: ServicesProps) {
   return (
-    <section id="services" className="py-20 bg-gray-50">
+    <section id="services" className="py-20 bg-gray-50 dark:bg-gray-900">
       <div className="container mx-auto px-6">
         <div className="text-center mb-16">
-          <h2 className="text-4xl font-bold text-gray-800 mb-4">Mes Services</h2>
-          <p className="text-xl text-gray-600 max-w-3xl mx-auto">
+          <h2 className="text-4xl font-bold text-gray-800 dark:text-white mb-4">Mes Services</h2>
+          <p className="text-xl text-gray-600 dark:text-gray-300 max-w-3xl mx-auto">
             Je propose une gamme complète de services pour concrétiser vos projets digitaux
           </p>
-        </div>{" "}
+        </div>
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
           {services.map((service) => (
             <div
               key={service.id}
-              className="bg-white p-8 rounded-xl shadow-lg hover:shadow-xl transition-all duration-300 text-center group hover:scale-105"
+              className="bg-white dark:bg-gray-800 p-8 rounded-xl shadow-lg hover:shadow-xl transition-all duration-300 text-center group hover:scale-105"
             >
               <div className="mb-6 flex justify-center">{iconMapping[service.icon as keyof typeof iconMapping]}</div>
-              <h3 className="text-xl font-semibold text-gray-800 mb-4">{service.title}</h3>
-              <p className="text-gray-600 leading-relaxed">{service.description}</p>
+              <h3 className="text-xl font-semibold text-gray-800 dark:text-white mb-4">{service.title}</h3>
+              <p className="text-gray-600 dark:text-gray-300 leading-relaxed">{service.description}</p>
             </div>
           ))}
         </div>
