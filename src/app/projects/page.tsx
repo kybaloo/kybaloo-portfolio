@@ -1,5 +1,6 @@
 "use client";
 
+import { useLanguage } from "@/context/LanguageContext";
 import projectsData from "@/data/projects.json";
 import { Project } from "@/types/project.types";
 import { motion } from "framer-motion";
@@ -7,6 +8,7 @@ import Image from "next/image";
 import { useEffect, useState } from "react";
 
 export default function ProjectsPage() {
+  const { t } = useLanguage();
   const [projects, setProjects] = useState<Project[]>([]);
   const [loading, setLoading] = useState(true);
   const [selectedProject, setSelectedProject] = useState<Project | null>(null);
@@ -52,14 +54,12 @@ export default function ProjectsPage() {
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.6 }}
         >
+          {" "}
           <h1 className="text-5xl font-bold mb-6 bg-gradient-to-r from-blue-500 via-purple-500 to-pink-500 bg-clip-text text-transparent">
-            Portfolio & Projets
+            {t.projectsPage.title}
           </h1>
           <div className="w-32 h-1 mx-auto bg-gradient-to-r from-blue-500 to-purple-500 rounded-full mb-8"></div>{" "}
-          <p className="text-xl text-gray-600 dark:text-gray-300 max-w-4xl mx-auto leading-relaxed">
-            Découvrez une sélection de mes projets les plus significatifs. De la conception à la mise en production, chaque projet
-            reflète ma passion pour le développement et l&apos;innovation technologique.
-          </p>
+          <p className="text-xl text-gray-600 dark:text-gray-300 max-w-4xl mx-auto leading-relaxed">{t.projectsPage.description}</p>
         </motion.div>
 
         {/* Loading State */}
@@ -101,14 +101,15 @@ export default function ProjectsPage() {
                     />
                     <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
                     <div className="absolute top-4 right-4">
+                      {" "}
                       <span className="px-3 py-1 bg-white/90 dark:bg-gray-800/90 text-xs font-semibold rounded-full">
-                        {project.category || "Web"}
+                        {project.category || t.projectsPage.category}
                       </span>
                     </div>
                     {project.featured && (
                       <div className="absolute top-4 left-4">
                         <span className="px-3 py-1 bg-gradient-to-r from-yellow-400 to-orange-500 text-white text-xs font-semibold rounded-full">
-                          ⭐ Featured
+                          ⭐ {t.projectsPage.featured}
                         </span>
                       </div>
                     )}
@@ -131,9 +132,7 @@ export default function ProjectsPage() {
                         </svg>
                       </button>
                     </div>
-
                     <p className="text-gray-600 dark:text-gray-300 mb-6 line-clamp-3 leading-relaxed">{project.description}</p>
-
                     {/* Tech Stack */}
                     <div className="flex flex-wrap gap-2 mb-6">
                       {project.techStack.slice(0, 4).map((tech, techIndex) => (
@@ -149,30 +148,31 @@ export default function ProjectsPage() {
                           +{project.techStack.length - 4}
                         </span>
                       )}
-                    </div>
-
+                    </div>{" "}
                     {/* Action Buttons */}
                     <div className="flex gap-3">
-                      {project.demoUrl && (
+                      {project.liveUrl && project.liveUrl !== "#" && (
                         <a
-                          href={project.demoUrl}
+                          href={project.liveUrl}
                           target="_blank"
                           rel="noopener noreferrer"
                           className="flex-1 px-4 py-2 bg-gradient-to-r from-blue-500 to-purple-600 text-white text-center rounded-lg hover:opacity-90 transition-opacity font-medium"
                           onClick={(e) => e.stopPropagation()}
                         >
-                          Démo live
+                          {t.projectsPage.liveDemo}
                         </a>
                       )}
-                      <a
-                        href={project.githubUrl}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        className="px-4 py-2 border border-gray-300 dark:border-gray-600 text-gray-700 dark:text-gray-300 rounded-lg hover:bg-gray-50 dark:hover:bg-gray-700 transition-colors font-medium"
-                        onClick={(e) => e.stopPropagation()}
-                      >
-                        GitHub
-                      </a>
+                      {project.githubUrl && project.githubUrl !== "#" && (
+                        <a
+                          href={project.githubUrl}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          className="px-4 py-2 border border-gray-300 dark:border-gray-600 text-gray-700 dark:text-gray-300 rounded-lg hover:bg-gray-50 dark:hover:bg-gray-700 transition-colors font-medium"
+                          onClick={(e) => e.stopPropagation()}
+                        >
+                          {t.projectsPage.github}
+                        </a>
+                      )}
                     </div>
                   </div>
                 </motion.div>
@@ -187,21 +187,22 @@ export default function ProjectsPage() {
               transition={{ delay: 0.6, duration: 0.6 }}
             >
               <div className="grid grid-cols-2 md:grid-cols-4 gap-8 text-center">
+                {" "}
                 <div>
                   <div className="text-3xl font-bold text-blue-600 dark:text-blue-400 mb-2">{projects.length}+</div>
-                  <div className="text-gray-600 dark:text-gray-300">Projets réalisés</div>
+                  <div className="text-gray-600 dark:text-gray-300">{t.projectsPage.projectsCompleted}</div>
                 </div>
                 <div>
                   <div className="text-3xl font-bold text-purple-600 dark:text-purple-400 mb-2">15+</div>
-                  <div className="text-gray-600 dark:text-gray-300">Technologies</div>
+                  <div className="text-gray-600 dark:text-gray-300">{t.projectsPage.technologies}</div>
                 </div>
                 <div>
                   <div className="text-3xl font-bold text-green-600 dark:text-green-400 mb-2">4+</div>
-                  <div className="text-gray-600 dark:text-gray-300">Années d&apos;expérience</div>
+                  <div className="text-gray-600 dark:text-gray-300">{t.projectsPage.yearsExperience}</div>
                 </div>
                 <div>
                   <div className="text-3xl font-bold text-orange-600 dark:text-orange-400 mb-2">100%</div>
-                  <div className="text-gray-600 dark:text-gray-300">Clients satisfaits</div>
+                  <div className="text-gray-600 dark:text-gray-300">{t.projectsPage.clientsSatisfied}</div>
                 </div>
               </div>
             </motion.div>
@@ -213,18 +214,16 @@ export default function ProjectsPage() {
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: 0.8, duration: 0.6 }}
             >
+              {" "}
               <div className="bg-white dark:bg-gray-800 rounded-2xl p-8 shadow-lg border border-gray-100 dark:border-gray-700">
-                <h2 className="text-2xl font-bold text-gray-800 dark:text-white mb-4">Prêt à donner vie à votre projet ?</h2>{" "}
-                <p className="text-gray-600 dark:text-gray-300 mb-6 max-w-2xl mx-auto">
-                  Je suis passionné par la création de solutions innovantes. Discutons de votre prochaine idée et construisons quelque
-                  chose d&apos;extraordinaire ensemble.
-                </p>
+                <h2 className="text-2xl font-bold text-gray-800 dark:text-white mb-4">{t.projectsPage.readyToStart}</h2>{" "}
+                <p className="text-gray-600 dark:text-gray-300 mb-6 max-w-2xl mx-auto">{t.projectsPage.readyDescription}</p>
                 <div className="flex flex-col sm:flex-row gap-4 justify-center">
                   <a
                     href="/contact"
                     className="px-8 py-3 bg-gradient-to-r from-blue-500 to-purple-600 text-white font-medium rounded-lg hover:opacity-90 transition-opacity"
                   >
-                    Commencer un projet
+                    {t.projectsPage.startProject}
                   </a>
                   <a
                     href="https://github.com/kybaloo"
@@ -232,7 +231,7 @@ export default function ProjectsPage() {
                     rel="noopener noreferrer"
                     className="px-8 py-3 border border-blue-600 text-blue-600 dark:text-blue-400 dark:border-blue-400 font-medium rounded-lg hover:bg-blue-600/10 transition-colors"
                   >
-                    Voir plus sur GitHub
+                    {t.projectsPage.viewMoreGithub}
                   </a>
                 </div>
               </div>
@@ -318,13 +317,15 @@ export default function ProjectsPage() {
 
                 {/* Project Details */}
                 <div className="space-y-6">
+                  {" "}
                   <div>
-                    <h3 className="text-lg font-semibold text-gray-800 dark:text-white mb-2">Description</h3>
+                    <h3 className="text-lg font-semibold text-gray-800 dark:text-white mb-2">{t.projectsPage.modalDescription}</h3>
                     <p className="text-gray-600 dark:text-gray-300 leading-relaxed">{selectedProject.description}</p>
                   </div>
-
                   <div>
-                    <h3 className="text-lg font-semibold text-gray-800 dark:text-white mb-2">Technologies utilisées</h3>
+                    <h3 className="text-lg font-semibold text-gray-800 dark:text-white mb-2">
+                      {t.projectsPage.modalTechnologiesUsed}
+                    </h3>
                     <div className="flex flex-wrap gap-2">
                       {selectedProject.techStack.map((tech, index) => (
                         <span
@@ -336,7 +337,6 @@ export default function ProjectsPage() {
                       ))}
                     </div>
                   </div>
-
                   <div className="flex gap-4 pt-4">
                     {selectedProject.demoUrl && (
                       <a
@@ -345,7 +345,7 @@ export default function ProjectsPage() {
                         rel="noopener noreferrer"
                         className="px-6 py-3 bg-gradient-to-r from-blue-500 to-purple-600 text-white rounded-lg hover:opacity-90 transition-opacity font-medium"
                       >
-                        Voir la démo
+                        {t.projectsPage.viewDemo}
                       </a>
                     )}
                     <a
@@ -354,7 +354,7 @@ export default function ProjectsPage() {
                       rel="noopener noreferrer"
                       className="px-6 py-3 border border-gray-300 dark:border-gray-600 text-gray-700 dark:text-gray-300 rounded-lg hover:bg-gray-50 dark:hover:bg-gray-700 transition-colors font-medium"
                     >
-                      Code source
+                      {t.projectsPage.sourceCode}
                     </a>
                   </div>
                 </div>
