@@ -7,5 +7,5 @@ export type BlogPost = {
   author: string;
   image: string;
   tags: string[];
-  slug: string;
-}
+  slug?: string;
+};

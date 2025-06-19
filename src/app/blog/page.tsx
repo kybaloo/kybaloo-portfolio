@@ -1,30 +1,21 @@
 "use client";
 
+import blogData from "@/data/blog.json";
 import { containerVariants, itemVariants } from "@/types/animations.types";
 import { BlogPost } from "@/types/blog-post.types";
 import { motion } from "framer-motion";
 import Image from "next/image";
 import Link from "next/link";
 import { useEffect, useState } from "react";
+
 export default function BlogPage() {
   const [posts, setPosts] = useState<BlogPost[]>([]);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    async function fetchBlogPosts() {
-      try {
-        // For now, we'll use the local JSON file
-        const response = await fetch("/api/blog");
-        const data = await response.json();
-        setPosts(data);
-        setLoading(false);
-      } catch (error) {
-        console.error("Error fetching blog posts:", error);
-        setLoading(false);
-      }
-    }
-
-    fetchBlogPosts();
+    // Use local blog data directly
+    setPosts(blogData as BlogPost[]);
+    setLoading(false);
   }, []);
 
   // Format date
@@ -81,10 +72,13 @@ export default function BlogPage() {
                     boxShadow: "0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04)",
                   }}
                 >
+                  {" "}
                   <div className="h-48 overflow-hidden">
                     <Image
                       src={post.image}
                       alt={post.title}
+                      width={400}
+                      height={200}
                       className="object-cover w-full h-full transition-transform duration-500 hover:scale-110"
                     />
                   </div>
@@ -93,9 +87,9 @@ export default function BlogPage() {
                       <span className="text-sm text-gray-500 dark:text-gray-400">{formatDate(post.date)}</span>
                       <span className="mx-2 text-gray-300 dark:text-gray-600">•</span>
                       <span className="text-sm text-gray-500 dark:text-gray-400">{post.author}</span>
-                    </div>
+                    </div>{" "}
                     <h2 className="mb-3 text-xl font-bold transition-colors hover:text-blue-500">
-                      <Link href={`/blog/${post.slug}`}>{post.title}</Link>
+                      <Link href={`/blog/${post.slug || post.id}`}>{post.title}</Link>
                     </h2>
                     <p className="mb-4 text-gray-600 dark:text-gray-300 line-clamp-3">{post.summary}</p>
                     <div className="flex flex-wrap gap-2 mb-4">
@@ -106,7 +100,7 @@ export default function BlogPage() {
                       ))}
                     </div>
                     <Link
-                      href={`/blog/${post.slug}`}
+                      href={`/blog/${post.slug || post.id}`}
                       className="inline-flex items-center font-medium text-blue-500 hover:text-blue-700"
                     >
                       Read more

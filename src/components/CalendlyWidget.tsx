@@ -55,9 +55,7 @@ export default function CalendlyWidget({ variant = "button", className = "" }: C
           <div className="absolute top-full left-0 mt-2 w-80 bg-white dark:bg-gray-800 rounded-xl shadow-2xl border border-gray-200 dark:border-gray-700 z-50 overflow-hidden">
             {" "}
             <div className="p-4 border-b border-gray-100 dark:border-gray-700">
-              <h3 className="font-semibold text-gray-900 dark:text-white">
-                {language === "fr" ? "Choisir un type de rendez-vous" : "Choose a meeting type"}
-              </h3>
+              <h3 className="font-semibold text-gray-900 dark:text-white">{t.calendly.scheduleCall}</h3>
               <p className="text-sm text-gray-600 dark:text-gray-400">
                 {language === "fr"
                   ? "Sélectionnez le type de consultation qui vous convient"
@@ -76,12 +74,8 @@ export default function CalendlyWidget({ variant = "button", className = "" }: C
                   </div>
                   <div className="flex-1">
                     {" "}
-                    <h4 className="font-medium text-gray-900 dark:text-white">
-                      {language === "fr" ? "Consultation (30 min)" : "Consultation (30 min)"}
-                    </h4>
-                    <p className="text-sm text-gray-600 dark:text-gray-400">
-                      {language === "fr" ? "Discussion générale sur votre projet" : "General discussion about your project"}
-                    </p>
+                    <h4 className="font-medium text-gray-900 dark:text-white">{t.calendly.freeConsultation}</h4>
+                    <p className="text-sm text-gray-600 dark:text-gray-400">{t.calendly.discussProjectAndGoals}</p>
                   </div>
                 </div>
               </button>
@@ -96,12 +90,9 @@ export default function CalendlyWidget({ variant = "button", className = "" }: C
                     <Video className="w-5 h-5 text-green-600 dark:text-green-400" />
                   </div>{" "}
                   <div className="flex-1">
-                    <h4 className="font-medium text-gray-900 dark:text-white">
-                      {language === "fr" ? "Appel de découverte (45 min)" : "Discovery Call (45 min)"}
-                    </h4>
-                    <p className="text-sm text-gray-600 dark:text-gray-400">
-                      {language === "fr" ? "Analyse approfondie de vos besoins" : "In-depth analysis of your needs"}
-                    </p>
+                    {" "}
+                    <h4 className="font-medium text-gray-900 dark:text-white">{t.calendly.discoveryCall}</h4>
+                    <p className="text-sm text-gray-600 dark:text-gray-400">{t.calendly.inDepthAnalysis}</p>
                   </div>
                 </div>
               </button>
@@ -116,20 +107,15 @@ export default function CalendlyWidget({ variant = "button", className = "" }: C
                     <Calendar className="w-5 h-5 text-purple-600 dark:text-purple-400" />
                   </div>
                   <div className="flex-1">
-                    <h4 className="font-medium text-gray-900 dark:text-white">
-                      {language === "fr" ? "Revue technique (60 min)" : "Technical Review (60 min)"}
-                    </h4>
-                    <p className="text-sm text-gray-600 dark:text-gray-400">
-                      {language === "fr" ? "Audit technique et recommandations" : "Technical audit and recommendations"}
-                    </p>
+                    {" "}
+                    <h4 className="font-medium text-gray-900 dark:text-white">{t.calendly.technicalReview}</h4>
+                    <p className="text-sm text-gray-600 dark:text-gray-400">{t.calendly.technicalAuditAndRecommendations}</p>
                   </div>
                 </div>
               </button>
-            </div>
+            </div>{" "}
             <div className="p-4 bg-gray-50 dark:bg-gray-700/50 border-t border-gray-100 dark:border-gray-700">
-              <p className="text-xs text-gray-500 dark:text-gray-400 text-center">
-                {language === "fr" ? "Tous les appels sont gratuits et sans engagement" : "All calls are free and without obligation"}
-              </p>
+              <p className="text-xs text-gray-500 dark:text-gray-400 text-center">{t.calendly.allCallsFreeAndWithoutObligation}</p>
             </div>
           </div>
         </>

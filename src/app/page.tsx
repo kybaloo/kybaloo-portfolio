@@ -7,7 +7,6 @@ import Hero from "@/components/Hero";
 import Projects from "@/components/Projects";
 import Services from "@/components/Services";
 import Skills from "@/components/Skills";
-import servicesData from "@/data/services.json";
 import { motion } from "framer-motion";
 
 export default function Home() {
@@ -15,7 +14,7 @@ export default function Home() {
     <div className="min-h-screen">
       <motion.main initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ duration: 0.5 }}>
         <Hero />
-        <Services services={servicesData} />
+        <Services />
         <Skills />
         <Projects />
         <Blog />
