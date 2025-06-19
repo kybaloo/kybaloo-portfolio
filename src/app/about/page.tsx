@@ -93,15 +93,15 @@ export default function AboutPage() {
 
   return (
     <main className="min-h-screen py-20">
-      <div className="container mx-auto px-4 sm:px-6 lg:px-8">
+      <div className="container px-4 mx-auto sm:px-6 lg:px-8">
         {/* Header */}
         <motion.div
-          className="text-center mb-16"
+          className="mb-16 text-center"
           initial={{ opacity: 0, y: -50 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.5 }}
         >
-          <h1 className="text-4xl font-bold mb-4 bg-gradient-to-r from-blue-500 to-purple-600 bg-clip-text text-transparent">
+          <h1 className="mb-4 text-4xl font-bold text-transparent bg-gradient-to-r from-blue-500 to-purple-600 bg-clip-text">
             {t.about.title}
           </h1>
           <div className="w-24 h-1 mx-auto bg-blue-500 rounded-full"></div>
@@ -109,16 +109,16 @@ export default function AboutPage() {
 
         {/* About Section */}
         <motion.section className="mb-20" initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: 0.2, duration: 0.5 }}>
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
+          <div className="grid items-center grid-cols-1 gap-12 lg:grid-cols-2">
             {/* Text Content */}
             <motion.div initial={{ x: -50, opacity: 0 }} animate={{ x: 0, opacity: 1 }} transition={{ delay: 0.3, duration: 0.5 }}>
-              <h2 className="text-3xl font-bold mb-6 text-gray-800 dark:text-white">
+              <h2 className="mb-6 text-3xl font-bold text-gray-800 dark:text-white">
                 {t.about.subtitle} <span className="text-blue-500">{t.about.role}</span>
               </h2>
-              <p className="text-gray-600 dark:text-gray-300 mb-6 leading-relaxed">{t.about.bio1}</p>
-              <p className="text-gray-600 dark:text-gray-300 mb-8 leading-relaxed">{t.about.bio2}</p>
+              <p className="mb-6 leading-relaxed text-gray-600 dark:text-gray-300">{t.about.bio1}</p>
+              <p className="mb-8 leading-relaxed text-gray-600 dark:text-gray-300">{t.about.bio2}</p>
               {/* Professional Stats */}
-              <div className="grid grid-cols-2 gap-6 p-6 mb-8 bg-white dark:bg-gray-800 rounded-xl shadow-lg">
+              <div className="grid grid-cols-2 gap-6 p-6 mb-8 bg-white shadow-lg dark:bg-gray-800 rounded-xl">
                 <div className="text-center">
                   <div className="text-3xl font-bold text-blue-500">4+</div>
                   <div className="text-sm text-gray-600 dark:text-gray-300">{t.about.yearsExperience}</div>
@@ -139,19 +139,19 @@ export default function AboutPage() {
               {/* Contact Info */}
               <div className="grid grid-cols-2 gap-4 mb-8">
                 <div>
-                  <h4 className="font-bold text-gray-700 dark:text-gray-200 mb-2">{t.about.name}</h4>
+                  <h4 className="mb-2 font-bold text-gray-700 dark:text-gray-200">{t.about.name}</h4>
                   <p className="text-gray-600 dark:text-gray-300">TCHANGAI Florentin Kybaloo</p>
                 </div>
                 <div>
-                  <h4 className="font-bold text-gray-700 dark:text-gray-200 mb-2">{t.about.email}</h4>
+                  <h4 className="mb-2 font-bold text-gray-700 dark:text-gray-200">{t.about.email}</h4>
                   <p className="text-gray-600 dark:text-gray-300">kybalooflo@gmail.com</p>
                 </div>
                 <div>
-                  <h4 className="font-bold text-gray-700 dark:text-gray-200 mb-2">{t.about.location}</h4>
+                  <h4 className="mb-2 font-bold text-gray-700 dark:text-gray-200">{t.about.location}</h4>
                   <p className="text-gray-600 dark:text-gray-300">Lomé, Togo</p>
                 </div>
                 <div>
-                  <h4 className="font-bold text-gray-700 dark:text-gray-200 mb-2">{t.about.availability}</h4>
+                  <h4 className="mb-2 font-bold text-gray-700 dark:text-gray-200">{t.about.availability}</h4>
                   <p className="text-green-500">{t.about.availabilityStatus}</p>
                 </div>
               </div>{" "}
@@ -161,7 +161,7 @@ export default function AboutPage() {
                 <div className="relative" ref={dropdownRef}>
                   <button
                     onClick={() => setIsDropdownOpen(!isDropdownOpen)}
-                    className="inline-flex items-center px-6 py-3 font-medium text-white bg-gradient-to-r from-blue-500 to-purple-600 rounded-lg hover:opacity-90 transition-all duration-200 group"
+                    className="inline-flex items-center px-6 py-3 font-medium text-white transition-all duration-200 rounded-lg bg-gradient-to-r from-blue-500 to-purple-600 hover:opacity-90 group"
                   >
                     <svg
                       xmlns="http://www.w3.org/2000/svg"
@@ -191,25 +191,25 @@ export default function AboutPage() {
 
                   {/* Dropdown Menu */}
                   {isDropdownOpen && (
-                    <div className="absolute top-full left-0 mt-2 w-48 bg-white dark:bg-gray-800 rounded-lg shadow-lg border border-gray-200 dark:border-gray-700 z-10 overflow-hidden">
+                    <div className="absolute left-0 z-10 w-48 mt-2 overflow-hidden bg-white border border-gray-200 rounded-lg shadow-lg top-full dark:bg-gray-800 dark:border-gray-700">
                       <a
-                        href="/cv-francais.txt"
-                        download="CV_TCHANGAI_Kybaloo_Francais.txt"
-                        className="flex items-center px-4 py-3 text-gray-700 dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-gray-700 transition-colors group"
+                        href="/cv.pdf"
+                        download="CV_TCHANGAI_Kybaloo_Francais.pdf"
+                        className="flex items-center px-4 py-3 text-gray-700 transition-colors dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-gray-700 group"
                         onClick={() => setIsDropdownOpen(false)}
                       >
-                        <span className="w-6 h-6 rounded-full bg-blue-100 dark:bg-blue-900/30 flex items-center justify-center mr-3 group-hover:bg-blue-200 dark:group-hover:bg-blue-800/50 transition-colors">
+                        <span className="flex items-center justify-center w-6 h-6 mr-3 transition-colors bg-blue-100 rounded-full dark:bg-blue-900/30 group-hover:bg-blue-200 dark:group-hover:bg-blue-800/50">
                           🇫🇷
                         </span>
                         <span className="font-medium">{t.about.downloadResumeFrench}</span>
                       </a>
                       <a
-                        href="/cv-english.txt"
-                        download="Resume_TCHANGAI_Kybaloo_English.txt"
-                        className="flex items-center px-4 py-3 text-gray-700 dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-gray-700 transition-colors group"
+                        href="/resume.pdf"
+                        download="Resume_TCHANGAI_Kybaloo_English.pdf"
+                        className="flex items-center px-4 py-3 text-gray-700 transition-colors dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-gray-700 group"
                         onClick={() => setIsDropdownOpen(false)}
                       >
-                        <span className="w-6 h-6 rounded-full bg-purple-100 dark:bg-purple-900/30 flex items-center justify-center mr-3 group-hover:bg-purple-200 dark:group-hover:bg-purple-800/50 transition-colors">
+                        <span className="flex items-center justify-center w-6 h-6 mr-3 transition-colors bg-purple-100 rounded-full dark:bg-purple-900/30 group-hover:bg-purple-200 dark:group-hover:bg-purple-800/50">
                           🇺🇸
                         </span>
                         <span className="font-medium">{t.about.downloadResumeEnglish}</span>
@@ -220,7 +220,7 @@ export default function AboutPage() {
 
                 <a
                   href="https://linkedin.com/in/kybaloo"
-                  className="inline-flex items-center px-6 py-3 font-medium text-blue-600 dark:text-blue-400 border border-blue-600 dark:border-blue-400 rounded-lg hover:bg-blue-600/10 transition-colors"
+                  className="inline-flex items-center px-6 py-3 font-medium text-blue-600 transition-colors border border-blue-600 rounded-lg dark:text-blue-400 dark:border-blue-400 hover:bg-blue-600/10"
                   target="_blank"
                   rel="noopener noreferrer"
                 >
@@ -242,7 +242,7 @@ export default function AboutPage() {
               <div className="relative w-80 h-80">
                 <div className="absolute rounded-xl -inset-4 bg-gradient-to-r from-blue-500/20 to-purple-500/20 rotate-6"></div>
                 <div className="absolute rounded-xl -inset-4 bg-gradient-to-r from-purple-500/20 to-blue-500/20 -rotate-6"></div>
-                <div className="relative w-full h-full overflow-hidden border-4 border-white dark:border-gray-700 rounded-xl shadow-xl">
+                <div className="relative w-full h-full overflow-hidden border-4 border-white shadow-xl dark:border-gray-700 rounded-xl">
                   <Image src="/about-me.png" alt="TCHANGAI Florentin Kybaloo" fill style={{ objectFit: "cover" }} />
                 </div>
               </div>
@@ -257,44 +257,44 @@ export default function AboutPage() {
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 0.5, duration: 0.5 }}
         >
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+          <div className="grid grid-cols-1 gap-8 md:grid-cols-2">
             {/* Education */}
-            <div className="bg-white dark:bg-gray-800 rounded-xl shadow-lg p-8">
-              <h3 className="text-2xl font-bold mb-6 text-gray-800 dark:text-white">Formation</h3>
+            <div className="p-8 bg-white shadow-lg dark:bg-gray-800 rounded-xl">
+              <h3 className="mb-6 text-2xl font-bold text-gray-800 dark:text-white">{t.about.education}</h3>
               <div className="space-y-4">
-                <div className="border-l-4 border-blue-500 pl-4">
-                  <h4 className="font-semibold text-gray-800 dark:text-white">ESGIS – Master en Architecture Logicielle</h4>
+                <div className="pl-4 border-l-4 border-blue-500">
+                  <h4 className="font-semibold text-gray-800 dark:text-white">{t.about.masterSoftwareArchitecture}</h4>
                   <p className="text-gray-600 dark:text-gray-400">2023 - 2025</p>
                 </div>
-                <div className="border-l-4 border-blue-500 pl-4">
-                  <h4 className="font-semibold text-gray-800 dark:text-white">ESGIS – Licence en Génie Logiciel</h4>
+                <div className="pl-4 border-l-4 border-blue-500">
+                  <h4 className="font-semibold text-gray-800 dark:text-white">{t.about.licenceSoftwareEngineering}</h4>
                   <p className="text-gray-600 dark:text-gray-400">2020 - 2023</p>
                 </div>
               </div>
             </div>
 
             {/* Languages & Values */}
-            <div className="bg-white dark:bg-gray-800 rounded-xl shadow-lg p-8">
-              <h3 className="text-2xl font-bold mb-6 text-gray-800 dark:text-white">Langues & Valeurs</h3>
+            <div className="p-8 bg-white shadow-lg dark:bg-gray-800 rounded-xl">
+              <h3 className="mb-6 text-2xl font-bold text-gray-800 dark:text-white">{t.about.languagesAndValues}</h3>
               <div className="mb-6">
-                <h4 className="font-semibold mb-3 text-gray-700 dark:text-gray-300">Langues</h4>
+                <h4 className="mb-3 font-semibold text-gray-700 dark:text-gray-300">{t.about.languages}</h4>
                 <div className="flex flex-wrap gap-3">
-                  <span className="px-3 py-1 bg-blue-100 dark:bg-blue-900/30 text-blue-800 dark:text-blue-300 rounded-full text-sm">
-                    Français - Natif
+                  <span className="px-3 py-1 text-sm text-blue-800 bg-blue-100 rounded-full dark:bg-blue-900/30 dark:text-blue-300">
+                    {t.about.frenchNative}
                   </span>
-                  <span className="px-3 py-1 bg-blue-100 dark:bg-blue-900/30 text-blue-800 dark:text-blue-300 rounded-full text-sm">
-                    Anglais - Professionnel
+                  <span className="px-3 py-1 text-sm text-blue-800 bg-blue-100 rounded-full dark:bg-blue-900/30 dark:text-blue-300">
+                    {t.about.englishProfessional}
                   </span>
                 </div>
               </div>
               <div>
-                <h4 className="font-semibold mb-3 text-gray-700 dark:text-gray-300">Valeurs de travail</h4>
-                <ul className="list-disc list-inside space-y-1 text-gray-600 dark:text-gray-400 text-sm">
-                  <li>Code propre et maintenable</li>
-                  <li>Design centré utilisateur</li>
-                  <li>Apprentissage continu</li>
-                  <li>Résolution collaborative</li>
-                  <li>Attention aux détails</li>
+                <h4 className="mb-3 font-semibold text-gray-700 dark:text-gray-300">{t.about.workValues}</h4>
+                <ul className="space-y-1 text-sm text-gray-600 list-disc list-inside dark:text-gray-400">
+                  <li>{t.about.cleanCode}</li>
+                  <li>{t.about.userCenteredDesign}</li>
+                  <li>{t.about.continuousLearning}</li>
+                  <li>{t.about.collaborativeSolving}</li>
+                  <li>{t.about.attentionToDetail}</li>
                 </ul>
               </div>
             </div>
@@ -308,13 +308,13 @@ export default function AboutPage() {
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 0.6, duration: 0.5 }}
         >
-          <div className="text-center mb-12">
-            <h2 className="text-3xl font-bold text-gray-800 dark:text-white mb-4">Expérience Professionnelle</h2>
+          <div className="mb-12 text-center">
+            <h2 className="mb-4 text-3xl font-bold text-gray-800 dark:text-white">{t.experience.title}</h2>
             <div className="w-24 h-1 mx-auto bg-blue-500 rounded-full"></div>
-            <p className="mt-4 text-lg text-gray-600 dark:text-gray-300">Mon parcours professionnel et mes réalisations</p>
+            <p className="mt-4 text-lg text-gray-600 dark:text-gray-300">{t.experience.subtitle}</p>
           </div>
 
-          <div className="flex flex-col lg:flex-row gap-8">
+          <div className="flex flex-col gap-8 lg:flex-row">
             {/* Experience Timeline */}
             <div className="lg:w-1/3">
               <div className="space-y-4">
@@ -328,8 +328,8 @@ export default function AboutPage() {
                         : "border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-800 hover:border-blue-300 dark:hover:border-blue-600 shadow-md"
                     }`}
                   >
-                    <div className="font-semibold text-gray-900 dark:text-white mb-1">{exp.position}</div>
-                    <div className="text-blue-600 dark:text-blue-400 font-medium mb-1">{exp.company}</div>
+                    <div className="mb-1 font-semibold text-gray-900 dark:text-white">{exp.position}</div>
+                    <div className="mb-1 font-medium text-blue-600 dark:text-blue-400">{exp.company}</div>
                     <div className="text-sm text-gray-500 dark:text-gray-400">{exp.duration}</div>
                   </button>
                 ))}
@@ -340,14 +340,14 @@ export default function AboutPage() {
             <div className="lg:w-2/3">
               <motion.div
                 key={activeExperience}
-                className="bg-white dark:bg-gray-800 rounded-xl shadow-lg p-8"
+                className="p-8 bg-white shadow-lg dark:bg-gray-800 rounded-xl"
                 initial={{ opacity: 0, x: 20 }}
                 animate={{ opacity: 1, x: 0 }}
                 transition={{ duration: 0.3 }}
               >
                 <div className="mb-6">
-                  <h3 className="text-2xl font-bold text-gray-900 dark:text-white mb-2">{currentExperience.position}</h3>
-                  <div className="text-xl text-blue-600 dark:text-blue-400 font-semibold mb-3">{currentExperience.company}</div>
+                  <h3 className="mb-2 text-2xl font-bold text-gray-900 dark:text-white">{currentExperience.position}</h3>
+                  <div className="mb-3 text-xl font-semibold text-blue-600 dark:text-blue-400">{currentExperience.company}</div>
                   <div className="flex flex-wrap gap-4 text-sm text-gray-600 dark:text-gray-300">
                     <span className="flex items-center">
                       <svg className="w-4 h-4 mr-2" fill="currentColor" viewBox="0 0 24 24">
@@ -364,10 +364,10 @@ export default function AboutPage() {
                   </div>
                 </div>
 
-                <p className="text-gray-700 dark:text-gray-300 mb-6 leading-relaxed">{currentExperience.description}</p>
+                <p className="mb-6 leading-relaxed text-gray-700 dark:text-gray-300">{currentExperience.description}</p>
 
                 <div className="mb-6">
-                  <h4 className="text-lg font-semibold text-gray-900 dark:text-white mb-4">Réalisations clés</h4>
+                  <h4 className="mb-4 text-lg font-semibold text-gray-900 dark:text-white">Réalisations clés</h4>
                   <ul className="space-y-3">
                     {currentExperience.achievements.map((achievement, index) => (
                       <li key={index} className="flex items-start">
@@ -381,12 +381,12 @@ export default function AboutPage() {
                 </div>
 
                 <div>
-                  <h4 className="text-lg font-semibold text-gray-900 dark:text-white mb-4">Technologies utilisées</h4>
+                  <h4 className="mb-4 text-lg font-semibold text-gray-900 dark:text-white">Technologies utilisées</h4>
                   <div className="flex flex-wrap gap-2">
                     {currentExperience.technologies.map((tech, index) => (
                       <span
                         key={index}
-                        className="px-3 py-1 text-sm bg-gradient-to-r from-blue-100 to-purple-100 dark:from-blue-900/30 dark:to-purple-900/30 text-blue-800 dark:text-blue-300 rounded-full border border-blue-200 dark:border-blue-700"
+                        className="px-3 py-1 text-sm text-blue-800 border border-blue-200 rounded-full bg-gradient-to-r from-blue-100 to-purple-100 dark:from-blue-900/30 dark:to-purple-900/30 dark:text-blue-300 dark:border-blue-700"
                       >
                         {tech}
                       </span>
