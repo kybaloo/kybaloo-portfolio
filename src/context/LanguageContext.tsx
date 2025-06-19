@@ -139,6 +139,7 @@ export const enTranslations = {
     noPostsYet: "No blog posts yet",
     comingSoon:
       "I'm working on some interesting content. Check back soon for articles about web development, data analysis, and more!",
+    viewAllBlogPosts: "View All Blog Posts",
   },
   contact: {
     title: "Get In Touch",
@@ -306,6 +307,7 @@ export const frTranslations = {
     noPostsYet: "Pas encore d'articles",
     comingSoon:
       "Je travaille sur du contenu intéressant. Revenez bientôt pour des articles sur le développement web, l'analyse de données et plus encore !",
+    viewAllBlogPosts: "Voir tous les articles",
   },
   contact: {
     title: "Entrer en Contact",
