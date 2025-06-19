@@ -24,7 +24,7 @@
     "images": ["/project1.jpg", "/project1-2.svg", "/project1-3.svg", "/project1-4.svg"],
     "tags": ["PHP", "Laravel", "Vue.js", "SQL Server", "Power BI"],
     "techStack": ["PHP", "Laravel", "Vue.js", "Livewire", "SQL Server", "Power BI", "REST APIs"],
-    "liveUrl": "https://ecobank.com/",
+    "liveUrl": "https://ecobank.com/smartloan",
     "githubUrl": "#",
     "featured": true,
     "company": "Ecobank Transnational Incorporated",
