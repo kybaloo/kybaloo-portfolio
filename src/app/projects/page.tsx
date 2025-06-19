@@ -1,5 +1,6 @@
 "use client";
 
+import projectsData from "@/data/projects.json";
 import { Project } from "@/types/project.types";
 import { motion } from "framer-motion";
 import Image from "next/image";
@@ -12,19 +13,9 @@ export default function ProjectsPage() {
   const [currentImageIndex, setCurrentImageIndex] = useState(0);
 
   useEffect(() => {
-    async function fetchProjects() {
-      try {
-        const response = await fetch("/api/projects");
-        const data = await response.json();
-        setProjects(data);
-        setLoading(false);
-      } catch (error) {
-        console.error("Error fetching projects:", error);
-        setLoading(false);
-      }
-    }
-
-    fetchProjects();
+    // Use local data instead of API
+    setProjects(projectsData as Project[]);
+    setLoading(false);
   }, []);
 
   const openModal = (project: Project) => {
@@ -36,7 +27,6 @@ export default function ProjectsPage() {
     setSelectedProject(null);
     setCurrentImageIndex(0);
   };
-
   const nextImage = () => {
     if (selectedProject && selectedProject.images) {
       setCurrentImageIndex((prev) => (prev === selectedProject.images!.length - 1 ? 0 : prev + 1));
@@ -48,6 +38,9 @@ export default function ProjectsPage() {
       setCurrentImageIndex((prev) => (prev === 0 ? selectedProject.images!.length - 1 : prev - 1));
     }
   };
+
+  // Filter projects (for now, show all projects)
+  const filteredProjects = projects;
 
   return (
     <main className="min-h-screen py-20">
@@ -88,7 +81,7 @@ export default function ProjectsPage() {
               animate={{ opacity: 1 }}
               transition={{ delay: 0.4, duration: 0.6 }}
             >
-              {projects.map((project, index) => (
+              {filteredProjects.map((project, index) => (
                 <motion.div
                   key={project.id}
                   className="group bg-white dark:bg-gray-800 rounded-2xl shadow-lg hover:shadow-2xl transition-all duration-500 overflow-hidden border border-gray-100 dark:border-gray-700"
@@ -223,7 +216,8 @@ export default function ProjectsPage() {
               <div className="bg-white dark:bg-gray-800 rounded-2xl p-8 shadow-lg border border-gray-100 dark:border-gray-700">
                 <h2 className="text-2xl font-bold text-gray-800 dark:text-white mb-4">Prêt à donner vie à votre projet ?</h2>{" "}
                 <p className="text-gray-600 dark:text-gray-300 mb-6 max-w-2xl mx-auto">
-                  Discutons de votre prochaine idée et construisons quelque chose d&apos;extraordinaire ensemble.
+                  Je suis passionné par la création de solutions innovantes. Discutons de votre prochaine idée et construisons quelque
+                  chose d&apos;extraordinaire ensemble.
                 </p>
                 <div className="flex flex-col sm:flex-row gap-4 justify-center">
                   <a
