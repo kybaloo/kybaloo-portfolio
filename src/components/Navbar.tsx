@@ -56,7 +56,7 @@ const Navbar = () => {
               <Link
                 key={link.name}
                 href={link.path}
-                className={`text-sm font-medium transition-colors hover:text-blue-500 ${
+                className={`text-sm font-medium transition-all duration-200 hover:text-blue-500 dark:hover:text-blue-400 hover:scale-105 ${
                   pathname === link.path ? "text-blue-500" : "text-gray-700 dark:text-gray-300"
                 }`}
               >
@@ -67,22 +67,23 @@ const Navbar = () => {
             <ThemeToggle />
             {/* Language Toggle */}
             <div className="flex items-center p-1 bg-gray-100 border border-gray-200 rounded-lg dark:bg-gray-800 dark:border-gray-700">
+              {" "}
               <button
                 onClick={() => handleLanguageChange("en")}
-                className={`px-3 py-1 text-xs font-medium rounded-md transition-all duration-200 ${
+                className={`px-3 py-1 text-xs font-medium rounded-md transition-all duration-200 hover:scale-105 ${
                   language === "en"
                     ? "bg-blue-500 text-white shadow-sm"
-                    : "text-gray-700 dark:text-gray-300 hover:bg-gray-200 dark:hover:bg-gray-700"
+                    : "text-gray-700 dark:text-gray-300 hover:bg-blue-100 dark:hover:bg-blue-900/30 hover:text-blue-600 dark:hover:text-blue-400"
                 }`}
               >
                 EN
-              </button>
+              </button>{" "}
               <button
                 onClick={() => handleLanguageChange("fr")}
-                className={`px-3 py-1 text-xs font-medium rounded-md transition-all duration-200 ${
+                className={`px-3 py-1 text-xs font-medium rounded-md transition-all duration-200 hover:scale-105 ${
                   language === "fr"
                     ? "bg-blue-500 text-white shadow-sm"
-                    : "text-gray-700 dark:text-gray-300 hover:bg-gray-200 dark:hover:bg-gray-700"
+                    : "text-gray-700 dark:text-gray-300 hover:bg-blue-100 dark:hover:bg-blue-900/30 hover:text-blue-600 dark:hover:text-blue-400"
                 }`}
               >
                 FR
@@ -114,8 +115,8 @@ const Navbar = () => {
                 <Link
                   key={link.name}
                   href={link.path}
-                  className={`text-sm font-medium transition-colors hover:text-blue-500 ${
-                    pathname === link.path ? "text-blue-500" : ""
+                  className={`text-sm font-medium transition-all duration-200 hover:text-blue-500 dark:hover:text-blue-400 hover:scale-105 ${
+                    pathname === link.path ? "text-blue-500" : "text-gray-700 dark:text-gray-300"
                   }`}
                   onClick={() => setIsMenuOpen(false)}
                 >
