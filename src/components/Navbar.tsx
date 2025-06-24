@@ -36,7 +36,6 @@ const Navbar = () => {
   const handleLanguageChange = (lang: Language) => {
     setLanguage(lang);
   };
-
   return (
     <header
       className={`fixed top-0 w-full z-50 transition-all duration-300 ${
@@ -52,21 +51,20 @@ const Navbar = () => {
           </Link>{" "}
           {/* Desktop Navigation */}
           <nav className="items-center hidden space-x-6 md:flex">
+            {" "}
             {navLinks.map((link) => (
               <Link
                 key={link.name}
                 href={link.path}
-                className={`text-sm font-medium transition-colors hover:text-blue-500 dark:text-gray-300 dark:hover:text-blue-400 ${
+                className={`text-sm font-medium transition-colors hover:text-blue-500 ${
                   pathname === link.path ? "text-blue-500" : "text-gray-700 dark:text-gray-300"
                 }`}
               >
                 {link.name}
               </Link>
             ))}
-
             {/* Theme Toggle */}
             <ThemeToggle />
-
             {/* Language Toggle */}
             <div className="flex items-center p-1 bg-gray-100 border border-gray-200 rounded-lg dark:bg-gray-800 dark:border-gray-700">
               <button
