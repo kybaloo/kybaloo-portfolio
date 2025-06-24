@@ -179,9 +179,8 @@ export default function ProjectsPage() {
               ))}
             </motion.div>
 
-            {/* Stats Section */}
-            <motion.div
-              className="bg-gradient-to-r from-blue-50 to-purple-50 dark:from-gray-800 dark:to-gray-700 rounded-2xl p-8 mb-16"
+            {/* Stats Section */}            <motion.div
+              className="bg-gradient-to-r from-blue-50 to-purple-50 dark:from-gray-800/50 dark:to-gray-700/50 rounded-2xl p-8 mb-16"
               initial={{ opacity: 0, y: 50 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: 0.6, duration: 0.6 }}
