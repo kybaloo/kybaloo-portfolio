@@ -4,9 +4,8 @@ import Link from "next/link";
 const Footer = () => {
   const currentYear = new Date().getFullYear();
   const { t } = useLanguage();
-
   return (
-    <footer className="py-12 text-white bg-gray-900">
+    <footer className="py-12 bg-gray-900 text-white">
       <div className="container px-4 mx-auto sm:px-6 lg:px-8">
         <div className="grid grid-cols-1 gap-8 md:grid-cols-3">
           <div>
