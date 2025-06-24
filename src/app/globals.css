@@ -1,7 +1,13 @@
 @import "tailwindcss";
 
-/* Base CSS variables - default to light mode */
+/* Disable automatic system preference override */
 :root {
+  color-scheme: light dark;
+}
+
+/* Base CSS variables - default to light mode */
+:root,
+html.light {
   --background: #ffffff;
   --foreground: #171717;
   --primary: #3b82f6;
@@ -10,35 +16,205 @@
   --secondary-dark: #059669;
   --accent: #8b5cf6;
   --accent-dark: #7c3aed;
+
+  /* Override system preferences */
+  color-scheme: light !important;
 }
 
 /* Dark mode variables - only when .dark class is present */
-.dark {
-  --background: #0a0a0a;
-  --foreground: #ededed;
-  --primary: #60a5fa;
-  --primary-dark: #3b82f6;
-  --secondary: #34d399;
-  --secondary-dark: #10b981;
-  --accent: #a78bfa;
-  --accent-dark: #8b5cf6;
-}
+html.dark {
+  --background: #0a0a0a !important;
+  --foreground: #ededed !important;
+  --primary: #60a5fa !important;
+  --primary-dark: #3b82f6 !important;
+  --secondary: #34d399 !important;
+  --secondary-dark: #10b981 !important;
+  --accent: #a78bfa !important;
+  --accent-dark: #8b5cf6 !important;
 
-/* Override system preference to always use our explicit theme */
-@media (prefers-color-scheme: dark) {
-  :root {
-    color-scheme: light;
-  }
+  /* Force dark mode override system preferences */
+  color-scheme: dark !important;
 }
 
 body {
-  background: var(--background);
-  color: var(--foreground);
+  background: var(--background) !important;
+  color: var(--foreground) !important;
   font-family: var(--font-roboto-mono), monospace;
   line-height: 1.6;
   transition:
     background-color 0.3s ease,
     color 0.3s ease;
+}
+
+/* Force theme colors on html element */
+html.light body {
+  background: #ffffff !important;
+  color: #171717 !important;
+}
+
+html.dark body {
+  background: #0a0a0a !important;
+  color: #ededed !important;
+}
+
+/* Override Tailwind's prefers-color-scheme with user choice */
+html.light .bg-gray-50 {
+  background-color: #f9fafb !important;
+}
+
+html.dark .bg-gray-50 {
+  background-color: #111827 !important;
+}
+
+html.light .bg-gray-900 {
+  background-color: #f9fafb !important;
+}
+
+html.dark .bg-gray-900 {
+  background-color: #111827 !important;
+}
+
+html.light .bg-white {
+  background-color: #ffffff !important;
+}
+
+html.dark .bg-white {
+  background-color: #1f2937 !important;
+}
+
+html.light .bg-gray-800 {
+  background-color: #ffffff !important;
+}
+
+html.dark .bg-gray-800 {
+  background-color: #1f2937 !important;
+}
+
+html.light .text-gray-800 {
+  color: #1f2937 !important;
+}
+
+html.dark .text-gray-800 {
+  color: #f9fafb !important;
+}
+
+html.light .text-white {
+  color: #1f2937 !important;
+}
+
+html.dark .text-white {
+  color: #f9fafb !important;
+}
+
+html.light .text-gray-600 {
+  color: #4b5563 !important;
+}
+
+html.dark .text-gray-600 {
+  color: #d1d5db !important;
+}
+
+html.light .text-gray-300 {
+  color: #6b7280 !important;
+}
+
+html.dark .text-gray-300 {
+  color: #d1d5db !important;
+}
+
+html.light .text-gray-400 {
+  color: #6b7280 !important;
+}
+
+html.dark .text-gray-400 {
+  color: #9ca3af !important;
+}
+
+html.light .text-gray-700 {
+  color: #374151 !important;
+}
+
+html.dark .text-gray-700 {
+  color: #d1d5db !important;
+}
+
+/* Specific overrides for navbar and footer */
+html.light .bg-gray-100 {
+  background-color: #f3f4f6 !important;
+}
+
+html.dark .bg-gray-100 {
+  background-color: #374151 !important;
+}
+
+html.light .border-gray-200 {
+  border-color: #e5e7eb !important;
+}
+
+html.dark .border-gray-200 {
+  border-color: #4b5563 !important;
+}
+
+html.light .border-gray-700 {
+  border-color: #e5e7eb !important;
+}
+
+html.dark .border-gray-700 {
+  border-color: #4b5563 !important;
+}
+
+html.light .border-gray-800 {
+  border-color: #e5e7eb !important;
+}
+
+html.dark .border-gray-800 {
+  border-color: #374151 !important;
+}
+
+/* Force navbar background in light mode */
+html.light .bg-white\/90 {
+  background-color: rgba(255, 255, 255, 0.9) !important;
+}
+
+html.light .dark\:bg-gray-900\/90 {
+  background-color: rgba(255, 255, 255, 0.9) !important;
+}
+
+/* Force navbar background in dark mode */
+html.dark .bg-white\/90 {
+  background-color: rgba(17, 24, 39, 0.9) !important;
+}
+
+html.dark .dark\:bg-gray-900\/90 {
+  background-color: rgba(17, 24, 39, 0.9) !important;
+}
+
+/* Force footer background */
+html.light footer.bg-gray-900,
+html.light .bg-gray-900 {
+  background-color: #f9fafb !important;
+}
+
+html.dark footer.bg-gray-900,
+html.dark .bg-gray-900 {
+  background-color: #111827 !important;
+}
+
+/* Force text colors in footer */
+html.light footer .text-white {
+  color: #1f2937 !important;
+}
+
+html.dark footer .text-white {
+  color: #f9fafb !important;
+}
+
+html.light footer .text-gray-400 {
+  color: #6b7280 !important;
+}
+
+html.dark footer .text-gray-400 {
+  color: #9ca3af !important;
 }
 
 /* Global theme transition for smoother experience */
