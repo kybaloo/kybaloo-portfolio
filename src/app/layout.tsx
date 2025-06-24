@@ -42,29 +42,61 @@ export default function RootLayout({
                 try {
                   var theme = localStorage.getItem('theme');
                   var htmlElement = document.documentElement;
+                  var bodyElement = document.body;
                   
-                  // Remove dark class first
-                  htmlElement.classList.remove('dark');
+                  // Remove any existing theme classes first
+                  htmlElement.classList.remove('dark', 'light');
+                  if (bodyElement) bodyElement.classList.remove('dark', 'light');
                   
-                  if (theme === 'dark') {
-                    htmlElement.classList.add('dark');
-                  }
-                  // For light mode, we don't add any class (Tailwind default)
-                  // Save light as default if no theme is set
+                  // If no stored theme, check system preference
                   if (!theme) {
-                    localStorage.setItem('theme', 'light');
+                    var systemPrefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+                    theme = systemPrefersDark ? 'dark' : 'light';
+                    localStorage.setItem('theme', theme);
+                  }
+                  
+                  // Apply the theme to both html and body
+                  htmlElement.classList.add(theme);
+                  if (bodyElement) bodyElement.classList.add(theme);
+                  htmlElement.setAttribute('data-theme', theme);
+                  
+                  // Force style properties
+                  if (theme === 'dark') {
+                    htmlElement.style.setProperty('--background', '#0a0a0a');
+                    htmlElement.style.setProperty('--foreground', '#ededed');
+                    htmlElement.style.colorScheme = 'dark';
+                  } else {
+                    htmlElement.style.setProperty('--background', '#ffffff');
+                    htmlElement.style.setProperty('--foreground', '#171717');
+                    htmlElement.style.colorScheme = 'light';
+                  }
+                  
+                  // Update meta theme-color
+                  var metaThemeColor = document.querySelector('meta[name="theme-color"]');
+                  if (metaThemeColor) {
+                    metaThemeColor.setAttribute('content', theme === 'dark' ? '#0a0a0a' : '#ffffff');
                   }
                 } catch (e) {
-                  // Fallback: remove dark class to default to light mode
+                  // Fallback: apply light theme
                   document.documentElement.classList.remove('dark');
+                  document.documentElement.classList.add('light');
+                  document.documentElement.setAttribute('data-theme', 'light');
+                  if (document.body) {
+                    document.body.classList.remove('dark');
+                    document.body.classList.add('light');
+                  }
                 }
               })();
             `,
           }}
         />
-      </head>
+      </head>{" "}
       <body
-        className={`${poppins.variable} ${robotoMono.variable} antialiased bg-gray-50 dark:bg-gray-900 text-gray-900 dark:text-gray-100`}
+        className={`${poppins.variable} ${robotoMono.variable} antialiased transition-colors duration-300`}
+        style={{
+          backgroundColor: "var(--background)",
+          color: "var(--foreground)",
+        }}
       >
         <ThemeProvider>
           <LanguageProvider>
