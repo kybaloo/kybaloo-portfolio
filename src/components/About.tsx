@@ -19,13 +19,10 @@ const About = () => {
             <h3 className="mb-4 text-2xl font-bold text-gray-800 dark:text-white">
               {t.about.subtitle} <span className="text-blue-500">{t.about.role}</span>
             </h3>
-
             <p className="mb-6 text-gray-600 dark:text-gray-300">{t.about.bio1}</p>
-
             <p className="mb-6 text-gray-600 dark:text-gray-300">{t.about.bio2}</p>
-
-            {/* Professional Stats */}
-            <div className="grid grid-cols-2 gap-6 p-6 mb-8 bg-white rounded-lg shadow-md dark:bg-gray-700/50">
+            {/* Professional Stats */}{" "}
+            <div className="grid grid-cols-2 gap-6 p-6 mb-8 bg-gray-50 dark:bg-gray-800/50 rounded-lg shadow-md">
               <div className="text-center">
                 <div className="text-3xl font-bold text-blue-500">4+</div>
                 <div className="text-sm text-gray-600 dark:text-gray-300">{t.about.yearsExperience}</div>
@@ -43,7 +40,6 @@ const About = () => {
                 <div className="text-sm text-gray-600 dark:text-gray-300">{t.about.clientSatisfaction}</div>
               </div>
             </div>
-
             <div className="grid grid-cols-2 gap-4 mb-8">
               <div>
                 <h4 className="mb-2 font-bold text-gray-700 dark:text-gray-200">{t.about.name}</h4>
@@ -62,7 +58,6 @@ const About = () => {
                 <p className="text-gray-600 dark:text-gray-300">Web & SQL Developer</p>
               </div>
             </div>
-
             <div className="flex flex-wrap gap-4">
               <a
                 href="/resume"
