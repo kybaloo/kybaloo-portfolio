@@ -42,7 +42,7 @@ export function ThemeProvider({ children }: { children: ReactNode }) {
     const metaThemeColor = document.querySelector('meta[name="theme-color"]');
     if (metaThemeColor) {
       metaThemeColor.setAttribute("content", newTheme === "dark" ? "#0a0a0a" : "#ffffff");
-    }    // Force a repaint to ensure styles are applied immediately
+    } // Force a repaint to ensure styles are applied immediately
     html.style.display = "none";
     void html.offsetHeight; // Trigger reflow
     html.style.display = "";
