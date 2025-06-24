@@ -217,6 +217,68 @@ html.dark footer .text-gray-400 {
   color: #9ca3af !important;
 }
 
+/* Footer specific rules */
+html.light footer {
+  background-color: #f9fafb !important;
+  color: #111827 !important;
+}
+
+html.dark footer {
+  background-color: #111827 !important;
+  color: #f9fafb !important;
+}
+
+/* Navbar specific rules */
+html.light .bg-white\/90 {
+  background-color: rgba(255, 255, 255, 0.9) !important;
+}
+
+html.dark .bg-white\/90 {
+  background-color: rgba(17, 24, 39, 0.9) !important;
+}
+
+html.light .dark\:bg-gray-900\/90 {
+  background-color: rgba(255, 255, 255, 0.9) !important;
+}
+
+html.dark .dark\:bg-gray-900\/90 {
+  background-color: rgba(17, 24, 39, 0.9) !important;
+}
+
+/* Text color overrides for better contrast */
+html.light .text-gray-700 {
+  color: #374151 !important;
+}
+
+html.dark .text-gray-700 {
+  color: #d1d5db !important;
+}
+
+html.light .text-gray-300 {
+  color: #6b7280 !important;
+}
+
+html.dark .text-gray-300 {
+  color: #d1d5db !important;
+}
+
+/* Border colors */
+html.light .border-gray-300 {
+  border-color: #d1d5db !important;
+}
+
+html.dark .border-gray-300 {
+  border-color: #4b5563 !important;
+}
+
+html.light .border-gray-700 {
+  border-color: #d1d5db !important;
+}
+
+html.dark .border-gray-700 {
+  border-color: #4b5563 !important;
+}
+
 /* Global theme transition for smoother experience */
 * {
   transition:
@@ -311,4 +373,93 @@ code {
 
 .animate-slide-up {
   animation: slideUp 0.5s ease-out;
+}
+
+/* Stats sections specific rules */
+html.light .bg-gray-50 {
+  background-color: #f8fafc !important;
+}
+
+html.dark .bg-gray-50 {
+  background-color: rgba(31, 41, 55, 0.5) !important;
+}
+
+html.light .dark\:bg-gray-800\/50 {
+  background-color: #f8fafc !important;
+}
+
+html.dark .dark\:bg-gray-800\/50 {
+  background-color: rgba(31, 41, 55, 0.5) !important;
+}
+
+html.light .dark\:from-gray-800\/50 {
+  background: linear-gradient(to right, #dbeafe, #ede9fe) !important;
+}
+
+html.dark .dark\:from-gray-800\/50 {
+  background: linear-gradient(to right, rgba(31, 41, 55, 0.5), rgba(55, 65, 81, 0.5)) !important;
+}
+
+html.light .dark\:to-gray-700\/50 {
+  background: linear-gradient(to right, #dbeafe, #ede9fe) !important;
+}
+
+html.dark .dark\:to-gray-700\/50 {
+  background: linear-gradient(to right, rgba(31, 41, 55, 0.5), rgba(55, 65, 81, 0.5)) !important;
+}
+
+/* Hover effects improvements */
+html.light .hover\:bg-blue-500:hover {
+  background-color: #3b82f6 !important;
+}
+
+html.dark .hover\:bg-blue-500:hover {
+  background-color: #3b82f6 !important;
+}
+
+html.light .dark\:hover\:bg-blue-600:hover {
+  background-color: #3b82f6 !important;
+}
+
+html.dark .dark\:hover\:bg-blue-600:hover {
+  background-color: #2563eb !important;
+}
+
+html.light .hover\:text-blue-500:hover {
+  color: #3b82f6 !important;
+}
+
+html.dark .hover\:text-blue-500:hover {
+  color: #60a5fa !important;
+}
+
+html.light .dark\:hover\:text-blue-400:hover {
+  color: #3b82f6 !important;
+}
+
+html.dark .dark\:hover\:text-blue-400:hover {
+  color: #60a5fa !important;
+}
+
+/* Button hover states */
+html.light .hover\:bg-blue-700:hover {
+  background-color: #1d4ed8 !important;
+}
+
+html.dark .hover\:bg-blue-700:hover {
+  background-color: #1d4ed8 !important;
+}
+
+/* Scale transforms */
+.hover\:scale-105:hover {
+  transform: scale(1.05) !important;
+}
+
+.hover\:scale-110:hover {
+  transform: scale(1.1) !important;
+}
+
+/* Group hover effects */
+.group:hover .group-hover\:text-white {
+  color: #ffffff !important;
 }
