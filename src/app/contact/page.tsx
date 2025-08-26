@@ -263,7 +263,7 @@ export default function ContactPage() {
                         strokeLinecap="round"
                         strokeLinejoin="round"
                         strokeWidth={2}
-                        d="M16 8a6 6 0 11-12 0 6 6 0 0112 0zM4.293 12.293a1 1 0 010-1.414l7.414-7.414a1 1 0 011.414 1.414L5.707 12l7.414 7.414a1 1 0 01-1.414 1.414l-7.414-7.414z"
+                        d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z"
                       />
                     </svg>
                   </div>
@@ -392,12 +392,12 @@ export default function ContactPage() {
           animate={{ y: 0, opacity: 1 }}
           transition={{ delay: 0.8, duration: 0.5 }}
         >
-          <div className="p-8 bg-gradient-to-br from-blue-50 to-purple-50 dark:from-gray-800 dark:to-gray-900 rounded-xl border border-gray-200 dark:border-gray-700">
+          <div className="p-8 border border-gray-200 bg-gradient-to-br from-blue-50 to-purple-50 dark:from-gray-800 dark:to-gray-900 rounded-xl dark:border-gray-700">
             {" "}
-            <h2 className="text-2xl font-bold mb-4 text-gray-900 dark:text-white">
+            <h2 className="mb-4 text-2xl font-bold text-gray-900 dark:text-white">
               {language === "fr" ? "Préférez un appel ?" : "Prefer a call?"}
             </h2>
-            <p className="text-gray-600 dark:text-gray-300 mb-6 max-w-2xl mx-auto">
+            <p className="max-w-2xl mx-auto mb-6 text-gray-600 dark:text-gray-300">
               {language === "fr"
                 ? "Planifiez un appel directement dans mon calendrier. C'est souvent plus efficace pour discuter de projets complexes."
                 : "Schedule a call directly in my calendar. It's often more efficient for discussing complex projects."}
