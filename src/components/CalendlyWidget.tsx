@@ -1,7 +1,7 @@
 "use client";
 
 import { useLanguage } from "@/context/LanguageContext";
-import { Calendar, ChevronDown, Clock, Video } from "lucide-react";
+import { Calendar, Clock, Video, X } from "lucide-react";
 import { useState } from "react";
 
 interface CalendlyWidgetProps {
@@ -15,9 +15,9 @@ export default function CalendlyWidget({ variant = "button", className = "" }: C
 
   // Replace with your actual Calendly URLs
   const calendlyUrls = {
-    consultation: "https://calendly.com/kybalooflo/30min", // Remplacez par votre vraie URL
-    discovery: "https://calendly.com/kybalooflo/discovery", // Remplacez par votre vraie URL
-    technical: "https://calendly.com/kybalooflo/technical", // Remplacez par votre vraie URL
+    consultation: "https://calendly.com/tchangaiflorentin6/30min",
+    discovery: "https://calendly.com/tchangaiflorentin6/discovery",
+    technical: "https://calendly.com/tchangaiflorentin6/technical",
   };
 
   const openCalendly = (url: string) => {
@@ -43,79 +43,87 @@ export default function CalendlyWidget({ variant = "button", className = "" }: C
       >
         <Calendar className="w-5 h-5 mr-2" />
         {t.hero.scheduleCall}
-        <ChevronDown className={`w-4 h-4 ml-2 transition-transform duration-200 ${isOpen ? "rotate-180" : ""}`} />
       </button>
 
       {isOpen && (
         <>
-          {/* Backdrop */}
-          <div className="fixed inset-0 z-40" onClick={() => setIsOpen(false)} />
-
-          {/* Dropdown Menu */}
-          <div className="absolute top-full left-0 mt-2 w-80 bg-white dark:bg-gray-800 rounded-xl shadow-2xl border border-gray-200 dark:border-gray-700 z-50 overflow-hidden">
-            {" "}
-            <div className="p-4 border-b border-gray-100 dark:border-gray-700">
-              <h3 className="font-semibold text-gray-900 dark:text-white">{t.calendly.scheduleCall}</h3>
-              <p className="text-sm text-gray-600 dark:text-gray-400">
-                {language === "fr"
-                  ? "Sélectionnez le type de consultation qui vous convient"
-                  : "Select the type of consultation that suits you"}
-              </p>
-            </div>
-            <div className="p-2">
-              {/* Consultation 30min */}
-              <button
-                onClick={() => openCalendly(calendlyUrls.consultation)}
-                className="w-full p-4 text-left hover:bg-gray-50 dark:hover:bg-gray-700 rounded-lg transition-colors group"
-              >
-                <div className="flex items-start">
-                  <div className="p-2 bg-blue-100 dark:bg-blue-900/30 rounded-lg mr-3 group-hover:bg-blue-200 dark:group-hover:bg-blue-900/50 transition-colors">
-                    <Clock className="w-5 h-5 text-blue-600 dark:text-blue-400" />
-                  </div>
-                  <div className="flex-1">
-                    {" "}
-                    <h4 className="font-medium text-gray-900 dark:text-white">{t.calendly.freeConsultation}</h4>
-                    <p className="text-sm text-gray-600 dark:text-gray-400">{t.calendly.discussProjectAndGoals}</p>
-                  </div>
+          {/* Modal Backdrop */}
+          <div className="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-50">
+            {/* Modal Content */}
+            <div className="relative w-full max-w-lg mx-4 bg-white border border-gray-200 shadow-2xl dark:bg-gray-800 rounded-xl dark:border-gray-700">
+              {/* Modal Header */}
+              <div className="flex items-center justify-between p-6 border-b border-gray-100 dark:border-gray-700">
+                <div>
+                  <h3 className="text-lg font-semibold text-gray-900 dark:text-white">{t.calendly.scheduleCall}</h3>
+                  <p className="text-sm text-gray-600 dark:text-gray-400">
+                    {language === "fr"
+                      ? "Sélectionnez le type de consultation qui vous convient"
+                      : "Select the type of consultation that suits you"}
+                  </p>
                 </div>
-              </button>
+                <button
+                  onClick={() => setIsOpen(false)}
+                  className="p-2 text-gray-400 transition-colors hover:text-gray-600 dark:hover:text-gray-300"
+                >
+                  <X className="w-5 h-5" />
+                </button>
+              </div>
 
-              {/* Discovery Call */}
-              <button
-                onClick={() => openCalendly(calendlyUrls.discovery)}
-                className="w-full p-4 text-left hover:bg-gray-50 dark:hover:bg-gray-700 rounded-lg transition-colors group"
-              >
-                <div className="flex items-start">
-                  <div className="p-2 bg-green-100 dark:bg-green-900/30 rounded-lg mr-3 group-hover:bg-green-200 dark:group-hover:bg-green-900/50 transition-colors">
-                    <Video className="w-5 h-5 text-green-600 dark:text-green-400" />
-                  </div>{" "}
-                  <div className="flex-1">
-                    {" "}
-                    <h4 className="font-medium text-gray-900 dark:text-white">{t.calendly.discoveryCall}</h4>
-                    <p className="text-sm text-gray-600 dark:text-gray-400">{t.calendly.inDepthAnalysis}</p>
+              {/* Modal Body */}
+              <div className="p-6">
+                {/* Consultation 30min */}
+                <button
+                  onClick={() => openCalendly(calendlyUrls.consultation)}
+                  className="w-full p-4 mb-3 text-left transition-colors rounded-lg hover:bg-gray-50 dark:hover:bg-gray-700 group"
+                >
+                  <div className="flex items-start">
+                    <div className="p-2 mr-3 transition-colors bg-blue-100 rounded-lg dark:bg-blue-900/30 group-hover:bg-blue-200 dark:group-hover:bg-blue-900/50">
+                      <Clock className="w-5 h-5 text-blue-600 dark:text-blue-400" />
+                    </div>
+                    <div className="flex-1">
+                      <h4 className="font-medium text-gray-900 dark:text-white">{t.calendly.freeConsultation}</h4>
+                      <p className="text-sm text-gray-600 dark:text-gray-400">{t.calendly.discussProjectAndGoals}</p>
+                    </div>
                   </div>
-                </div>
-              </button>
+                </button>
 
-              {/* Technical Review */}
-              <button
-                onClick={() => openCalendly(calendlyUrls.technical)}
-                className="w-full p-4 text-left hover:bg-gray-50 dark:hover:bg-gray-700 rounded-lg transition-colors group"
-              >
-                <div className="flex items-start">
-                  <div className="p-2 bg-purple-100 dark:bg-purple-900/30 rounded-lg mr-3 group-hover:bg-purple-200 dark:group-hover:bg-purple-900/50 transition-colors">
-                    <Calendar className="w-5 h-5 text-purple-600 dark:text-purple-400" />
+                {/* Discovery Call */}
+                <button
+                  onClick={() => openCalendly(calendlyUrls.discovery)}
+                  className="w-full p-4 mb-3 text-left transition-colors rounded-lg hover:bg-gray-50 dark:hover:bg-gray-700 group"
+                >
+                  <div className="flex items-start">
+                    <div className="p-2 mr-3 transition-colors bg-green-100 rounded-lg dark:bg-green-900/30 group-hover:bg-green-200 dark:group-hover:bg-green-900/50">
+                      <Video className="w-5 h-5 text-green-600 dark:text-green-400" />
+                    </div>
+                    <div className="flex-1">
+                      <h4 className="font-medium text-gray-900 dark:text-white">{t.calendly.discoveryCall}</h4>
+                      <p className="text-sm text-gray-600 dark:text-gray-400">{t.calendly.inDepthAnalysis}</p>
+                    </div>
                   </div>
-                  <div className="flex-1">
-                    {" "}
-                    <h4 className="font-medium text-gray-900 dark:text-white">{t.calendly.technicalReview}</h4>
-                    <p className="text-sm text-gray-600 dark:text-gray-400">{t.calendly.technicalAuditAndRecommendations}</p>
+                </button>
+
+                {/* Technical Review */}
+                <button
+                  onClick={() => openCalendly(calendlyUrls.technical)}
+                  className="w-full p-4 mb-3 text-left transition-colors rounded-lg hover:bg-gray-50 dark:hover:bg-gray-700 group"
+                >
+                  <div className="flex items-start">
+                    <div className="p-2 mr-3 transition-colors bg-purple-100 rounded-lg dark:bg-purple-900/30 group-hover:bg-purple-200 dark:group-hover:bg-purple-900/50">
+                      <Calendar className="w-5 h-5 text-purple-600 dark:text-purple-400" />
+                    </div>
+                    <div className="flex-1">
+                      <h4 className="font-medium text-gray-900 dark:text-white">{t.calendly.technicalReview}</h4>
+                      <p className="text-sm text-gray-600 dark:text-gray-400">{t.calendly.technicalAuditAndRecommendations}</p>
+                    </div>
                   </div>
-                </div>
-              </button>
-            </div>{" "}
-            <div className="p-4 bg-gray-50 dark:bg-gray-700/50 border-t border-gray-100 dark:border-gray-700">
-              <p className="text-xs text-gray-500 dark:text-gray-400 text-center">{t.calendly.allCallsFreeAndWithoutObligation}</p>
+                </button>
+              </div>
+
+              {/* Modal Footer */}
+              <div className="p-6 border-t border-gray-100 bg-gray-50 dark:bg-gray-700/50 dark:border-gray-700">
+                <p className="text-xs text-center text-gray-500 dark:text-gray-400">{t.calendly.allCallsFreeAndWithoutObligation}</p>
+              </div>
             </div>
           </div>
         </>
