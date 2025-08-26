@@ -85,30 +85,18 @@
     "duration": "2023"
   },
   {
-    "id": "sem-consult",
-    "title": "SEM-Consult - Car Rental Website",
-    "description": "Site vitrine et e-commerce pour une agence de location de véhicules. Réalisé avec WordPress et WooCommerce.",
-    "miniDescription": "Site e-commerce de location véhicules",
-    "image": "/projects/semconsult.png",
-    "tags": ["WordPress", "WooCommerce", "PHP"],
-    "techStack": ["WordPress", "WooCommerce", "PHP", "MySQL"],
-    "liveUrl": "https://sem-consult.com/",
-    "githubUrl": "#",
+    "id": "issuesync",
+    "title": "IssueSync - GitHub Issues Synchronization Tool",
+    "description": "A Node.js library and CLI tool for listing and synchronizing GitHub issues between repositories. Perfect for repository migrations, issue management dashboards, and automation workflows.",
+    "miniDescription": "Outil Node.js pour synchroniser les issues",
+    "image": "/projects/issue-sync.png",
+    "tags": ["Node.js", "GitHub API", "CLI", "TypeScript"],
+    "techStack": ["Node.js", "TypeScript", "GitHub API", "Commander.js"],
+    "liveUrl": "https://www.npmjs.com/package/issuesync",
+    "githubUrl": "https://github.com/kybaloo/issuesync",
     "featured": false,
-    "duration": "2022"
-  },
-  {
-    "id": "inventory-management",
-    "title": "Enterprise Inventory Management System",
-    "description": "Solution de gestion de stocks pour grandes entreprises. Suivi en temps réel, réapprovisionnement automatique, gestion fournisseurs et reporting.",
-    "miniDescription": "Système complet de gestion de stock",
-    "image": "/projects/inventory.png",
-    "tags": ["Laravel", "Vue.js", "Redis", "Docker"],
-    "techStack": ["Laravel", "Vue.js", "MySQL", "Redis", "Docker"],
-    "liveUrl": "#",
-    "githubUrl": "https://github.com/kybaloo/inventory-management",
-    "featured": false,
-    "duration": "2021 - 2022"
+    "duration": "2025",
+    "features": ["List and filter GitHub issues", "Sync issues between repositories", "Smart duplicate detection", "CLI tool and library", "Extensible for web apps and CI/CD"]
   },
   {
     "id": "va-hire",
@@ -141,24 +129,11 @@
     "title": "AI Chatbot with FastAPI",
     "description": "API chatbot développée avec FastAPI et intégrée avec NLP pour répondre en langage naturel.",
     "miniDescription": "Chatbot basé sur FastAPI",
-    "image": "/projects/chatbot.png",
+    "image": "",
     "tags": ["Python", "FastAPI", "NLP"],
     "techStack": ["Python", "FastAPI", "NLTK", "Transformers"],
     "liveUrl": "#",
     "githubUrl": "https://github.com/kybaloo/chatbot",
-    "featured": false,
-    "duration": "2023"
-  },
-  {
-    "id": "ecommerce-aspnet",
-    "title": "E-commerce Platform - ASP.NET",
-    "description": "Plateforme e-commerce développée avec ASP.NET Core pour gestion produits, commandes et paiements.",
-    "miniDescription": "Plateforme e-commerce ASP.NET",
-    "image": "",
-    "tags": ["ASP.NET Core", "SQL Server"],
-    "techStack": [".NET Core", "ASP.NET MVC", "SQL Server"],
-    "liveUrl": "#",
-    "githubUrl": "https://github.com/kybaloo/ecommerce_plateform",
     "featured": false,
     "duration": "2023"
   }
