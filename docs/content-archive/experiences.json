@@ -1,0 +1,50 @@
+[
+  {
+    "id": "ecobank",
+    "company": "Ecobank Transnational Incorporated",
+    "position": "Web & SQL Developer",
+    "duration": "September 2022 - Present",
+    "location": "Lomé, Togo",
+    "description": "Leading development of core banking applications and data analytics solutions serving millions of customers across Africa.",
+    "achievements": [
+      "Developed and maintained SmartLoan digital lending platform, processing over $50M in loan applications",
+      "Designed and implemented real-time data analytics dashboards using Power BI and Tableau",
+      "Optimized database queries resulting in 40% improvement in application performance",
+      "Led integration of core banking systems with external APIs and third-party services",
+      "Mentored junior developers and conducted code reviews for quality assurance"
+    ],
+    "technologies": ["PHP", "Laravel", "Vue.js", "SQL Server", "Power BI", ".NET", "C#", "REST APIs"]
+  },
+  {
+    "id": "freelance",
+    "company": "Freelance Developer",
+    "position": "Full Stack Web Developer",
+    "duration": "January 2021 - August 2022",
+    "location": "Remote",
+    "description": "Delivered custom web applications and data solutions for various clients across different industries.",
+    "achievements": [
+      "Built 20+ custom web applications using React, Vue.js, and Laravel",
+      "Developed attendance management system with facial recognition technology",
+      "Created business intelligence dashboards for data-driven decision making",
+      "Implemented e-commerce solutions with payment gateway integrations",
+      "Maintained 98% client satisfaction rate with on-time project delivery"
+    ],
+    "technologies": ["React", "Vue.js", "Node.js", "Laravel", "MySQL", "MongoDB", "Python", "TensorFlow"]
+  },
+  {
+    "id": "internship",
+    "company": "Tech Solutions Togo",
+    "position": "Junior Developer Intern",
+    "duration": "June 2020 - December 2020",
+    "location": "Lomé, Togo",
+    "description": "Gained hands-on experience in web development and database management while contributing to various client projects.",
+    "achievements": [
+      "Assisted in development of 5+ web applications using PHP and JavaScript",
+      "Learned database design and SQL optimization techniques",
+      "Participated in agile development process and daily standups",
+      "Contributed to bug fixes and feature enhancements",
+      "Completed training in modern web development frameworks"
+    ],
+    "technologies": ["PHP", "JavaScript", "HTML5", "CSS3", "MySQL", "Bootstrap"]
+  }
+]
