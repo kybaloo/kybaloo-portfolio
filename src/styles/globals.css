@@ -1,1 +1,89 @@
-@import "tailwindcss";
+@import 'tailwindcss';
+
+/* Mode sombre piloté par la classe posée par next-themes, pas par la
+   préférence système : l'utilisateur doit pouvoir choisir. */
+@custom-variant dark (&:where(.dark, .dark *));
+
+@theme {
+  /* ---- Familles ---- */
+  --font-serif: var(--font-newsreader), Georgia, serif;
+  --font-sans: var(--font-inter), system-ui, sans-serif;
+  --font-mono: var(--font-jetbrains), ui-monospace, monospace;
+
+  /* ---- Échelle typographique, ratio 1.25 ancré sur 16px ---- */
+  --text-xs: 0.75rem;
+  --text-sm: 0.875rem;
+  --text-base: 1rem;
+  --text-lg: 1.25rem;
+  --text-xl: 1.563rem;
+  --text-2xl: 1.953rem;
+  --text-3xl: 2.441rem;
+  --text-4xl: 3.052rem;
+  --text-5xl: 3.815rem;
+
+  /* ---- Espacement : uniquement des multiples de 4px ---- */
+  --spacing: 0.25rem;
+
+  /* ---- Rayons discrets : une direction éditoriale n'a pas de gros arrondis ---- */
+  --radius-sm: 3px;
+  --radius-md: 5px;
+  --radius-lg: 8px;
+
+  /* ---- Rôles de couleur, mode clair ----
+     Aucun composant n'écrit d'hexadécimal : tout passe par ces rôles. */
+  --color-paper: #f6f7f4;
+  --color-ink: #111512;
+  --color-muted: #828a84;
+  --color-line: #e3e6e1;
+  --color-accent: #1f5140;
+  --color-highlight: #d9a441;
+  --color-highlight-ink: #111512;
+}
+
+/* ---- Mêmes rôles, valeurs sombres ---- */
+.dark {
+  --color-paper: #0f1211;
+  --color-ink: #e7eae6;
+  --color-muted: #767e79;
+  --color-line: #1f2422;
+  --color-accent: #6cc3a2;
+  --color-highlight: #d9a441;
+  --color-highlight-ink: #0f1211;
+}
+
+@layer base {
+  html {
+    scroll-behavior: smooth;
+    color-scheme: light;
+  }
+
+  html.dark {
+    color-scheme: dark;
+  }
+
+  body {
+    background-color: var(--color-paper);
+    color: var(--color-ink);
+    font-family: var(--font-sans);
+    -webkit-font-smoothing: antialiased;
+  }
+
+  /* Focus visible sur tout élément interactif — exigence d'accessibilité. */
+  :focus-visible {
+    outline: 2px solid var(--color-accent);
+    outline-offset: 2px;
+  }
+
+  /* Aucune animation n'est déclarée dans ce projet, mais une transition de
+     thème reste possible : la couper pour qui la refuse. */
+  @media (prefers-reduced-motion: reduce) {
+    *,
+    *::before,
+    *::after {
+      animation-duration: 0.01ms !important;
+      animation-iteration-count: 1 !important;
+      transition-duration: 0.01ms !important;
+      scroll-behavior: auto !important;
+    }
+  }
+}
