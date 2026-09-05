@@ -1,0 +1,27 @@
+{
+  "nav": {
+    "home": "Home",
+    "expertise": "Expertise",
+    "work": "Work",
+    "about": "About",
+    "writing": "Writing",
+    "contact": "Contact"
+  },
+  "theme": {
+    "toggle": "Toggle theme",
+    "light": "Light",
+    "dark": "Dark"
+  },
+  "language": {
+    "label": "Change language",
+    "fr": "French",
+    "en": "English"
+  },
+  "footer": {
+    "rights": "All rights reserved.",
+    "builtWith": "Designed and built in Lomé."
+  },
+  "a11y": {
+    "skipToContent": "Skip to main content"
+  }
+}

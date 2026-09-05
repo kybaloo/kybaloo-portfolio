@@ -1,0 +1,27 @@
+{
+  "nav": {
+    "home": "Accueil",
+    "expertise": "Expertise",
+    "work": "Travaux",
+    "about": "Parcours",
+    "writing": "Écrits",
+    "contact": "Contact"
+  },
+  "theme": {
+    "toggle": "Changer de thème",
+    "light": "Clair",
+    "dark": "Sombre"
+  },
+  "language": {
+    "label": "Changer de langue",
+    "fr": "Français",
+    "en": "Anglais"
+  },
+  "footer": {
+    "rights": "Tous droits réservés.",
+    "builtWith": "Conçu et développé à Lomé."
+  },
+  "a11y": {
+    "skipToContent": "Aller au contenu principal"
+  }
+}
