@@ -4,3 +4,9 @@ playwright-report
 test-results
 public
 docs/content-archive
+
+# Prettier lowercases hex color literals unconditionally (no option to
+# disable it). The design-tokens spec and its test lock the exact casing
+# from the palette (#F6F7F4, not #f6f7f4), so this file is excluded from
+# automatic formatting to keep the contractual values intact across commits.
+src/styles/globals.css
