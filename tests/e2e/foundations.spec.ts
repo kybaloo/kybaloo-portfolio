@@ -83,3 +83,20 @@ test('/admin renvoie 410 Gone pour toutes les méthodes', async ({request}) => {
     expect(res.status(), `${method} /admin doit renvoyer 410`).toBe(410);
   }
 });
+
+test('une URL inconnue sous une locale valide affiche le 404 stylé du site', async ({page}) => {
+  const response = await page.goto('/fr/page-inexistante');
+  expect(response?.status()).toBe(404);
+  await expect(page.locator('html')).toHaveAttribute('lang', 'fr');
+  await expect(page.getByRole('heading', {name: 'Page introuvable'})).toBeVisible();
+  await expect(page.getByRole('link', {name: 'Accueil'})).toBeVisible();
+});
+
+test('une URL totalement inconnue, sans préfixe de langue, affiche aussi le 404 stylé', async ({
+  page,
+}) => {
+  const response = await page.goto('/chemin-au-hasard');
+  expect(response?.status()).toBe(404);
+  await expect(page.locator('html')).toHaveAttribute('lang', 'fr');
+  await expect(page.getByRole('heading', {name: 'Page introuvable'})).toBeVisible();
+});
