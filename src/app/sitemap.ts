@@ -13,13 +13,18 @@ import {siteUrl} from '@/lib/site';
 const STATIC_PAGES = ['/'] as const;
 
 export default function sitemap(): MetadataRoute.Sitemap {
-  return STATIC_PAGES.map((href) => ({
-    url: `${siteUrl}${getPathname({href, locale: routing.defaultLocale})}`,
-    lastModified: new Date(),
-    alternates: {
-      languages: Object.fromEntries(
-        routing.locales.map((locale) => [locale, `${siteUrl}${getPathname({href, locale})}`]),
-      ),
-    },
-  }));
+  // Une entrée par langue : chaque locale a sa propre `<loc>`, faute de quoi
+  // `/en` n'apparaît jamais comme URL indexable et ne vit que dans les
+  // alternances de `/fr`.
+  return STATIC_PAGES.flatMap((href) =>
+    routing.locales.map((locale) => ({
+      url: `${siteUrl}${getPathname({href, locale})}`,
+      lastModified: new Date(),
+      alternates: {
+        languages: Object.fromEntries(
+          routing.locales.map((l) => [l, `${siteUrl}${getPathname({href, locale: l})}`]),
+        ),
+      },
+    })),
+  );
 }
