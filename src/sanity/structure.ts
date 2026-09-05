@@ -11,5 +11,14 @@ export const structure: StructureResolver = (S) =>
   S.list()
     .title('Contenu')
     .items([
+      S.listItem()
+        .title('Profil')
+        .id('profile')
+        .child(S.document().schemaType('profile').documentId('profile')),
+      S.listItem()
+        .title('Réglages du site')
+        .id('settings')
+        .child(S.document().schemaType('settings').documentId('settings')),
+      S.divider(),
       ...S.documentTypeListItems().filter((item) => !SINGLETON_TYPES.has(item.getId() ?? '')),
     ]);

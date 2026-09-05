@@ -1,9 +1,10 @@
 import {visionTool} from '@sanity/vision';
 import {defineConfig} from 'sanity';
 import {structureTool} from 'sanity/structure';
+import {internationalizedArray} from 'sanity-plugin-internationalized-array';
 import {apiVersion, dataset, projectId} from './src/sanity/env';
 import {schemaTypes} from './src/sanity/schemas';
-import {structure} from './src/sanity/structure';
+import {SINGLETON_TYPES, structure} from './src/sanity/structure';
 
 export default defineConfig({
   name: 'default',
@@ -12,5 +13,24 @@ export default defineConfig({
   projectId,
   dataset,
   schema: {types: schemaTypes},
-  plugins: [structureTool({structure}), visionTool({defaultApiVersion: apiVersion})],
+  plugins: [
+    structureTool({structure}),
+    visionTool({defaultApiVersion: apiVersion}),
+    internationalizedArray({
+      languages: [
+        {id: 'fr', title: 'Français'},
+        {id: 'en', title: 'English'},
+      ],
+      defaultLanguages: ['fr'],
+      fieldTypes: ['string', 'text'],
+    }),
+  ],
+  document: {
+    actions: (input, context) =>
+      SINGLETON_TYPES.has(context.schemaType)
+        ? input.filter(
+            ({action}) => action !== 'unpublish' && action !== 'duplicate' && action !== 'delete',
+          )
+        : input,
+  },
 });
