@@ -1,5 +1,10 @@
 {
+  "meta": {
+    "title": "Florentin Tchangai — Technology Architect",
+    "description": "Florentin Tchangai designs, builds, and evolves digital systems from Lomé, Togo. Bilingual portfolio of a technology architect and consultant."
+  },
   "nav": {
+    "primaryLabel": "Main navigation",
     "home": "Home",
     "expertise": "Expertise",
     "work": "Work",
@@ -23,5 +28,8 @@
   },
   "a11y": {
     "skipToContent": "Skip to main content"
+  },
+  "notFound": {
+    "title": "Page not found"
   }
 }

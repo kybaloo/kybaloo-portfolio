@@ -1,5 +1,10 @@
 {
+  "meta": {
+    "title": "Florentin Tchangai — Architecte technologique",
+    "description": "Florentin Tchangai conçoit, construit et fait évoluer des systèmes numériques depuis Lomé, au Togo. Portfolio bilingue d'un architecte et consultant technologique."
+  },
   "nav": {
+    "primaryLabel": "Navigation principale",
     "home": "Accueil",
     "expertise": "Expertise",
     "work": "Travaux",
@@ -23,5 +28,8 @@
   },
   "a11y": {
     "skipToContent": "Aller au contenu principal"
+  },
+  "notFound": {
+    "title": "Page introuvable"
   }
 }

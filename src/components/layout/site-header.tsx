@@ -23,7 +23,7 @@ export function SiteHeader() {
         </Link>
 
         <div className="flex flex-wrap items-baseline gap-x-6 gap-y-3">
-          <nav aria-label={t('home')} className="flex flex-wrap gap-x-5 gap-y-2">
+          <nav aria-label={t('primaryLabel')} className="flex flex-wrap gap-x-5 gap-y-2">
             {LINKS.map(({href, key}) => (
               <Link
                 key={href}
