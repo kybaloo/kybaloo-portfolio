@@ -26,7 +26,23 @@ test('les deux langues répondent et déclarent la bonne locale', async ({page})
   await expect(page.locator('html')).toHaveAttribute('lang', 'en');
 });
 
-test('le changement de langue conserve la page courante', async ({page}) => {
+// Ce test ne prouve PAS que le sélecteur de langue conserve la page
+// courante : il ne visite que la racine « /fr », et « / » se traduit par
+// « / » dans les deux langues — « conserver le chemin » et « toujours
+// rentrer à l'accueil » y sont donc indiscernables. Il prouve seulement
+// que le sélecteur mène bien vers la version anglaise, ce qui reste utile
+// (un lien cassé ou pointant ailleurs serait détecté), mais c'est plus
+// modeste que ce qu'annonçait l'ancien nom du test.
+//
+// Le renforcer réellement demande une page dont le slug diverge entre les
+// langues (ex. /fr/parcours ↔ /en/about). Aucune n'existe encore — ces
+// pages arrivent dans un plan ultérieur — et en attendant, un 404 ne rend
+// pas l'en-tête ni le sélecteur de langue, donc il n'y a rien à cliquer.
+// Quand une telle page existera, remplacer ce test par : visiter la page
+// en français, cliquer le sélecteur, vérifier que l'URL anglaise obtenue
+// est bien la page équivalente (pas la racine) — ce qui distinguera enfin
+// « conserve la page » de « repart à l'accueil ».
+test('le sélecteur de langue mène à la version anglaise', async ({page}) => {
   await page.goto('/fr');
   await page.getByRole('link', {name: 'en', exact: true}).click();
   await expect(page).toHaveURL(/\/en$/);
@@ -51,7 +67,9 @@ test('les anciennes URLs redirigent de façon permanente', async ({request}) => 
     ['/about', '/fr/parcours'],
     ['/projects', '/fr/travaux'],
     ['/blog', '/fr/ecrits'],
+    ['/blog/mon-article', '/fr/ecrits/mon-article'],
     ['/resume', '/fr/parcours'],
+    ['/contact', '/fr/contact'],
   ] as const) {
     const res = await request.get(from, {maxRedirects: 0});
     expect(res.status(), `${from} doit être une redirection permanente`).toBe(308);
@@ -59,7 +77,9 @@ test('les anciennes URLs redirigent de façon permanente', async ({request}) => 
   }
 });
 
-test('/admin renvoie 410 Gone', async ({request}) => {
-  const res = await request.get('/admin', {maxRedirects: 0});
-  expect(res.status()).toBe(410);
+test('/admin renvoie 410 Gone pour toutes les méthodes', async ({request}) => {
+  for (const method of ['GET', 'POST', 'PUT', 'PATCH', 'DELETE'] as const) {
+    const res = await request.fetch('/admin', {method, maxRedirects: 0});
+    expect(res.status(), `${method} /admin doit renvoyer 410`).toBe(410);
+  }
 });
