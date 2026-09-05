@@ -32,36 +32,36 @@ Ces contraintes s'appliquent à **toutes** les tâches de ce plan.
 
 ## Structure des fichiers
 
-| Fichier | Responsabilité |
-|---|---|
-| `docs/content-archive/*.json` | Contenu extrait de l'ancien site, source du plan 2 |
-| `scripts/validate-archive.mjs` | Vérifie que l'archive est complète et bien formée |
-| `package.json` | Dépendances — repartir de zéro |
-| `tsconfig.json` | TypeScript strict + `noUncheckedIndexedAccess` |
-| `eslint.config.mjs` | ESLint 9 flat, `eslint-config-next` 16, a11y |
-| `.prettierrc.mjs` · `.lintstagedrc.mjs` · `.husky/pre-commit` | Formatage automatique |
-| `vitest.config.ts` | Tests unitaires |
-| `playwright.config.ts` | Tests de parcours |
-| `postcss.config.mjs` | `@tailwindcss/postcss` |
-| `src/styles/globals.css` | **Unique** source des tokens et des rôles de couleur |
-| `src/lib/fonts.ts` | Les trois polices, et rien d'autre |
-| `src/i18n/routing.ts` | Locales, préfixe, slugs localisés |
-| `src/i18n/request.ts` | Chargement des messages par requête |
-| `src/i18n/navigation.ts` | `Link`, `redirect`, `usePathname`, `useRouter`, `getPathname` localisés |
-| `src/proxy.ts` | Routage i18n (ex-`middleware.ts`) |
-| `messages/fr.json` · `messages/en.json` | Traductions d'interface |
-| `next.config.ts` | Plugin next-intl, redirections 301, en-têtes de sécurité |
-| `src/app/(site)/[locale]/layout.tsx` | **Racine HTML du site** — providers, header, footer |
-| `src/app/(site)/[locale]/page.tsx` | Accueil provisoire |
-| `src/components/layout/site-header.tsx` | Navigation, sélecteur de langue, bascule de thème |
-| `src/components/layout/site-footer.tsx` | Pied de page |
-| `src/components/layout/language-switch.tsx` | Bascule FR/EN conservant la page courante |
-| `src/components/layout/theme-toggle.tsx` | Bascule clair/sombre |
-| `src/components/layout/skip-link.tsx` | Lien d'évitement |
-| `src/app/robots.ts` · `src/app/sitemap.ts` | Indexation |
-| `tests/unit/*.test.ts` | Vitest |
-| `tests/e2e/*.spec.ts` | Playwright |
-| `.github/workflows/ci.yml` | Intégration continue |
+| Fichier                                                       | Responsabilité                                                          |
+| ------------------------------------------------------------- | ----------------------------------------------------------------------- |
+| `docs/content-archive/*.json`                                 | Contenu extrait de l'ancien site, source du plan 2                      |
+| `scripts/validate-archive.mjs`                                | Vérifie que l'archive est complète et bien formée                       |
+| `package.json`                                                | Dépendances — repartir de zéro                                          |
+| `tsconfig.json`                                               | TypeScript strict + `noUncheckedIndexedAccess`                          |
+| `eslint.config.mjs`                                           | ESLint 9 flat, `eslint-config-next` 16, a11y                            |
+| `.prettierrc.mjs` · `.lintstagedrc.mjs` · `.husky/pre-commit` | Formatage automatique                                                   |
+| `vitest.config.ts`                                            | Tests unitaires                                                         |
+| `playwright.config.ts`                                        | Tests de parcours                                                       |
+| `postcss.config.mjs`                                          | `@tailwindcss/postcss`                                                  |
+| `src/styles/globals.css`                                      | **Unique** source des tokens et des rôles de couleur                    |
+| `src/lib/fonts.ts`                                            | Les trois polices, et rien d'autre                                      |
+| `src/i18n/routing.ts`                                         | Locales, préfixe, slugs localisés                                       |
+| `src/i18n/request.ts`                                         | Chargement des messages par requête                                     |
+| `src/i18n/navigation.ts`                                      | `Link`, `redirect`, `usePathname`, `useRouter`, `getPathname` localisés |
+| `src/proxy.ts`                                                | Routage i18n (ex-`middleware.ts`)                                       |
+| `messages/fr.json` · `messages/en.json`                       | Traductions d'interface                                                 |
+| `next.config.ts`                                              | Plugin next-intl, redirections 301, en-têtes de sécurité                |
+| `src/app/(site)/[locale]/layout.tsx`                          | **Racine HTML du site** — providers, header, footer                     |
+| `src/app/(site)/[locale]/page.tsx`                            | Accueil provisoire                                                      |
+| `src/components/layout/site-header.tsx`                       | Navigation, sélecteur de langue, bascule de thème                       |
+| `src/components/layout/site-footer.tsx`                       | Pied de page                                                            |
+| `src/components/layout/language-switch.tsx`                   | Bascule FR/EN conservant la page courante                               |
+| `src/components/layout/theme-toggle.tsx`                      | Bascule clair/sombre                                                    |
+| `src/components/layout/skip-link.tsx`                         | Lien d'évitement                                                        |
+| `src/app/robots.ts` · `src/app/sitemap.ts`                    | Indexation                                                              |
+| `tests/unit/*.test.ts`                                        | Vitest                                                                  |
+| `tests/e2e/*.spec.ts`                                         | Playwright                                                              |
+| `.github/workflows/ci.yml`                                    | Intégration continue                                                    |
 
 **Pourquoi le groupe de routes `(site)`.** Le Studio Sanity vivra sur `/studio`, hors du segment `[locale]`. Next impose que la racine porte `<html>` et `<body>` ; deux racines distinctes exigent des groupes de routes et **aucun** `src/app/layout.tsx`. On pose la structure dès maintenant pour que le plan 2 s'y insère sans réorganisation.
 
@@ -72,10 +72,12 @@ Ces contraintes s'appliquent à **toutes** les tâches de ce plan.
 Rien n'est supprimé dans cette tâche. Elle produit la source de données du plan 2.
 
 **Files:**
+
 - Create: `docs/content-archive/projects.json`, `blog.json`, `services.json`, `skills.json`, `experiences.json`, `profile.json`
 - Create: `scripts/validate-archive.mjs`
 
 **Interfaces:**
+
 - Consumes: rien
 - Produces: `docs/content-archive/*.json` — consommé par le plan 2 (import Sanity). Formes garanties : `projects[]` (10 entrées, champ `id` unique), `blog[]` (5), `services[]` (4), `skills[]` (catégories avec `items[]`), `experiences[]` (2), `profile{fr,en}`.
 
@@ -101,8 +103,8 @@ Lire `src/context/LanguageContext.tsx`. Y figurent `enTranslations` et `frTransl
 
 ```json
 {
-  "fr": { "hero": { }, "about": { } },
-  "en": { "hero": { }, "about": { } }
+  "fr": {"hero": {}, "about": {}},
+  "en": {"hero": {}, "about": {}}
 }
 ```
 
@@ -115,40 +117,78 @@ Copier les objets `hero` et `about` de chaque langue sans les reformuler. Ces te
 import {readFileSync} from 'node:fs';
 
 const read = (name) =>
-  JSON.parse(readFileSync(new URL(`../docs/content-archive/${name}.json`, import.meta.url), 'utf8'));
+  JSON.parse(
+    readFileSync(new URL(`../docs/content-archive/${name}.json`, import.meta.url), 'utf8'),
+  );
 
 const checks = [
-  ['projects', () => { const d = read('projects');
-    if (!Array.isArray(d) || d.length !== 10) throw new Error(`10 projets attendus, ${d.length} trouvés`);
-    const ids = new Set(d.map((p) => p.id));
-    if (ids.size !== 10) throw new Error('identifiants de projet en double');
-    if (d.filter((p) => p.featured).length !== 4) throw new Error('4 projets "featured" attendus');
-    return `${d.length} projets`; }],
-  ['blog', () => { const d = read('blog');
-    if (d.length !== 5) throw new Error(`5 articles attendus, ${d.length}`);
-    return `${d.length} articles`; }],
-  ['services', () => { const d = read('services');
-    if (d.length !== 4) throw new Error(`4 services attendus, ${d.length}`);
-    return `${d.length} services`; }],
-  ['skills', () => { const d = read('skills');
-    if (!d.every((c) => Array.isArray(c.items))) throw new Error('catégorie sans items[]');
-    return `${d.length} catégories, ${d.reduce((n, c) => n + c.items.length, 0)} compétences`; }],
-  ['experiences', () => { const d = read('experiences');
-    if (d.length !== 2) throw new Error(`2 expériences attendues, ${d.length}`);
-    if (!d.every((e) => Array.isArray(e.achievements) && e.achievements.length))
-      throw new Error('expérience sans achievements[]');
-    return `${d.length} expériences`; }],
-  ['profile', () => { const d = read('profile');
-    for (const l of ['fr', 'en']) {
-      if (!d[l]?.hero || !d[l]?.about) throw new Error(`profile.${l}.hero ou .about manquant`);
-    }
-    return 'fr + en'; }],
+  [
+    'projects',
+    () => {
+      const d = read('projects');
+      if (!Array.isArray(d) || d.length !== 10)
+        throw new Error(`10 projets attendus, ${d.length} trouvés`);
+      const ids = new Set(d.map((p) => p.id));
+      if (ids.size !== 10) throw new Error('identifiants de projet en double');
+      if (d.filter((p) => p.featured).length !== 4)
+        throw new Error('4 projets "featured" attendus');
+      return `${d.length} projets`;
+    },
+  ],
+  [
+    'blog',
+    () => {
+      const d = read('blog');
+      if (d.length !== 5) throw new Error(`5 articles attendus, ${d.length}`);
+      return `${d.length} articles`;
+    },
+  ],
+  [
+    'services',
+    () => {
+      const d = read('services');
+      if (d.length !== 4) throw new Error(`4 services attendus, ${d.length}`);
+      return `${d.length} services`;
+    },
+  ],
+  [
+    'skills',
+    () => {
+      const d = read('skills');
+      if (!d.every((c) => Array.isArray(c.items))) throw new Error('catégorie sans items[]');
+      return `${d.length} catégories, ${d.reduce((n, c) => n + c.items.length, 0)} compétences`;
+    },
+  ],
+  [
+    'experiences',
+    () => {
+      const d = read('experiences');
+      if (d.length !== 2) throw new Error(`2 expériences attendues, ${d.length}`);
+      if (!d.every((e) => Array.isArray(e.achievements) && e.achievements.length))
+        throw new Error('expérience sans achievements[]');
+      return `${d.length} expériences`;
+    },
+  ],
+  [
+    'profile',
+    () => {
+      const d = read('profile');
+      for (const l of ['fr', 'en']) {
+        if (!d[l]?.hero || !d[l]?.about) throw new Error(`profile.${l}.hero ou .about manquant`);
+      }
+      return 'fr + en';
+    },
+  ],
 ];
 
 let failed = 0;
 for (const [name, run] of checks) {
-  try { console.log(`  ok   ${name.padEnd(12)} ${run()}`); }
-  catch (e) { failed++; console.error(`  FAIL ${name.padEnd(12)} ${e.message}`); }
+  try {
+    console.log(`  ok   ${name.padEnd(12)} ${run()}`);
+  } catch (e) {
+    failed++;
+    console.error(`  FAIL ${name.padEnd(12)} ${e.message}`);
+  }
 }
 console.log(failed ? `\n${failed} vérification(s) en échec` : '\nArchive complète.');
 process.exit(failed ? 1 : 0);
@@ -180,11 +220,13 @@ Co-Authored-By: Claude Opus 5 (1M context) <noreply@anthropic.com>"
 ### Task 2 : Table rase — dépendances et fichiers morts
 
 **Files:**
+
 - Modify: `package.json` (réécriture complète)
 - Delete: `src/app/admin/`, `src/app/api/`, `src/data/`, `src/context/`, `src/components/`, `src/types/`, `src/app/about/`, `src/app/blog/`, `src/app/contact/`, `src/app/projects/`, `src/app/resume/`, `src/app/page.tsx`, `src/app/layout.tsx`, `src/app/globals.css`, `tailwind.config.js`, `netlify.toml`, `windsurf_deployment.yaml`
 - Create: `src/app/(site)/[locale]/layout.tsx` (provisoire), `src/app/(site)/[locale]/page.tsx` (provisoire), `src/styles/globals.css` (provisoire)
 
 **Interfaces:**
+
 - Consumes: `docs/content-archive/*.json` de la tâche 1 doit être commité **avant** toute suppression
 - Produces: un `package.json` sans dépendance morte ; l'arborescence `src/app/(site)/[locale]/`
 
@@ -269,12 +311,12 @@ npm install
 
 ```css
 /* src/styles/globals.css — remplacé intégralement à la tâche 4 */
-@import "tailwindcss";
+@import 'tailwindcss';
 ```
 
 ```tsx
 // src/app/(site)/[locale]/layout.tsx — remplacé à la tâche 6
-import "@/styles/globals.css";
+import '@/styles/globals.css';
 
 export default function RootLayout({children}: {children: React.ReactNode}) {
   return (
@@ -321,10 +363,12 @@ Co-Authored-By: Claude Opus 5 (1M context) <noreply@anthropic.com>"
 ### Task 3 : Outillage — TypeScript strict, ESLint, Prettier, Vitest
 
 **Files:**
+
 - Modify: `tsconfig.json`, `eslint.config.mjs`, `postcss.config.mjs`
 - Create: `.prettierrc.mjs`, `.prettierignore`, `.lintstagedrc.mjs`, `.husky/pre-commit`, `vitest.config.ts`, `tests/unit/setup.test.ts`
 
 **Interfaces:**
+
 - Consumes: `package.json` de la tâche 2
 - Produces: `npm run lint`, `npm run typecheck`, `npm test` — utilisés par la CI en tâche 9
 
@@ -497,10 +541,12 @@ Co-Authored-By: Claude Opus 5 (1M context) <noreply@anthropic.com>"
 ### Task 4 : Design tokens et polices
 
 **Files:**
+
 - Create: `src/lib/fonts.ts`, `tests/unit/tokens.test.ts`
 - Modify: `src/styles/globals.css` (réécriture complète)
 
 **Interfaces:**
+
 - Consumes: `postcss.config.mjs` et Vitest de la tâche 3
 - Produces:
   - `src/lib/fonts.ts` exporte `fontVariables: string` — la chaîne de classes CSS à poser sur `<html>` (tâche 6)
@@ -565,7 +611,7 @@ Expected: ÉCHEC — `globals.css` ne contient encore que `@import "tailwindcss"
 - [ ] **Step 3 : Écrire `src/styles/globals.css`**
 
 ```css
-@import "tailwindcss";
+@import 'tailwindcss';
 
 /* Mode sombre piloté par la classe posée par next-themes, pas par la
    préférence système : l'utilisateur doit pouvoir choisir. */
@@ -598,24 +644,24 @@ Expected: ÉCHEC — `globals.css` ne contient encore que `@import "tailwindcss"
 
   /* ---- Rôles de couleur, mode clair ----
      Aucun composant n'écrit d'hexadécimal : tout passe par ces rôles. */
-  --color-paper: #F6F7F4;
+  --color-paper: #f6f7f4;
   --color-ink: #111512;
-  --color-muted: #828A84;
-  --color-line: #E3E6E1;
-  --color-accent: #1F5140;
-  --color-highlight: #D9A441;
+  --color-muted: #828a84;
+  --color-line: #e3e6e1;
+  --color-accent: #1f5140;
+  --color-highlight: #d9a441;
   --color-highlight-ink: #111512;
 }
 
 /* ---- Mêmes rôles, valeurs sombres ---- */
 .dark {
-  --color-paper: #0F1211;
-  --color-ink: #E7EAE6;
-  --color-muted: #767E79;
-  --color-line: #1F2422;
-  --color-accent: #6CC3A2;
-  --color-highlight: #D9A441;
-  --color-highlight-ink: #0F1211;
+  --color-paper: #0f1211;
+  --color-ink: #e7eae6;
+  --color-muted: #767e79;
+  --color-line: #1f2422;
+  --color-accent: #6cc3a2;
+  --color-highlight: #d9a441;
+  --color-highlight-ink: #0f1211;
 }
 
 @layer base {
@@ -717,11 +763,13 @@ Co-Authored-By: Claude Opus 5 (1M context) <noreply@anthropic.com>"
 ### Task 5 : Routage i18n
 
 **Files:**
+
 - Create: `src/i18n/routing.ts`, `src/i18n/request.ts`, `src/i18n/navigation.ts`, `src/proxy.ts`, `messages/fr.json`, `messages/en.json`, `tests/unit/routing.test.ts`
 - Modify: `next.config.ts` (créé ici, remplace `next.config.mjs`)
 - Delete: `next.config.mjs`
 
 **Interfaces:**
+
 - Consumes: rien des tâches précédentes
 - Produces:
   - `routing` (`src/i18n/routing.ts`) — objet `defineRouting`, `locales: ['fr','en']`, `defaultLocale: 'fr'`, `localePrefix: 'always'`
@@ -765,13 +813,14 @@ describe('messages', () => {
   /** Aplatit un objet imbriqué en paires [chemin pointé, valeur]. */
   function entries(value: unknown, prefix = ''): Array<[string, string]> {
     if (typeof value !== 'object' || value === null) return [[prefix, String(value)]];
-    return Object.entries(value).flatMap(([k, v]) =>
-      entries(v, prefix ? `${prefix}.${k}` : k),
-    );
+    return Object.entries(value).flatMap(([k, v]) => entries(v, prefix ? `${prefix}.${k}` : k));
   }
 
   it('expose exactement les mêmes clés en français et en anglais', () => {
-    const keys = (o: unknown) => entries(o).map(([k]) => k).sort();
+    const keys = (o: unknown) =>
+      entries(o)
+        .map(([k]) => k)
+        .sort();
     expect(keys(fr)).toEqual(keys(en));
   });
 
@@ -987,10 +1036,12 @@ Co-Authored-By: Claude Opus 5 (1M context) <noreply@anthropic.com>"
 ### Task 6 : Layout — thème, en-tête, pied de page
 
 **Files:**
+
 - Modify: `src/app/(site)/[locale]/layout.tsx`, `src/app/(site)/[locale]/page.tsx`
 - Create: `src/components/layout/site-header.tsx`, `site-footer.tsx`, `language-switch.tsx`, `theme-toggle.tsx`, `skip-link.tsx`, `src/components/theme-provider.tsx`, `src/app/(site)/[locale]/not-found.tsx`
 
 **Interfaces:**
+
 - Consumes: `fontVariables` (tâche 4) · `routing`, `Link`, `usePathname` (tâche 5) · clés `nav.*`, `theme.*`, `language.*`, `footer.*`, `a11y.*` (tâche 5)
 - Produces: `<main id="main">` présent sur toutes les pages — cible du lien d'évitement et des tests Playwright de la tâche 8
 
@@ -1042,8 +1093,13 @@ export default async function LocaleLayout({
 
   return (
     <html lang={locale} className={fontVariables} suppressHydrationWarning>
-      <body className="bg-paper text-ink flex min-h-screen flex-col">
-        <ThemeProvider attribute="class" defaultTheme="system" enableSystem disableTransitionOnChange>
+      <body className="flex min-h-screen flex-col bg-paper text-ink">
+        <ThemeProvider
+          attribute="class"
+          defaultTheme="system"
+          enableSystem
+          disableTransitionOnChange
+        >
           <NextIntlClientProvider>
             <SkipLink />
             <SiteHeader />
@@ -1072,7 +1128,7 @@ export function SkipLink() {
   return (
     <a
       href="#main"
-      className="bg-accent sr-only rounded-md px-4 py-2 text-sm text-white focus:not-sr-only focus:absolute focus:left-4 focus:top-4 focus:z-50"
+      className="sr-only rounded-md bg-accent px-4 py-2 text-sm text-white focus:not-sr-only focus:absolute focus:top-4 focus:left-4 focus:z-50"
     >
       {t('skipToContent')}
     </a>
@@ -1108,7 +1164,7 @@ export function ThemeToggle() {
       type="button"
       onClick={() => setTheme(next)}
       aria-label={t('toggle')}
-      className="border-line hover:border-accent font-mono text-xs uppercase tracking-widest rounded-sm border px-2 py-1"
+      className="rounded-sm border border-line px-2 py-1 font-mono text-xs tracking-widest uppercase hover:border-accent"
     >
       {resolvedTheme === 'dark' ? t('light') : t('dark')}
     </button>
@@ -1137,7 +1193,11 @@ export function LanguageSwitch({current}: {current: string}) {
     <nav aria-label={t('label')} className="flex items-center gap-1">
       {routing.locales.map((locale, index) => (
         <span key={locale} className="flex items-center gap-1">
-          {index > 0 && <span aria-hidden className="text-muted">/</span>}
+          {index > 0 && (
+            <span aria-hidden className="text-muted">
+              /
+            </span>
+          )}
           <Link
             href={pathname}
             locale={locale}
@@ -1145,8 +1205,8 @@ export function LanguageSwitch({current}: {current: string}) {
             aria-current={locale === current ? 'true' : undefined}
             className={
               locale === current
-                ? 'text-accent font-mono text-xs uppercase tracking-widest'
-                : 'text-muted hover:text-ink font-mono text-xs uppercase tracking-widest'
+                ? 'font-mono text-xs tracking-widest text-accent uppercase'
+                : 'font-mono text-xs tracking-widest text-muted uppercase hover:text-ink'
             }
           >
             {locale}
@@ -1180,7 +1240,7 @@ export function SiteHeader() {
   const locale = useLocale();
 
   return (
-    <header className="border-line border-b">
+    <header className="border-b border-line">
       <div className="mx-auto flex max-w-5xl items-baseline justify-between px-6 py-5">
         <Link href="/" className="font-serif text-lg">
           Florentin Tchangai
@@ -1192,7 +1252,7 @@ export function SiteHeader() {
               <Link
                 key={href}
                 href={href}
-                className="text-muted hover:text-ink font-mono text-xs uppercase tracking-widest"
+                className="font-mono text-xs tracking-widest text-muted uppercase hover:text-ink"
               >
                 {t(key)}
               </Link>
@@ -1216,9 +1276,11 @@ export function SiteFooter() {
   const year = new Date().getFullYear();
 
   return (
-    <footer className="border-line border-t">
-      <div className="text-muted mx-auto flex max-w-5xl flex-wrap justify-between gap-2 px-6 py-8 font-mono text-xs">
-        <span>© {year} Florentin Tchangai. {t('rights')}</span>
+    <footer className="border-t border-line">
+      <div className="mx-auto flex max-w-5xl flex-wrap justify-between gap-2 px-6 py-8 font-mono text-xs text-muted">
+        <span>
+          © {year} Florentin Tchangai. {t('rights')}
+        </span>
         <span>{t('builtWith')}</span>
       </div>
     </footer>
@@ -1242,7 +1304,7 @@ export default async function HomePage({params}: {params: Promise<{locale: strin
         Je conçois, construis et fais évoluer des{' '}
         <em className="text-accent italic">systèmes numériques.</em>
       </h1>
-      <p className="text-muted mt-6 max-w-prose">
+      <p className="mt-6 max-w-prose text-muted">
         Fondations en place. Le contenu arrive au plan 2.
       </p>
     </div>
@@ -1259,9 +1321,9 @@ export default function NotFound() {
   const t = useTranslations('nav');
   return (
     <div className="mx-auto max-w-5xl px-6 py-24">
-      <p className="text-muted font-mono text-xs uppercase tracking-widest">404</p>
-      <h1 className="font-serif mt-3 text-3xl">Page introuvable</h1>
-      <Link href="/" className="text-accent mt-6 inline-block underline underline-offset-4">
+      <p className="font-mono text-xs tracking-widest text-muted uppercase">404</p>
+      <h1 className="mt-3 font-serif text-3xl">Page introuvable</h1>
+      <Link href="/" className="mt-6 inline-block text-accent underline underline-offset-4">
         {t('home')}
       </Link>
     </div>
@@ -1293,10 +1355,12 @@ Co-Authored-By: Claude Opus 5 (1M context) <noreply@anthropic.com>"
 ### Task 7 : Redirections, en-têtes de sécurité, robots et sitemap
 
 **Files:**
+
 - Modify: `next.config.ts`
 - Create: `src/lib/redirects.ts`, `src/app/robots.ts`, `src/app/sitemap.ts`, `src/lib/site.ts`, `tests/unit/redirects.test.ts`
 
 **Interfaces:**
+
 - Consumes: `routing` (tâche 5)
 - Produces:
   - `LEGACY_REDIRECTS: readonly Redirect[]` (`src/lib/redirects.ts`) — consommé par `next.config.ts` **et** par le test
@@ -1500,10 +1564,12 @@ Co-Authored-By: Claude Opus 5 (1M context) <noreply@anthropic.com>"
 ### Task 8 : `/admin` en 410 et parcours Playwright
 
 **Files:**
+
 - Create: `src/app/admin/route.ts`, `playwright.config.ts`, `tests/e2e/foundations.spec.ts`
 - Modify: `.gitignore`
 
 **Interfaces:**
+
 - Consumes: `<main id="main">` (tâche 6) · redirections (tâche 7)
 - Produces: `npm run test:e2e` — utilisé par la CI en tâche 9
 
@@ -1589,7 +1655,12 @@ export default defineConfig({
   // Pas de serveur à démarrer si l'on teste une URL d'aperçu Vercel.
   webServer: process.env.PLAYWRIGHT_BASE_URL
     ? undefined
-    : {command: 'npm run build && npm start', url: 'http://localhost:3000', reuseExistingServer: !process.env.CI, timeout: 120_000},
+    : {
+        command: 'npm run build && npm start',
+        url: 'http://localhost:3000',
+        reuseExistingServer: !process.env.CI,
+        timeout: 120_000,
+      },
 });
 ```
 
@@ -1649,9 +1720,11 @@ Co-Authored-By: Claude Opus 5 (1M context) <noreply@anthropic.com>"
 ### Task 9 : Intégration continue
 
 **Files:**
+
 - Create: `.github/workflows/ci.yml`
 
 **Interfaces:**
+
 - Consumes: `lint`, `typecheck`, `test`, `build`, `test:e2e`, `validate:archive` (tâches 1, 3, 8)
 - Produces: une vérification obligatoire sur toute PR vers `dev` et `main`
 
@@ -1738,6 +1811,7 @@ git push origin dev
 - [ ] **Step 4 : Vérifier l'aperçu Vercel**
 
 Ouvrir l'aperçu de `dev` et contrôler :
+
 - `/` redirige vers `/fr`
 - `/fr` et `/en` s'affichent, en-tête et pied de page compris
 - la bascule de langue conserve la page

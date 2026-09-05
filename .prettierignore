@@ -4,3 +4,5 @@ playwright-report
 test-results
 public
 docs/content-archive
+package-lock.json
+.remember

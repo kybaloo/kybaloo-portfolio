@@ -19,10 +19,13 @@ jobs:
 
       - uses: actions/setup-node@v4
         with:
-          node-version: 24
+          node-version-file: '.nvmrc'
           cache: npm
 
       - run: npm ci
+
+      - name: Formatage
+        run: npm run format:check
 
       - name: Archive du contenu
         run: npm run validate:archive
