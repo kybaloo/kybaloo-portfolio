@@ -38,11 +38,11 @@ Ces quatre publics veulent la même chose : **des preuves de travail lisibles**.
 
 ### 2.1 Sécurité — critique
 
-| Emplacement | Problème |
-|---|---|
-| `src/app/admin/page.tsx:17` | Mot de passe `kybaloo123` en clair dans le bundle **client**. Authentification par `localStorage`. |
-| `src/app/api/projects/route.ts` | `POST` et `DELETE` sans aucune authentification serveur. |
-| `src/app/api/blog/route.ts` | Idem. |
+| Emplacement                     | Problème                                                                                                                                                              |
+| ------------------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `src/app/admin/page.tsx:17`     | Mot de passe codé en dur, en clair, dans le bundle **client** — visible de quiconque inspecte le JavaScript livré au navigateur. Authentification par `localStorage`. |
+| `src/app/api/projects/route.ts` | `POST` et `DELETE` sans aucune authentification serveur.                                                                                                              |
+| `src/app/api/blog/route.ts`     | Idem.                                                                                                                                                                 |
 
 Ces routes écrivent via `fs.writeFileSync`, ce qui échoue de toute façon sur Vercel (système de fichiers en lecture seule) — mais elles restent joignables publiquement.
 
@@ -60,12 +60,12 @@ Ces routes écrivent via `fs.writeFileSync`, ce qui échoue de toute façon sur 
 
 ### 2.3 Incohérences de configuration
 
-| Paquet | Déclaré | Réalité |
-|---|---|---|
-| `next` | 14.2.35 | 16.3.4 disponible |
-| `react` | `^18` | mais `@types/react: ^19` |
-| `tailwindcss` | `^4` | avec un `tailwind.config.js` en syntaxe v3 |
-| `eslint-config-next` | 15.3.0 | avec Next 14 |
+| Paquet               | Déclaré | Réalité                                    |
+| -------------------- | ------- | ------------------------------------------ |
+| `next`               | 14.2.35 | 16.3.4 disponible                          |
+| `react`              | `^18`   | mais `@types/react: ^19`                   |
+| `tailwindcss`        | `^4`    | avec un `tailwind.config.js` en syntaxe v3 |
+| `eslint-config-next` | 15.3.0  | avec Next 14                               |
 
 `tailwind.config.js` force `important: true`, et `globals.css` compte une quarantaine de `!important` — conséquence directe de trois systèmes de thème concurrents.
 
@@ -93,16 +93,16 @@ Le site cumule les marqueurs du template généré : dégradé bleu → violet �
 
 ## 3. Décisions
 
-| Sujet | Décision | Justification |
-|---|---|---|
-| Stratégie | **Reconstruction propre sur `dev`** | Une migration incrémentale coûterait plus cher : chaque étape réconcilierait une configuration destinée à disparaître. |
-| Contenu | **Sanity** | Le besoin est éditorial, pas transactionnel. Supabase imposerait de reconstruire un back-office, une gestion i18n et une transformation d'images que Sanity fournit. |
-| Framework | **Next 16.3.4 / React 19.2** | Contrainte dure : `next-sanity@13` exige `next: "^16.0.0-0"`. |
-| i18n | **next-intl 4.14**, routage `/fr` `/en`, slugs localisés | Vraies URLs indexables par langue, `hreflang` croisé. |
-| Positionnement | **Technology Architect / Consultant** | Décision de l'auteur. Conditionne le hero, les services et le modèle de projet. |
-| Direction visuelle | **Éditoriale** | Se distingue du template, vieillit bien, sert les quatre publics. |
-| Animation | **Aucune bibliothèque** | `framer-motion` pèse ~50 kB et les apparitions au défilement sont précisément le tic à supprimer. CSS et View Transitions natives suffisent. |
-| Formulaire | **Server Actions + Zod + Resend** | Aucune base de données nécessaire pour un formulaire de contact. |
+| Sujet              | Décision                                                 | Justification                                                                                                                                                        |
+| ------------------ | -------------------------------------------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| Stratégie          | **Reconstruction propre sur `dev`**                      | Une migration incrémentale coûterait plus cher : chaque étape réconcilierait une configuration destinée à disparaître.                                               |
+| Contenu            | **Sanity**                                               | Le besoin est éditorial, pas transactionnel. Supabase imposerait de reconstruire un back-office, une gestion i18n et une transformation d'images que Sanity fournit. |
+| Framework          | **Next 16.3.4 / React 19.2**                             | Contrainte dure : `next-sanity@13` exige `next: "^16.0.0-0"`.                                                                                                        |
+| i18n               | **next-intl 4.14**, routage `/fr` `/en`, slugs localisés | Vraies URLs indexables par langue, `hreflang` croisé.                                                                                                                |
+| Positionnement     | **Technology Architect / Consultant**                    | Décision de l'auteur. Conditionne le hero, les services et le modèle de projet.                                                                                      |
+| Direction visuelle | **Éditoriale**                                           | Se distingue du template, vieillit bien, sert les quatre publics.                                                                                                    |
+| Animation          | **Aucune bibliothèque**                                  | `framer-motion` pèse ~50 kB et les apparitions au défilement sont précisément le tic à supprimer. CSS et View Transitions natives suffisent.                         |
+| Formulaire         | **Server Actions + Zod + Resend**                        | Aucune base de données nécessaire pour un formulaire de contact.                                                                                                     |
 
 ### Compatibilité vérifiée
 
@@ -121,19 +121,19 @@ shadcn@4.21.0
 
 ### 4.1 Pile
 
-| Rôle | Choix |
-|---|---|
-| Framework | Next 16.3.4 (App Router, RSC par défaut) / React 19.2 |
-| Langage | TypeScript strict, `noUncheckedIndexedAccess` activé |
-| Styles | Tailwind v4 en CSS-first (`@theme`) — pas de `tailwind.config.js` |
-| Primitives UI | shadcn/ui 4.21 — uniquement les composants réellement employés |
-| Contenu | Sanity 6.12 + `next-sanity` 13.3, Studio embarqué sur `/studio` |
-| Typage du contenu | Sanity TypeGen — types générés depuis les requêtes GROQ |
-| i18n | next-intl 4.14 |
-| Thème | next-themes 0.4.6 |
-| Formulaires | Server Actions + Zod |
-| Email | Resend + react-email |
-| Animation | aucune bibliothèque |
+| Rôle              | Choix                                                             |
+| ----------------- | ----------------------------------------------------------------- |
+| Framework         | Next 16.3.4 (App Router, RSC par défaut) / React 19.2             |
+| Langage           | TypeScript strict, `noUncheckedIndexedAccess` activé              |
+| Styles            | Tailwind v4 en CSS-first (`@theme`) — pas de `tailwind.config.js` |
+| Primitives UI     | shadcn/ui 4.21 — uniquement les composants réellement employés    |
+| Contenu           | Sanity 6.12 + `next-sanity` 13.3, Studio embarqué sur `/studio`   |
+| Typage du contenu | Sanity TypeGen — types générés depuis les requêtes GROQ           |
+| i18n              | next-intl 4.14                                                    |
+| Thème             | next-themes 0.4.6                                                 |
+| Formulaires       | Server Actions + Zod                                              |
+| Email             | Resend + react-email                                              |
+| Animation         | aucune bibliothèque                                               |
 
 ### 4.2 Arborescence
 
@@ -192,15 +192,15 @@ Rendu statique, revalidé par webhook Sanity à la publication.
 
 Permanentes (301), obligatoires — le site est déjà indexé :
 
-| Ancienne | Nouvelle |
-|---|---|
-| `/about` | `/fr/parcours` |
-| `/projects` | `/fr/travaux` |
-| `/blog` | `/fr/ecrits` |
+| Ancienne       | Nouvelle            |
+| -------------- | ------------------- |
+| `/about`       | `/fr/parcours`      |
+| `/projects`    | `/fr/travaux`       |
+| `/blog`        | `/fr/ecrits`        |
 | `/blog/[slug]` | `/fr/ecrits/[slug]` |
-| `/resume` | `/fr/parcours` |
-| `/contact` | `/fr/contact` |
-| `/admin` | **410 Gone** |
+| `/resume`      | `/fr/parcours`      |
+| `/contact`     | `/fr/contact`       |
+| `/admin`       | **410 Gone**        |
 
 ---
 
@@ -208,31 +208,31 @@ Permanentes (301), obligatoires — le site est déjà indexé :
 
 ### 5.1 Typographie
 
-| Rôle | Police | Usage |
-|---|---|---|
+| Rôle   | Police                                      | Usage                                          |
+| ------ | ------------------------------------------- | ---------------------------------------------- |
 | Titres | **Newsreader** (variable, tailles optiques) | titres, noms de projets, chiffres mis en avant |
-| Texte | **Inter** | paragraphes, interface |
-| Méta | **JetBrains Mono** | étiquettes, années, stacks, numéros |
+| Texte  | **Inter**                                   | paragraphes, interface                         |
+| Méta   | **JetBrains Mono**                          | étiquettes, années, stacks, numéros            |
 
 Chargées par `next/font/google` : auto-hébergées, aucune requête externe, aucun décalage de mise en page.
 
 ### 5.2 Couleur
 
-| Rôle | Clair | Sombre |
-|---|---|---|
-| `--color-paper` | `#F6F7F4` | `#0F1211` |
-| `--color-ink` | `#111512` | `#E7EAE6` |
-| `--color-accent` | `#1F5140` | `#6CC3A2` |
-| `--color-highlight` | `#D9A441` | `#D9A441` |
+| Rôle                    | Clair     | Sombre    |
+| ----------------------- | --------- | --------- |
+| `--color-paper`         | `#F6F7F4` | `#0F1211` |
+| `--color-ink`           | `#111512` | `#E7EAE6` |
+| `--color-accent`        | `#1F5140` | `#6CC3A2` |
+| `--color-highlight`     | `#D9A441` | `#D9A441` |
 | `--color-highlight-ink` | `#111512` | `#0F1211` |
 
 Contrastes vérifiés :
 
-| Association | Ratio | WCAG |
-|---|---|---|
-| Vert sur papier | 8,5:1 | AAA |
-| Encre sur or | 8,3:1 | AAA |
-| Or sur fond sombre | 8,5:1 | AAA |
+| Association             | Ratio     | WCAG      |
+| ----------------------- | --------- | --------- |
+| Vert sur papier         | 8,5:1     | AAA       |
+| Encre sur or            | 8,3:1     | AAA       |
+| Or sur fond sombre      | 8,5:1     | AAA       |
 | **Or sur papier clair** | **2,1:1** | **échec** |
 
 **Règle de l'or.** Autorisé en fond (avec encre par-dessus), en aplat plein (puce, filet, soulignement au survol), et en texte **uniquement en mode sombre**. Interdit en texte sur fond clair, en fond de bouton avec texte clair, en dégradé, et au-delà d'environ 5 % de la surface. C'est un accent d'exception, pas une seconde couleur de marque.
@@ -244,16 +244,24 @@ Déclarés une seule fois dans `globals.css` via `@theme`. Aucun composant n'éc
 ```css
 @theme {
   /* Échelle typographique — ratio 1.25, ancrée sur 16px */
-  --text-xs: 0.75rem;   --text-sm: 0.875rem;  --text-base: 1rem;
-  --text-lg: 1.25rem;   --text-xl: 1.563rem;  --text-2xl: 1.953rem;
-  --text-3xl: 2.441rem; --text-4xl: 3.052rem; --text-5xl: 3.815rem;
+  --text-xs: 0.75rem;
+  --text-sm: 0.875rem;
+  --text-base: 1rem;
+  --text-lg: 1.25rem;
+  --text-xl: 1.563rem;
+  --text-2xl: 1.953rem;
+  --text-3xl: 2.441rem;
+  --text-4xl: 3.052rem;
+  --text-5xl: 3.815rem;
 
-  --spacing: 0.25rem;                          /* uniquement des multiples de 4px */
-  --radius-sm: 3px; --radius-md: 5px; --radius-lg: 8px;
+  --spacing: 0.25rem; /* uniquement des multiples de 4px */
+  --radius-sm: 3px;
+  --radius-md: 5px;
+  --radius-lg: 8px;
 
   --font-serif: var(--font-newsreader);
-  --font-sans:  var(--font-inter);
-  --font-mono:  var(--font-jetbrains);
+  --font-sans: var(--font-inter);
+  --font-mono: var(--font-jetbrains);
 }
 ```
 
@@ -274,14 +282,14 @@ Ces éléments produisaient la signature « template généré » et sont bannis
 
 ### Accueil
 
-| # | Bloc | Public servi |
-|---|---|---|
-| 1 | Hero — positionnement architecte, disponibilité, « Me contacter » + « CV » | freelance, CDI |
-| 2 | Expertise condensée — l'arc et les cinq titres, lien vers `/expertise` | tous |
-| 3 | Travaux sélectionnés — 3 à 4 projets en liste éditoriale numérotée | tous |
-| 4 | Parcours condensé — Ecobank, années, domaines | CDI, crédibilité locale |
-| 5 | Écrits — 2 derniers articles, **bloc masqué si vide** | lecteurs techniques |
-| 6 | Contact — disponibilité et formulaire | freelance |
+| #   | Bloc                                                                       | Public servi            |
+| --- | -------------------------------------------------------------------------- | ----------------------- |
+| 1   | Hero — positionnement architecte, disponibilité, « Me contacter » + « CV » | freelance, CDI          |
+| 2   | Expertise condensée — l'arc et les cinq titres, lien vers `/expertise`     | tous                    |
+| 3   | Travaux sélectionnés — 3 à 4 projets en liste éditoriale numérotée         | tous                    |
+| 4   | Parcours condensé — Ecobank, années, domaines                              | CDI, crédibilité locale |
+| 5   | Écrits — 2 derniers articles, **bloc masqué si vide**                      | lecteurs techniques     |
+| 6   | Contact — disponibilité et formulaire                                      | freelance               |
 
 Tout bloc sans contenu disparaît entièrement. Une section vide nuit plus qu'une section absente.
 
@@ -291,17 +299,17 @@ Message central : **« Je conçois, construis et fais évoluer des systèmes num
 
 Les cinq services sont présentés comme les étapes d'une même expertise, numérotés dans l'ordre de l'arc :
 
-| N° | Service | Étape |
-|---|---|---|
-| 01 | Technology Strategy | Understand |
-| 02 | Architecture & Systems | Architect |
-| 03 | Digital Products | Build |
-| 04 | Data & Intelligence | Measure |
-| 05 | Digital Transformation | Improve |
+| N°  | Service                | Étape      |
+| --- | ---------------------- | ---------- |
+| 01  | Technology Strategy    | Understand |
+| 02  | Architecture & Systems | Architect  |
+| 03  | Digital Products       | Build      |
+| 04  | Data & Intelligence    | Measure    |
+| 05  | Digital Transformation | Improve    |
 
 Chaque service porte son étape en étiquette et la liste de ses mots-clés.
 
-En bas de page, une ligne `Capabilities` discrète : *Software Engineering · Cloud · DevOps · UX · Mobile · APIs · BI · Data Engineering*. Présente pour les mots-clés et l'indexation, sans concurrencer les cinq services. **UX Design, Mobile et Web Development n'apparaissent jamais comme services principaux.**
+En bas de page, une ligne `Capabilities` discrète : _Software Engineering · Cloud · DevOps · UX · Mobile · APIs · BI · Data Engineering_. Présente pour les mots-clés et l'indexation, sans concurrencer les cinq services. **UX Design, Mobile et Web Development n'apparaissent jamais comme services principaux.**
 
 ### Fiche projet
 
@@ -340,10 +348,10 @@ settings     ⬦ singleton — SEO par défaut · image OG
 
 ### Internationalisation du contenu — modèle hybride
 
-| Type | Stratégie | Raison |
-|---|---|---|
-| `post` | **niveau document** (`@sanity/document-internationalization`) | un article peut n'exister qu'en une langue ; les textes divergent réellement |
-| `project`, `service`, `experience`, `skill`, `profile` | **niveau champ** (`sanity-plugin-internationalized-array`) | images, stack, liens et dates sont communs — les dupliquer créerait deux versions à désynchroniser |
+| Type                                                   | Stratégie                                                     | Raison                                                                                             |
+| ------------------------------------------------------ | ------------------------------------------------------------- | -------------------------------------------------------------------------------------------------- |
+| `post`                                                 | **niveau document** (`@sanity/document-internationalization`) | un article peut n'exister qu'en une langue ; les textes divergent réellement                       |
+| `project`, `service`, `experience`, `skill`, `profile` | **niveau champ** (`sanity-plugin-internationalized-array`)    | images, stack, liens et dates sont communs — les dupliquer créerait deux versions à désynchroniser |
 
 Tout au niveau document imposerait de ré-téléverser chaque capture en double. Tout au niveau champ rendrait la rédaction d'articles pénible.
 
@@ -369,11 +377,11 @@ Les requêtes GROQ vivent dans `sanity/queries/`. `sanity typegen generate` prod
 
 ### Transformé
 
-| Source | Devient |
-|---|---|
-| `skills.json` — `"level": 95` | niveau d'usage : `quotidien` / `régulier` / `notions`, plus les projets qui le prouvent |
-| `services.json` — 4 prestations | les 5 services du positionnement architecte |
-| `projects.json` | documents `project` enrichis des champs d'architecture (à compléter par l'auteur) |
+| Source                          | Devient                                                                                 |
+| ------------------------------- | --------------------------------------------------------------------------------------- |
+| `skills.json` — `"level": 95`   | niveau d'usage : `quotidien` / `régulier` / `notions`, plus les projets qui le prouvent |
+| `services.json` — 4 prestations | les 5 services du positionnement architecte                                             |
+| `projects.json`                 | documents `project` enrichis des champs d'architecture (à compléter par l'auteur)       |
 
 Les pourcentages disparaissent : ils ne mesurent rien et signalent un portfolio junior auprès du public technique visé.
 
