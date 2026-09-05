@@ -18,54 +18,102 @@ interface Experience {
 
 const experiences: Experience[] = [
   {
-    id: "ecobank",
+    id: "ecobank-risk",
     company: "Ecobank Transnational Incorporated",
-    position: "Web & SQL Developer",
-    duration: "September 2022 - Present",
+    position: "Développeur Web & SQL",
+    duration: "Novembre 2024 - Présent",
     location: "Lomé, Togo",
     description:
-      "Leading development of core banking applications and data analytics solutions serving millions of customers across Africa.",
+      "Automatisation des processus d'évaluation des risques des portefeuilles de prêts et développement de solutions d'analyse financière.",
     achievements: [
-      "Developed and maintained SmartLoan digital lending platform, processing over $50M in loan applications",
-      "Designed and implemented real-time data analytics dashboards using Power BI and Tableau",
-      "Optimized database queries resulting in 40% improvement in application performance",
-      "Led integration of core banking systems with external APIs and third-party services",
-      "Mentored junior developers and conducted code reviews for quality assurance",
+      "Automatisation des processus d'évaluation des risques des portefeuilles de prêts (VBA & .NET)",
+      "Développement de fonctions SQL pour l'analyse et le calcul des indicateurs de risque",
+      "Support à l'analyse de portefeuille de crédits et aide à la prise de décision stratégique",
+      "Utilisation de SQL et Excel pour le traitement et l'analyse de données",
+      "Amélioration de l'efficacité des processus d'évaluation des risques",
     ],
-    technologies: ["PHP", "Laravel", "Vue.js", "SQL Server", "Power BI", ".NET", "C#", "REST APIs"],
+    technologies: ["VBA", ".NET", "SQL Server", "Excel", "C#", "Risk Analysis"],
   },
   {
-    id: "freelance",
-    company: "Freelance Developer",
-    position: "Full Stack Web Developer",
-    duration: "January 2021 - August 2022",
-    location: "Remote",
-    description: "Delivered custom web applications and data solutions for various clients across different industries.",
+    id: "ecobank-togo",
+    company: "Ecobank Togo",
+    position: "Développeur Web",
+    duration: "Mai 2024 - Novembre 2024",
+    location: "Lomé, Togo",
+    description: "Développement d'un système d'automatisation des prêts au personnel avec une approche Full Stack moderne.",
     achievements: [
-      "Built 20+ custom web applications using React, Vue.js, and Laravel",
-      "Developed attendance management system with facial recognition technology",
-      "Created business intelligence dashboards for data-driven decision making",
-      "Implemented e-commerce solutions with payment gateway integrations",
-      "Maintained 98% client satisfaction rate with on-time project delivery",
+      "Projet d'automatisation des prêts au personnel pour améliorer l'efficacité RH",
+      "Développement Front-End et Back-End avec ASP.Net Core MVC et jQuery",
+      "Collaboration étroite avec les équipes RH et IT pour répondre aux besoins métier",
+      "Détection et résolution proactive de bugs techniques",
+      "Rédaction de documentation complète et de guides utilisateurs détaillés",
     ],
-    technologies: ["React", "Vue.js", "Node.js", "Laravel", "MySQL", "MongoDB", "Python", "TensorFlow"],
+    technologies: ["ASP.Net Core MVC", "jQuery", "C#", "SQL Server", "HTML5", "CSS3"],
   },
   {
-    id: "internship",
-    company: "Tech Solutions Togo",
-    position: "Junior Developer Intern",
-    duration: "June 2020 - December 2020",
+    id: "artifice",
+    company: "Artifice Corporation",
+    position: "Développeur Web",
+    duration: "Mai 2023 - Février 2024",
     location: "Lomé, Togo",
     description:
-      "Gained hands-on experience in web development and database management while contributing to various client projects.",
+      "Conception et développement d'applications web innovantes en respectant les spécifications techniques du cahier des charges.",
     achievements: [
-      "Assisted in development of 5+ web applications using PHP and JavaScript",
-      "Learned database design and SQL optimization techniques",
-      "Participated in agile development process and daily standups",
-      "Contributed to bug fixes and feature enhancements",
-      "Completed training in modern web development frameworks",
+      "Conception et programmation d'applications logicielles respectant le cahier des charges",
+      "Développement d'une application web de présentation d'exposition avec Laravel & Vue.js",
+      "Développement d'une application web de gestion d'incubateur de startups avec Laravel",
+      "Respect des délais de livraison et des standards de qualité",
+      "Collaboration avec les équipes design et produit",
     ],
-    technologies: ["PHP", "JavaScript", "HTML5", "CSS3", "MySQL", "Bootstrap"],
+    technologies: ["Laravel", "Vue.js", "PHP", "MySQL", "JavaScript", "Bootstrap"],
+  },
+  {
+    id: "nitch-corp",
+    company: "NITCH-CORP",
+    position: "Développeur Full Stack",
+    duration: "Juillet 2022 - Mars 2024",
+    location: "Lomé, Togo",
+    description: "Développement d'applications web et mobiles avec gestion de projets et respect des délais de livraison.",
+    achievements: [
+      "Développement Front-End avec Angular pour une application de gestion du personnel",
+      "Développement d'une application mobile de réservation de véhicules avec Flutter & Firebase",
+      "Gestion et pilotage de projets en respectant les délais de livraison",
+      "Optimisation des performances et de l'expérience utilisateur",
+      "Formation et support technique aux utilisateurs finaux",
+    ],
+    technologies: ["Angular", "Flutter", "Firebase", "TypeScript", "Dart", "Node.js"],
+  },
+  {
+    id: "xotufe",
+    company: "XOTUFE-Group",
+    position: "Développeur Mobile (CDD)",
+    duration: "Juillet 2022 - Octobre 2022",
+    location: "Lomé, Togo",
+    description: "Développement spécialisé d'une application mobile de réservation avec une équipe collaborative.",
+    achievements: [
+      "Développement d'une application mobile de réservation de véhicules (Flutter & Firebase)",
+      "Collaboration avec une équipe pour concevoir une interface intuitive et performante",
+      "Intégration des fonctionnalités clés (réservations, gestion des utilisateurs, etc.)",
+      "Optimisation des performances mobiles et de la réactivité",
+      "Tests et validation des fonctionnalités développées",
+    ],
+    technologies: ["Flutter", "Firebase", "Dart", "Firebase Auth", "Firestore"],
+  },
+  {
+    id: "ky-digitals",
+    company: "KY Digitals",
+    position: "Lead Developer / Développeur Web Indépendant",
+    duration: "Juin 2021 - Présent",
+    location: "Lomé, Togo",
+    description: "Direction technique et développement d'applications web modernes avec optimisation SEO et performances avancées.",
+    achievements: [
+      "Développement et maintenance d'applications web avec React, Next.js et Express",
+      "Optimisation SEO et performances avec les fonctionnalités avancées de Next.js (SSR, SSG)",
+      "Construction et intégration d'API REST robustes et sécurisées",
+      "Gestion de bases de données pour fournir des solutions évolutives",
+      "Direction technique et encadrement d'équipes de développement",
+    ],
+    technologies: ["React", "Next.js", "Express", "Node.js", "MongoDB", "TypeScript", "Prisma"],
   },
 ];
 
@@ -124,7 +172,7 @@ export default function AboutPage() {
                   <div className="text-sm text-gray-600 dark:text-gray-300">{t.about.yearsExperience}</div>
                 </div>
                 <div className="text-center">
-                  <div className="text-3xl font-bold text-blue-500">50+</div>
+                  <div className="text-3xl font-bold text-blue-500">40+</div>
                   <div className="text-sm text-gray-600 dark:text-gray-300">{t.about.projectsCompleted}</div>
                 </div>
                 <div className="text-center">
@@ -132,8 +180,8 @@ export default function AboutPage() {
                   <div className="text-sm text-gray-600 dark:text-gray-300">{t.about.technologiesMastered}</div>
                 </div>
                 <div className="text-center">
-                  <div className="text-3xl font-bold text-blue-500">100%</div>
-                  <div className="text-sm text-gray-600 dark:text-gray-300">{t.about.clientSatisfaction}</div>
+                  <div className="text-3xl font-bold text-blue-500">6</div>
+                  <div className="text-sm text-gray-600 dark:text-gray-300">Entreprises</div>
                 </div>
               </div>
               {/* Contact Info */}
