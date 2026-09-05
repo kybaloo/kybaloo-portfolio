@@ -14,6 +14,16 @@ const securityHeaders = [
 const nextConfig: NextConfig = {
   reactStrictMode: true,
 
+  // Le paquet `sanity` (et `@sanity/vision`) est un monolithe pensé pour un
+  // bundle client unique : son export racine tire des hooks React (via
+  // `swr`) même dans les chemins jamais exécutés côté serveur. Importé
+  // depuis sanity.config.ts par un Server Component (studio/page.tsx),
+  // Turbopack résout sinon ce paquet sous la condition `react-server`, où
+  // `swr` n'expose plus l'export par défaut attendu — le build échoue avant
+  // même d'atteindre le rendu. Le marquer externe fait résoudre ces paquets
+  // en Node classique (condition `require`/`import`), qu'ils gèrent bien.
+  serverExternalPackages: ['sanity', '@sanity/vision'],
+
   experimental: {
     // Sans src/app/layout.tsx (le groupe (site) sert de racine pour porter
     // <html lang> par locale), Next.js n'a pas de racine HTML à utiliser
