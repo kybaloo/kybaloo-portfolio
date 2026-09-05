@@ -1,8 +1,9 @@
+import 'server-only';
 // `defineLive` est exposé sous `next-sanity/live` (pas la racine du paquet)
 // dans next-sanity 13.3.4 : l'export racine ne le réexporte plus.
 import {defineLive} from 'next-sanity/live';
 import {client} from './client';
-import {readToken} from '../env';
+import {readToken} from '../env.server';
 
 const token = readToken();
 

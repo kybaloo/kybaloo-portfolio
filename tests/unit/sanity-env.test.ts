@@ -10,6 +10,12 @@ import {afterEach, beforeEach, describe, expect, it, vi} from 'vitest';
  * Sanity réel, ces valeurs ne servent qu'à éprouver la logique de
  * validation — jamais à contacter l'API Sanity.
  *
+ * `readToken` vit désormais dans `src/sanity/env.server.ts` (gardé par
+ * `server-only`, pour qu'aucun bundle client ne puisse l'atteindre), pas
+ * dans `env.ts` : les tests le concernant importent donc ce module voisin,
+ * mais restent dans ce fichier pour rester à côté de `assertValue`, dont
+ * ils dépendent tout autant que les tests de `projectId`/`dataset`.
+ *
  * Les tests ci-dessous portent sur le comportement réel des exports
  * (`projectId`, `dataset`, `readToken`), pas sur `assertValue` appelé de
  * façon isolée avec des valeurs fabriquées : un test qui ne fait que ça
@@ -18,6 +24,17 @@ import {afterEach, beforeEach, describe, expect, it, vi} from 'vitest';
  * cas vérifie donc à la fois l'échec/succès ET que le message nomme la
  * variable fautive.
  */
+
+// `server-only` ne détecte pas « suis-je dans un navigateur ? » à
+// l'exécution : son package.json exporte `empty.js` (no-op) sous la
+// condition `react-server`, et `index.js` (qui lève inconditionnellement)
+// pour toute autre condition — y compris la résolution Node par défaut de
+// Vitest, qui ne pose jamais la condition `react-server`. Sans ce mock,
+// importer `env.server.ts` échouerait donc ici même si ce test tourne
+// bel et bien côté serveur (dans le process Vitest, jamais un navigateur).
+// Le garde-fou réel — celui qui compte — est prouvé par le build Next.js
+// volontairement cassé documenté dans task-2-report.md, pas par ce test.
+vi.mock('server-only', () => ({}));
 
 const ENV_KEYS = [
   'NEXT_PUBLIC_SANITY_PROJECT_ID',
@@ -88,7 +105,7 @@ describe('chargement du module', () => {
   });
 });
 
-describe('readToken', () => {
+describe('readToken (src/sanity/env.server.ts)', () => {
   beforeEach(() => {
     process.env.NEXT_PUBLIC_SANITY_PROJECT_ID = 'test-project-id';
     process.env.NEXT_PUBLIC_SANITY_DATASET = 'test-dataset';
@@ -97,7 +114,7 @@ describe('readToken', () => {
   it('lève quand SANITY_API_READ_TOKEN manque, en nommant la variable', async () => {
     delete process.env.SANITY_API_READ_TOKEN;
 
-    const {readToken} = await import('@/sanity/env');
+    const {readToken} = await import('@/sanity/env.server');
 
     expect(() => readToken()).toThrow(/SANITY_API_READ_TOKEN/);
   });
@@ -105,7 +122,7 @@ describe('readToken', () => {
   it('lève quand SANITY_API_READ_TOKEN est une chaîne vide, en nommant la variable', async () => {
     process.env.SANITY_API_READ_TOKEN = '';
 
-    const {readToken} = await import('@/sanity/env');
+    const {readToken} = await import('@/sanity/env.server');
 
     expect(() => readToken()).toThrow(/SANITY_API_READ_TOKEN/);
   });
@@ -113,7 +130,7 @@ describe('readToken', () => {
   it('renvoie la valeur quand SANITY_API_READ_TOKEN est présent', async () => {
     process.env.SANITY_API_READ_TOKEN = 'test-token-value';
 
-    const {readToken} = await import('@/sanity/env');
+    const {readToken} = await import('@/sanity/env.server');
 
     expect(readToken()).toBe('test-token-value');
   });
