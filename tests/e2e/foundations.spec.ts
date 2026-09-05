@@ -1,8 +1,21 @@
 import {expect, test} from '@playwright/test';
 
-test('la racine redirige vers le français', async ({page}) => {
-  await page.goto('/');
-  await expect(page).toHaveURL(/\/fr$/);
+test.describe('visiteur avec un navigateur en fr-FR', () => {
+  test.use({locale: 'fr-FR'});
+
+  test('la racine redirige vers /fr pour un navigateur francophone', async ({page}) => {
+    await page.goto('/');
+    await expect(page).toHaveURL(/\/fr$/);
+  });
+});
+
+test.describe('visiteur avec un navigateur en en-US', () => {
+  test.use({locale: 'en-US'});
+
+  test('la racine redirige vers /en pour un navigateur anglophone', async ({page}) => {
+    await page.goto('/');
+    await expect(page).toHaveURL(/\/en$/);
+  });
 });
 
 test('les deux langues répondent et déclarent la bonne locale', async ({page}) => {
