@@ -1,0 +1,47 @@
+# Normalize line endings for all text files to LF, regardless of the
+# committer's platform or local core.autocrlf setting. This is the root-fix
+# for CI failures caused by files whose working-tree bytes drift to CRLF
+# (e.g. written by an editor/tool on Windows) while the git blob stays LF:
+# core.autocrlf=true silently normalizes that drift away for `git status`/
+# `git diff`, but Prettier reads the raw working-tree bytes and fails.
+* text=auto eol=lf
+
+# Explicit text types (defensive; also covered by the catch-all above).
+*.ts     text
+*.tsx    text
+*.js     text
+*.jsx    text
+*.mjs    text
+*.cjs    text
+*.json   text
+*.md     text
+*.mdx    text
+*.css    text
+*.scss   text
+*.yml    text
+*.yaml   text
+*.html   text
+*.txt    text
+*.svg    text
+
+# Windows-only scripts keep CRLF on purpose.
+*.bat text eol=crlf
+*.cmd text eol=crlf
+
+# Binary assets: never subject to text normalization or diffing.
+*.png   binary
+*.jpg   binary
+*.jpeg  binary
+*.gif   binary
+*.webp  binary
+*.avif  binary
+*.ico   binary
+*.pdf   binary
+*.woff  binary
+*.woff2 binary
+*.ttf   binary
+*.otf   binary
+*.eot   binary
+*.zip   binary
+*.mp4   binary
+*.mov   binary
