@@ -21,15 +21,28 @@
  * Chaque document est écrit indépendamment : un échec isolé (réseau,
  * validation) n'interrompt pas le reste de l'import, et le récapitulatif
  * final indique précisément ce qui a réussi et ce qui a échoué.
+ *
+ * « Idempotent » ne veut pas dire « sans risque » : `createOrReplace`
+ * remplace le document ENTIER. Sur les singletons `profile` et `settings`,
+ * dont l'auteur écrit le texte à la main dans le Studio, une seconde
+ * exécution écrase sa rédaction par l'amorce posée ici. D'où `--dry-run`,
+ * qui construit et imprime tous les documents sans ouvrir la moindre
+ * connexion : c'est le mode par lequel on vérifie ce que l'import ferait,
+ * et celui qu'exercent les tests.
  */
 import {readFileSync} from 'node:fs';
 import {createClient} from '@sanity/client';
+
+const dryRun = process.argv.includes('--dry-run');
 
 const projectId = process.env.NEXT_PUBLIC_SANITY_PROJECT_ID;
 const dataset = process.env.NEXT_PUBLIC_SANITY_DATASET;
 const token = process.env.SANITY_API_WRITE_TOKEN;
 
-if (!projectId || !dataset || !token) {
+// Le mode à blanc n'exige aucune variable : une exécution à blanc qui
+// réclamerait un jeton d'écriture serait une exécution à blanc en
+// trompe-l'œil, et personne ne la lancerait pour vérifier avant d'écrire.
+if (!dryRun && (!projectId || !dataset || !token)) {
   console.error(
     'Variables manquantes. Requis : NEXT_PUBLIC_SANITY_PROJECT_ID, ' +
       'NEXT_PUBLIC_SANITY_DATASET, SANITY_API_WRITE_TOKEN.',
@@ -37,7 +50,22 @@ if (!projectId || !dataset || !token) {
   process.exit(1);
 }
 
-const client = createClient({projectId, dataset, token, apiVersion: '2026-09-01', useCdn: false});
+const client = dryRun
+  ? null
+  : createClient({projectId, dataset, token, apiVersion: '2026-09-01', useCdn: false});
+
+const WRITE_WARNING = [
+  'ATTENTION — `createOrReplace` remplace le document ENTIER, il ne fusionne pas.',
+  '  Les singletons `profile` et `settings` sont concernés au premier chef : si',
+  '  l’auteur a déjà réécrit sa biographie ou ses réglages dans le Studio, une',
+  '  nouvelle exécution les remplacera par l’amorce posée par ce script.',
+  '  Vérifier d’abord avec `node scripts/import-archive.mjs --dry-run`, qui',
+  '  n’ouvre aucune connexion à Sanity.',
+].join('\n');
+
+console.log(
+  dryRun ? 'MODE À BLANC — aucune écriture, aucune connexion à Sanity.\n' : `${WRITE_WARNING}\n`,
+);
 
 const read = (name) =>
   JSON.parse(
@@ -84,6 +112,10 @@ async function writeAll(docs, label) {
   let succeeded = 0;
   const failed = [];
   for (const doc of docs) {
+    if (dryRun) {
+      succeeded++;
+      continue;
+    }
     try {
       await client.createOrReplace(doc);
       succeeded++;
@@ -91,7 +123,7 @@ async function writeAll(docs, label) {
       failed.push({id: doc._id, message: err instanceof Error ? err.message : String(err)});
     }
   }
-  return {label, total: docs.length, succeeded, failed};
+  return {label, total: docs.length, succeeded, failed, docs};
 }
 
 async function importProjects() {
@@ -242,24 +274,151 @@ async function importSkills() {
   return writeAll(docs, 'skills');
 }
 
+/**
+ * Amorce du positionnement, posée par l'import et destinée à être réécrite.
+ *
+ * L'archive porte l'ANCIEN positionnement — « Développeur Full Stack »,
+ * « Développeur Web & SQL chez Ecobank », « Analyste de Données » — que
+ * l'auteur a explicitement rejeté au profit de Technology Architect /
+ * Technology Consultant. La spec §8 est formelle : les textes de bio sont
+ * « extraits vers le singleton `profile`, PUIS RÉÉCRITS pour porter le
+ * positionnement d'architecte ». Importer la bio archivée telle quelle
+ * rétablirait dans Sanity exactement ce que la refonte cherche à quitter.
+ *
+ * Ce script ne rédige donc pas la biographie de l'auteur : il pose le
+ * message central approuvé par la spec (§6, « Expertise ») et le signale
+ * comme provisoire, dans le texte lui-même et dans le récapitulatif final.
+ * Écrire davantage reviendrait à écrire son identité à sa place.
+ */
+const POSITIONING = {
+  role: 'Technology Architect / Technology Consultant',
+  bio: {
+    fr:
+      'Je conçois, construis et fais évoluer des systèmes numériques.\n\n' +
+      '(Amorce posée par l’import — à réécrire dans le Studio.)',
+    en:
+      'I design, build and improve digital systems.\n\n' +
+      '(Placeholder written by the import — to be rewritten in the Studio.)',
+  },
+};
+
+/**
+ * Le singleton `profile`. Son identifiant est imposé par
+ * `src/sanity/structure.ts`, qui ouvre `S.document().documentId('profile')` :
+ * tout autre identifiant produirait un document que le Studio n'ouvrirait
+ * jamais.
+ *
+ * Les champs factuels sont repris de l'archive quand elle les contient
+ * réellement. `docs/content-archive/profile.json` n'est pas une fiche
+ * d'identité mais le dictionnaire de libellés de l'ancien site : on n'y
+ * trouve ni nom, ni lieu, ni lien — seulement des étiquettes d'interface.
+ * Le lieu vient donc des expériences (celui du poste en cours), le lien
+ * GitHub des dépôts des projets, et le nom de `src/lib/site.ts`, l'identité
+ * que le site affiche déjà dans son en-tête et son pied de page.
+ *
+ * Photo et CV ne sont pas importés : ce sont des ressources à téléverser,
+ * ce que ce script ne fait pour aucun média (voir les captures de projets).
+ */
+function buildProfile(archiveWarnings) {
+  const experiences = read('experiences');
+  const projects = read('projects');
+
+  const location = experiences.find((e) => e.location)?.location;
+  if (!location) {
+    archiveWarnings.push('profil : aucun lieu trouvé dans les expériences, champ laissé vide');
+  }
+
+  // « https://github.com/kybaloo/un-depot » -> « https://github.com/kybaloo ».
+  const repoUrl = projects.map((p) => p.githubUrl).find((url) => url && url !== '#');
+  const account = repoUrl?.match(/^https:\/\/github\.com\/([^/]+)/)?.[1];
+  if (!account) {
+    archiveWarnings.push(
+      'profil : aucun compte GitHub déductible des projets, liens laissés vides',
+    );
+  }
+
+  return {
+    _id: 'profile',
+    _type: 'profile',
+    name: 'Florentin Tchangai',
+    role: i18n(POSITIONING.role, POSITIONING.role),
+    location,
+    bio: i18nText(POSITIONING.bio.fr, POSITIONING.bio.en),
+    // L'archive annonce « Disponible pour de nouvelles opportunités » /
+    // « Open to new opportunities » dans les deux langues.
+    available: true,
+    links: account
+      ? [{_key: 'github', _type: 'link', label: 'GitHub', url: `https://github.com/${account}`}]
+      : [],
+  };
+}
+
+/**
+ * Le singleton `settings` porte le SEO par défaut du site (spec §9). Son
+ * titre et sa description sont repris de `messages/{fr,en}.json`, que le
+ * site sert déjà comme métadonnées par défaut : ces textes portent le
+ * positionnement d'architecte et ont été validés, les réécrire ici en
+ * inventerait une seconde version à désynchroniser.
+ *
+ * `ogImage` n'est pas importée : c'est une ressource à téléverser.
+ */
+function buildSettings() {
+  const meta = (locale) => {
+    const messages = JSON.parse(
+      readFileSync(new URL(`../messages/${locale}.json`, import.meta.url), 'utf8'),
+    );
+    if (!messages.meta?.title || !messages.meta?.description) {
+      throw new Error(`messages/${locale}.json : meta.title ou meta.description manquant`);
+    }
+    return messages.meta;
+  };
+
+  const fr = meta('fr');
+  const en = meta('en');
+
+  return {
+    _id: 'settings',
+    _type: 'settings',
+    title: i18n(fr.title, en.title),
+    description: i18nText(fr.description, en.description),
+  };
+}
+
+async function importSingletons(archiveWarnings) {
+  return writeAll([buildProfile(archiveWarnings), buildSettings()], 'profil + réglages');
+}
+
 const dateWarnings = [];
+const archiveWarnings = [];
 const sections = [
   await importProjects(),
   await importExperiences(dateWarnings),
   await importSkills(),
+  await importSingletons(archiveWarnings),
 ];
 
-console.log('Import terminé :');
+if (dryRun) {
+  console.log('--- documents (début) ---');
+  console.log(JSON.stringify(sections.flatMap((s) => s.docs)));
+  console.log('--- documents (fin) ---\n');
+}
+
+console.log(dryRun ? 'Documents qui seraient écrits :' : 'Import terminé :');
 for (const s of sections) {
   const status = s.failed.length
     ? `${s.succeeded}/${s.total} (${s.failed.length} échec(s))`
     : `${s.succeeded}`;
-  console.log(`  ${s.label.padEnd(12)} ${status}`);
+  console.log(`  ${s.label.padEnd(18)} ${status}`);
 }
 
 if (dateWarnings.length > 0) {
   console.log('\nDates d’expérience non reconnues (laissées vides, pas devinées) :');
   for (const w of dateWarnings) console.log(`  - ${w}`);
+}
+
+if (archiveWarnings.length > 0) {
+  console.log('\nChamps non déductibles de l’archive (laissés vides, pas devinés) :');
+  for (const w of archiveWarnings) console.log(`  - ${w}`);
 }
 
 const hasFailures = sections.some((s) => s.failed.length > 0);
@@ -286,7 +445,51 @@ console.log('    champs d’architecture du projet (contexte, contrainte, décis
 console.log('    à écrire à la main dans le Studio — pas de retour aux fonctionnalités.');
 console.log('  - les captures d’écran des projets (projects.json, champ `image`) : à téléverser');
 console.log('    à la main dans le Studio.');
-console.log('\nÀ compléter à la main dans le Studio : traductions anglaises, images, champs');
-console.log('d’architecture des projets, et les 5 services du positionnement.');
+
+// Le récapitulatif dit désormais QUELLE langue manque, PAR TYPE de
+// document. L'ancienne formule — « à compléter : traductions anglaises » —
+// annonçait l'inverse de la réalité pour les expériences : leur description
+// et leurs réalisations ne sont peuplées qu'en anglais, si bien que c'est le
+// FRANÇAIS qui manque, dans la langue par défaut du site et sur la page
+// `/fr/parcours` que ces documents alimentent.
+console.log('\nTraductions manquantes, par type de document :');
+console.log('  - projets      : `summary` n’est écrit qu’en FRANÇAIS (l’archive est en');
+console.log('                   français) — l’ANGLAIS reste à écrire.');
+console.log('  - expériences  : `description` et les réalisations ne sont écrites qu’en');
+console.log('                   ANGLAIS (l’archive est en anglais) — le FRANÇAIS reste à');
+console.log('                   écrire, et c’est la langue par défaut du site.');
+console.log('  - compétences  : aucun champ traduisible (nom, domaine, fréquence).');
+console.log('  - profil       : les deux langues sont posées, mais provisoires (ci-dessous).');
+console.log('  - réglages     : les deux langues sont reprises des métadonnées du site.');
+
+console.log('\nÀ relire — écrit, mais pas forcément juste :');
+console.log('  - expériences  : `position` porte le MÊME libellé anglais dans les deux');
+console.log('                   langues (l’archive n’en a qu’un). Défendable pour un');
+console.log('                   intitulé de poste, à trancher par l’auteur.');
+console.log('  - compétences  : `usage` est déduit des pourcentages de l’ancien site, qui');
+console.log('                   ne mesuraient rien — à réviser.');
+
+console.log('\nÀ RÉÉCRIRE PAR L’AUTEUR DANS LE STUDIO — amorce provisoire :');
+console.log('  - profil       : `role` et `bio` ne portent qu’une amorce, posée par ce');
+console.log('                   script pour que le singleton existe et porte le');
+console.log('                   positionnement d’architecte. Ce texte est l’identité de');
+console.log('                   l’auteur : le script ne rédige pas sa biographie. La bio');
+console.log('                   archivée n’a délibérément PAS été importée — elle porte');
+console.log('                   l’ancien positionnement de développeur généraliste, que');
+console.log('                   l’auteur a rejeté.');
+
+console.log('\nRessources à téléverser à la main (aucun média n’est importé) :');
+console.log('  - profil       : photo, CV français, CV anglais.');
+console.log('  - réglages     : image de partage par défaut (ogImage).');
+console.log('  - projets      : captures d’écran.');
+
+console.log('\nReste à créer entièrement dans le Studio :');
+console.log('  - les 5 services du positionnement d’architecte ;');
+console.log('  - les champs d’architecture de chaque projet (contexte, contrainte,');
+console.log('    décisions, résultats).');
+
+// L'avertissement est répété en mode à blanc : c'est justement le moment où
+// l'on décide de lancer, ou non, l'exécution réelle.
+console.log(`\n${dryRun ? 'Ce qu’une exécution réelle ferait — ' : ''}${WRITE_WARNING}`);
 
 if (hasFailures) process.exit(1);
