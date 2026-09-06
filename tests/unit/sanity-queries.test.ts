@@ -163,6 +163,57 @@ describe('tri des requêtes de liste — un ordre stable d’une requête à l�
       }
     }
   });
+
+  /**
+   * GROQ place les valeurs absentes **en tête** d'un tri décroissant. Vérifié
+   * contre `groq-js`, le moteur de référence :
+   *
+   *   order(year desc, _id asc)   sur [a:2024, b:null, c:2020, d:null]
+   *     -> b(null) d(null) a(2024) c(2020)
+   *
+   * Un projet sans année passerait donc devant tous les autres, et un article
+   * dont `pinned` n'a jamais été renseigné devant les articles réellement
+   * épinglés. Le champ n'étant pas `required()` dans le schéma, le cas n'est
+   * pas théorique — un document écrit par script ou par l'API n'a aucun
+   * `initialValue`.
+   *
+   * Deux parades, selon la sémantique du champ : `defined(champ) desc` en
+   * premier critère (l'absence passe en dernier), ou `coalesce(champ, défaut)`
+   * quand l'absence a une valeur de repli qui a du sens — un `pinned` absent
+   * veut dire « non épinglé », pas « inconnu ».
+   */
+  it('protège chaque tri décroissant contre les valeurs absentes', () => {
+    // Un critère « nu » : un chemin de champ suivi de `desc`, sans appel de
+    // fonction. `defined(x) desc` et `coalesce(x, y) desc` sont déjà protégés.
+    const bareDescending = /^([A-Za-z_][\w.]*)\s+desc$/;
+
+    const sorted = ALL.filter(([, query]) => orderClauses(String(query)).length > 0);
+    expect(sorted.length).toBeGreaterThan(0);
+
+    for (const [name, query] of sorted) {
+      for (const clause of orderClauses(String(query))) {
+        const criteria = criteriaOf(clause);
+
+        criteria.forEach((criterion, index) => {
+          const bare = bareDescending.exec(criterion);
+          if (!bare) return;
+
+          const field = bare[1];
+          const guard = `defined(${field}) desc`;
+
+          // Un filtre `defined(champ)` dans la requête écarte déjà les
+          // documents sans valeur : le tri n'a alors plus rien à garder, et
+          // exiger la garde en plus n'ajouterait qu'un critère mort.
+          if (String(query).includes(`defined(${field})`)) return;
+
+          expect(
+            criteria.slice(0, index),
+            `${name} trie sur « ${criterion} » sans garde : un document sans « ${field} » passerait en tête`,
+          ).toContain(guard);
+        });
+      }
+    }
+  });
 });
 
 describe('traductions croisées des articles', () => {

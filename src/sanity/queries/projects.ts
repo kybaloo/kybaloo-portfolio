@@ -12,7 +12,7 @@ import {defineQuery} from 'next-sanity';
  * bouger la liste publique sans qu'aucun contenu n'ait changé.
  */
 export const PROJECTS_QUERY = defineQuery(`
-  *[_type == "project"] | order(order asc, year desc, _id asc) {
+  *[_type == "project"] | order(order asc, defined(year) desc, year desc, _id asc) {
     _id,
     title,
     "slug": slug.current,
@@ -31,7 +31,7 @@ export const PROJECTS_QUERY = defineQuery(`
 `);
 
 export const FEATURED_PROJECTS_QUERY = defineQuery(`
-  *[_type == "project" && featured == true] | order(order asc, year desc, _id asc) [0...4] {
+  *[_type == "project" && featured == true] | order(order asc, defined(year) desc, year desc, _id asc) [0...4] {
     _id,
     title,
     "slug": slug.current,

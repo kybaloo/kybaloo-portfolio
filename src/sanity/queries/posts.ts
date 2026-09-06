@@ -24,9 +24,20 @@ const TRANSLATIONS_PROJECTION = `
     }
 `;
 
+/**
+ * `coalesce(pinned, false)` et non `pinned desc` : GROQ place les valeurs
+ * absentes **en tête** d'un tri décroissant, si bien qu'un article dont
+ * `pinned` n'a jamais été renseigné passerait devant les articles réellement
+ * épinglés. `initialValue: false` ne protège que les documents créés dans le
+ * Studio, pas ceux écrits par l'API. Un `pinned` absent veut dire « non
+ * épinglé » : c'est ce que `coalesce` exprime.
+ *
+ * `publishedAt` n'a pas besoin de la même garde ici — le filtre
+ * `defined(publishedAt)` écarte déjà les articles sans date.
+ */
 export const POSTS_QUERY = defineQuery(`
   *[_type == "post" && language == $language && defined(publishedAt)]
-    | order(pinned desc, publishedAt desc, _id asc) {
+    | order(coalesce(pinned, false) desc, publishedAt desc, _id asc) {
     _id,
     title,
     "slug": slug.current,

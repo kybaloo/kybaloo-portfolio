@@ -22,7 +22,8 @@ jobs:
       NEXT_PUBLIC_SANITY_PROJECT_ID: ${{ secrets.NEXT_PUBLIC_SANITY_PROJECT_ID || 'ci000000' }}
       NEXT_PUBLIC_SANITY_DATASET: ${{ secrets.NEXT_PUBLIC_SANITY_DATASET || 'production' }}
       SANITY_API_READ_TOKEN: ${{ secrets.SANITY_API_READ_TOKEN || 'ci-placeholder-token' }}
-      SANITY_REVALIDATE_SECRET: ${{ secrets.SANITY_REVALIDATE_SECRET || 'ci-placeholder-secret' }}
+      SANITY_REVALIDATE_SECRET: ${{ secrets.SANITY_REVALIDATE_SECRET || 'ci-placeholder-webhook-secret' }}
+      SANITY_PREVIEW_SECRET: ${{ secrets.SANITY_PREVIEW_SECRET || 'ci-placeholder-preview-secret' }}
     steps:
       - uses: actions/checkout@v4
 
