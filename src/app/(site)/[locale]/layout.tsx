@@ -1,6 +1,8 @@
 import type {Metadata} from 'next';
 import {NextIntlClientProvider, hasLocale} from 'next-intl';
 import {getTranslations, setRequestLocale} from 'next-intl/server';
+import {VisualEditing} from 'next-sanity/visual-editing';
+import {draftMode} from 'next/headers';
 import {notFound} from 'next/navigation';
 import {SiteFooter} from '@/components/layout/site-footer';
 import {SiteHeader} from '@/components/layout/site-header';
@@ -10,6 +12,7 @@ import {getPathname} from '@/i18n/navigation';
 import {routing} from '@/i18n/routing';
 import {fontVariables} from '@/lib/fonts';
 import {siteUrl} from '@/lib/site';
+import {SanityLive} from '@/sanity/lib/live';
 import '@/styles/globals.css';
 
 export function generateStaticParams() {
@@ -52,6 +55,8 @@ export default async function LocaleLayout({
   // Indispensable pour que les pages restent rendues statiquement.
   setRequestLocale(locale);
 
+  const {isEnabled: isDraft} = await draftMode();
+
   return (
     <html lang={locale} className={fontVariables} suppressHydrationWarning>
       <body className="flex min-h-screen flex-col bg-paper text-ink">
@@ -70,6 +75,8 @@ export default async function LocaleLayout({
             <SiteFooter />
           </NextIntlClientProvider>
         </ThemeProvider>
+        <SanityLive includeDrafts={isDraft} />
+        {isDraft && <VisualEditing />}
       </body>
     </html>
   );
