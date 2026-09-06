@@ -472,9 +472,26 @@ export type AllSanitySchemaTypes =
   | SanityImageAsset
   | Geopoint;
 
+// Source: src/sanity/queries/experiences.ts
+// Variable: EXPERIENCES_QUERY
+// Query: *[_type == "experience"]    | order(defined(startDate) desc, startDate desc, _id asc) {    _id,    "position": position[language == $language][0].value,    organisation,    location,    startDate,    endDate,    "description": description[language == $language][0].value,    "achievements": achievements[]{      "text": text[language == $language][0].value    },    technologies  }
+export type EXPERIENCES_QUERY_RESULT = Array<{
+  _id: string;
+  position: string | null;
+  organisation: string;
+  location: string | null;
+  startDate: string | null;
+  endDate: string | null;
+  description: string | null;
+  achievements: Array<{
+    text: string | null;
+  }> | null;
+  technologies: Array<string> | null;
+}>;
+
 // Source: src/sanity/queries/posts.ts
 // Variable: POSTS_QUERY
-// Query: *[_type == "post" && language == $language && defined(publishedAt)]    | order(pinned desc, publishedAt desc) {    _id,    title,    "slug": slug.current,    summary,    publishedAt,    tags,    pinned,    cover  }
+// Query: *[_type == "post" && language == $language && defined(publishedAt)]    | order(pinned desc, publishedAt desc, _id asc) {    _id,    title,    "slug": slug.current,    summary,    publishedAt,    tags,    pinned,    cover  }
 export type POSTS_QUERY_RESULT = Array<{
   _id: string;
   title: string;
@@ -495,7 +512,7 @@ export type POSTS_QUERY_RESULT = Array<{
 
 // Source: src/sanity/queries/posts.ts
 // Variable: POST_BY_SLUG_QUERY
-// Query: *[_type == "post" && language == $language && slug.current == $slug][0] {    _id,    title,    "slug": slug.current,    summary,    publishedAt,    tags,    cover,    body  }
+// Query: *[_type == "post" && language == $language && slug.current == $slug][0] {    _id,    title,    "slug": slug.current,    summary,    publishedAt,    tags,    cover,    body,      "translations": *[_type == "translation.metadata" && references(^._id)][0]    .translations[defined(value)]{      language,      "slug": value->slug.current    }  }
 export type POST_BY_SLUG_QUERY_RESULT = {
   _id: string;
   title: string;
@@ -556,6 +573,10 @@ export type POST_BY_SLUG_QUERY_RESULT = {
         _key: string;
       }
   > | null;
+  translations: Array<{
+    language: string;
+    slug: string | null;
+  }> | null;
 } | null;
 
 // Source: src/sanity/queries/profile.ts
@@ -594,7 +615,7 @@ export type PROFILE_QUERY_RESULT = {
 
 // Source: src/sanity/queries/projects.ts
 // Variable: PROJECTS_QUERY
-// Query: *[_type == "project"] | order(order asc, year desc) {    _id,    title,    "slug": slug.current,    "summary": summary[language == $language][0].value,    year,    client,    "role": role[language == $language][0].value,    featured,    stack,    "cover": images[0]{      ...,      "alt": alt[language == $language][0].value    },    links  }
+// Query: *[_type == "project"] | order(order asc, year desc, _id asc) {    _id,    title,    "slug": slug.current,    "summary": summary[language == $language][0].value,    year,    client,    "role": role[language == $language][0].value,    featured,    stack,    "cover": images[0]{      ...,      "alt": alt[language == $language][0].value    },    links  }
 export type PROJECTS_QUERY_RESULT = Array<{
   _id: string;
   title: string;
@@ -623,7 +644,7 @@ export type PROJECTS_QUERY_RESULT = Array<{
 
 // Source: src/sanity/queries/projects.ts
 // Variable: FEATURED_PROJECTS_QUERY
-// Query: *[_type == "project" && featured == true] | order(order asc, year desc) [0...4] {    _id,    title,    "slug": slug.current,    "summary": summary[language == $language][0].value,    year,    client,    stack  }
+// Query: *[_type == "project" && featured == true] | order(order asc, year desc, _id asc) [0...4] {    _id,    title,    "slug": slug.current,    "summary": summary[language == $language][0].value,    year,    client,    stack  }
 export type FEATURED_PROJECTS_QUERY_RESULT = Array<{
   _id: string;
   title: string;
@@ -673,7 +694,7 @@ export type PROJECT_BY_SLUG_QUERY_RESULT = {
 
 // Source: src/sanity/queries/services.ts
 // Variable: SERVICES_QUERY
-// Query: *[_type == "service"] | order(number asc) {    _id,    number,    stage,    title,    "description": description[language == $language][0].value,    keywords  }
+// Query: *[_type == "service"] | order(number asc, _id asc) {    _id,    number,    stage,    title,    "description": description[language == $language][0].value,    keywords  }
 export type SERVICES_QUERY_RESULT = Array<{
   _id: string;
   number: number;
@@ -683,16 +704,49 @@ export type SERVICES_QUERY_RESULT = Array<{
   keywords: Array<string> | null;
 }>;
 
+// Source: src/sanity/queries/settings.ts
+// Variable: SETTINGS_QUERY
+// Query: *[_type == "settings"][0] {    "title": title[language == $language][0].value,    "description": description[language == $language][0].value,    ogImage  }
+export type SETTINGS_QUERY_RESULT = {
+  title: string | null;
+  description: string | null;
+  ogImage: {
+    asset?: SanityImageAssetReference;
+    media?: unknown;
+    hotspot?: SanityImageHotspot;
+    crop?: SanityImageCrop;
+    _type: 'image';
+  } | null;
+} | null;
+
+// Source: src/sanity/queries/skills.ts
+// Variable: SKILLS_QUERY
+// Query: *[_type == "skill"] | order(category asc, name asc, _id asc) {    _id,    name,    category,    usage,    "projects": projects[]->{      _id,      title,      "slug": slug.current    }  }
+export type SKILLS_QUERY_RESULT = Array<{
+  _id: string;
+  name: string;
+  category: 'backend' | 'cloud' | 'data' | 'frontend' | 'tools';
+  usage: 'daily' | 'familiar' | 'regular';
+  projects: Array<{
+    _id: string;
+    title: string;
+    slug: string;
+  }> | null;
+}>;
+
 // Query TypeMap
 declare global {
   interface SanityQueries {
-    '\n  *[_type == "post" && language == $language && defined(publishedAt)]\n    | order(pinned desc, publishedAt desc) {\n    _id,\n    title,\n    "slug": slug.current,\n    summary,\n    publishedAt,\n    tags,\n    pinned,\n    cover\n  }\n': POSTS_QUERY_RESULT;
-    '\n  *[_type == "post" && language == $language && slug.current == $slug][0] {\n    _id,\n    title,\n    "slug": slug.current,\n    summary,\n    publishedAt,\n    tags,\n    cover,\n    body\n  }\n': POST_BY_SLUG_QUERY_RESULT;
+    '\n  *[_type == "experience"]\n    | order(defined(startDate) desc, startDate desc, _id asc) {\n    _id,\n    "position": position[language == $language][0].value,\n    organisation,\n    location,\n    startDate,\n    endDate,\n    "description": description[language == $language][0].value,\n    "achievements": achievements[]{\n      "text": text[language == $language][0].value\n    },\n    technologies\n  }\n': EXPERIENCES_QUERY_RESULT;
+    '\n  *[_type == "post" && language == $language && defined(publishedAt)]\n    | order(pinned desc, publishedAt desc, _id asc) {\n    _id,\n    title,\n    "slug": slug.current,\n    summary,\n    publishedAt,\n    tags,\n    pinned,\n    cover\n  }\n': POSTS_QUERY_RESULT;
+    '\n  *[_type == "post" && language == $language && slug.current == $slug][0] {\n    _id,\n    title,\n    "slug": slug.current,\n    summary,\n    publishedAt,\n    tags,\n    cover,\n    body,\n    \n  "translations": *[_type == "translation.metadata" && references(^._id)][0]\n    .translations[defined(value)]{\n      language,\n      "slug": value->slug.current\n    }\n\n  }\n': POST_BY_SLUG_QUERY_RESULT;
     '\n  *[_type == "profile"][0] {\n    name,\n    "role": role[language == $language][0].value,\n    location,\n    "bio": bio[language == $language][0].value,\n    "photo": photo{\n      ...,\n      "alt": alt[language == $language][0].value\n    },\n    available,\n    links,\n    resumeFr,\n    resumeEn\n  }\n': PROFILE_QUERY_RESULT;
-    '\n  *[_type == "project"] | order(order asc, year desc) {\n    _id,\n    title,\n    "slug": slug.current,\n    "summary": summary[language == $language][0].value,\n    year,\n    client,\n    "role": role[language == $language][0].value,\n    featured,\n    stack,\n    "cover": images[0]{\n      ...,\n      "alt": alt[language == $language][0].value\n    },\n    links\n  }\n': PROJECTS_QUERY_RESULT;
-    '\n  *[_type == "project" && featured == true] | order(order asc, year desc) [0...4] {\n    _id,\n    title,\n    "slug": slug.current,\n    "summary": summary[language == $language][0].value,\n    year,\n    client,\n    stack\n  }\n': FEATURED_PROJECTS_QUERY_RESULT;
+    '\n  *[_type == "project"] | order(order asc, year desc, _id asc) {\n    _id,\n    title,\n    "slug": slug.current,\n    "summary": summary[language == $language][0].value,\n    year,\n    client,\n    "role": role[language == $language][0].value,\n    featured,\n    stack,\n    "cover": images[0]{\n      ...,\n      "alt": alt[language == $language][0].value\n    },\n    links\n  }\n': PROJECTS_QUERY_RESULT;
+    '\n  *[_type == "project" && featured == true] | order(order asc, year desc, _id asc) [0...4] {\n    _id,\n    title,\n    "slug": slug.current,\n    "summary": summary[language == $language][0].value,\n    year,\n    client,\n    stack\n  }\n': FEATURED_PROJECTS_QUERY_RESULT;
     '\n  *[_type == "project" && slug.current == $slug][0] {\n    _id,\n    title,\n    "slug": slug.current,\n    "summary": summary[language == $language][0].value,\n    year,\n    client,\n    "role": role[language == $language][0].value,\n    stack,\n    images[]{\n      ...,\n      "alt": alt[language == $language][0].value\n    },\n    links,\n    "context": context[language == $language][0].value,\n    "constraint": constraint[language == $language][0].value,\n    "decisions": decisions[]{ "text": text[language == $language][0].value },\n    outcomes[]{\n      value,\n      "label": label[language == $language][0].value\n    }\n  }\n': PROJECT_BY_SLUG_QUERY_RESULT;
-    '\n  *[_type == "service"] | order(number asc) {\n    _id,\n    number,\n    stage,\n    title,\n    "description": description[language == $language][0].value,\n    keywords\n  }\n': SERVICES_QUERY_RESULT;
+    '\n  *[_type == "service"] | order(number asc, _id asc) {\n    _id,\n    number,\n    stage,\n    title,\n    "description": description[language == $language][0].value,\n    keywords\n  }\n': SERVICES_QUERY_RESULT;
+    '\n  *[_type == "settings"][0] {\n    "title": title[language == $language][0].value,\n    "description": description[language == $language][0].value,\n    ogImage\n  }\n': SETTINGS_QUERY_RESULT;
+    '\n  *[_type == "skill"] | order(category asc, name asc, _id asc) {\n    _id,\n    name,\n    category,\n    usage,\n    "projects": projects[]->{\n      _id,\n      title,\n      "slug": slug.current\n    }\n  }\n': SKILLS_QUERY_RESULT;
   }
 }
 // Lets @sanity/client releases that predate the global registry read it too
