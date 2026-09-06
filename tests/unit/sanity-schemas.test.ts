@@ -1,4 +1,5 @@
 import {Rule} from '@sanity/schema';
+import {ConcreteRuleClass} from 'sanity';
 import {describe, expect, it, vi} from 'vitest';
 import type {
   DocumentActionComponent,
@@ -13,6 +14,7 @@ import {profile} from '@/sanity/schemas/documents/profile';
 import {project} from '@/sanity/schemas/documents/project';
 import {service} from '@/sanity/schemas/documents/service';
 import {experience} from '@/sanity/schemas/documents/experience';
+import {skill} from '@/sanity/schemas/documents/skill';
 import {
   DOCUMENT_INTERNATIONALIZED_TYPES,
   PLUGIN_MANAGED_TYPES,
@@ -57,6 +59,29 @@ const customValidatorsOf = (validation: unknown): CustomValidatorFn[] => {
   return rule._rules
     .filter((r) => r.flag === 'custom')
     .map((r) => r.constraint as CustomValidatorFn);
+};
+
+/**
+ * `Rule` de `@sanity/schema` déclare `validate()` abstraite : seule
+ * l'implémentation concrète du paquet `sanity` exécute réellement les
+ * règles. On l'emploie ici pour éprouver le **comportement** — « cette
+ * valeur est-elle refusée ? » — et non la seule présence d'une déclaration
+ * dans `_rules`, qui resterait vraie même si la règle ne rejetait rien.
+ *
+ * `i18n.t` est fourni parce que le formatage du message d'erreur passe par
+ * la traduction du Studio, absente hors de celui-ci.
+ */
+const validationErrorsOf = async (
+  validation: unknown,
+  value: unknown,
+  document?: Record<string, unknown>,
+): Promise<Array<{message: string}>> => {
+  const rule = (validation as RuleValidator)(
+    new ConcreteRuleClass() as unknown as InstanceType<typeof Rule>,
+  ) as unknown as {
+    validate: (value: unknown, context: unknown) => Promise<Array<{message: string}>>;
+  };
+  return rule.validate(value, {document, i18n: {t: (key: string) => key}});
 };
 
 describe('schémas Sanity', () => {
@@ -530,4 +555,78 @@ describe('internationalisation documentaire — post et lui seul', () => {
   it("n'est pas un singleton : il doit rester créable et supprimable normalement", () => {
     expect(SINGLETON_TYPES.has('post')).toBe(false);
   });
+});
+
+describe('unions générées — l’API doit refuser ce que le menu déroulant n’offre pas', () => {
+  /**
+   * `sanity.types.ts` type `service.stage`, `skill.category` et
+   * `skill.usage` en unions fermées, dérivées de leur `options.list`. Mais
+   * `options.list` ne contraint que le menu déroulant du Studio, jamais
+   * l'API : une écriture par jeton (script d'import, migration) peut poser
+   * n'importe quelle chaîne, et le type généré ment alors au consommateur.
+   *
+   * Ces tests portent sur le comportement — quelles valeurs la validation
+   * accepte-t-elle réellement ? — plutôt que sur la présence d'une règle.
+   * Les valeurs acceptées sont lues depuis `options.list` du champ lui-même
+   * et non recopiées ici : si la validation cessait de dériver de la même
+   * source, une valeur du menu déroulant finirait par être refusée et ce
+   * test le dirait.
+   */
+  const cases = [
+    // `document` reste indéfini pour `service.stage` : la règle croisée
+    // number ↔ stage se désactive alors (elle laisse la validation de
+    // `number` signaler l'absence), si bien que seule l'appartenance à la
+    // liste peut encore refuser la valeur. Sans cette précaution, le test
+    // passerait grâce à la règle croisée et ne prouverait rien.
+    {label: 'service.stage', fields: service.fields, name: 'stage', rejected: 'strategy'},
+    {label: 'skill.category', fields: skill.fields, name: 'category', rejected: 'devops'},
+    {label: 'skill.usage', fields: skill.fields, name: 'usage', rejected: 'sometimes'},
+  ] as const;
+
+  for (const {label, fields, name, rejected} of cases) {
+    describe(label, () => {
+      const field = () => findField(fields, name);
+      const listValues = (): string[] => {
+        const options = (field() as {options?: {list?: Array<{value: string}>}}).options;
+        const values = options?.list?.map((entry) => entry.value);
+        if (!values) throw new Error(`${label} n’a pas de options.list`);
+        return values;
+      };
+
+      it('accepte chaque valeur de son menu déroulant', async () => {
+        for (const value of listValues()) {
+          const errors = await validationErrorsOf(field()?.validation, value);
+          expect(errors, `${label} refuse « ${value} », pourtant proposée`).toEqual([]);
+        }
+      });
+
+      it('refuse une valeur hors liste', async () => {
+        expect(listValues()).not.toContain(rejected);
+        const errors = await validationErrorsOf(field()?.validation, rejected);
+        expect(errors.length, `${label} accepte « ${rejected} »`).toBeGreaterThan(0);
+      });
+
+      it('refuse une valeur empruntée à un autre champ du même schéma', async () => {
+        // Un `usage` posé dans `category` est le glissement le plus
+        // plausible d'un script de migration : il doit être refusé aussi.
+        const foreign = cases
+          .filter((other) => other.label !== label)
+          .flatMap((other) => {
+            const otherField = findField(other.fields, other.name) as {
+              options?: {list?: Array<{value: string}>};
+            };
+            return otherField.options?.list?.map((entry) => entry.value) ?? [];
+          })
+          .filter((value) => !listValues().includes(value));
+
+        for (const value of foreign) {
+          const errors = await validationErrorsOf(field()?.validation, value);
+          expect(
+            errors.length,
+            `${label} accepte « ${value} », venue d’un autre champ`,
+          ).toBeGreaterThan(0);
+        }
+      });
+    });
+  }
 });

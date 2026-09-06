@@ -1,9 +1,10 @@
 import {defineField, defineType} from 'sanity';
+import {isOneOf} from '../validation';
 
 /**
- * Les cinq étapes de l'arc, dans l'ordre. Utilisée à la fois pour la liste
- * déroulante de `stage` et pour vérifier que `number` et `stage` désignent
- * la même étape — une seule source de vérité pour l'ordre de l'arc.
+ * Les cinq étapes de l'arc, dans l'ordre. Source unique : la liste
+ * déroulante de `stage`, la vérification que `number` et `stage` désignent
+ * la même étape, et la validation d'appartenance en dérivent toutes trois.
  */
 const STAGES = [
   {title: 'Understand', value: 'understand'},
@@ -73,19 +74,26 @@ export const service = defineType({
       type: 'string',
       options: {list: [...STAGES]},
       validation: (r) =>
-        r.required().custom((stage, context) => {
-          const number = (context.document as {number?: number} | undefined)?.number;
-          if (typeof number !== 'number' || number < 1 || number > STAGES.length) {
-            // Le numéro est hors bornes ou absent : sa propre validation
-            // (`required().min(1).max(5)`) le signale déjà, inutile de
-            // dupliquer l'erreur ici.
-            return true;
-          }
-          const expected = STAGES[number - 1]?.value;
-          return stage === expected
-            ? true
-            : `L’étape doit être « ${expected} » pour le numéro ${number} (arc Understand → Improve).`;
-        }),
+        r
+          .required()
+          .custom((stage, context) => {
+            const number = (context.document as {number?: number} | undefined)?.number;
+            if (typeof number !== 'number' || number < 1 || number > STAGES.length) {
+              // Le numéro est hors bornes ou absent : sa propre validation
+              // (`required().min(1).max(5)`) le signale déjà, inutile de
+              // dupliquer l'erreur ici.
+              return true;
+            }
+            const expected = STAGES[number - 1]?.value;
+            return stage === expected
+              ? true
+              : `L’étape doit être « ${expected} » pour le numéro ${number} (arc Understand → Improve).`;
+          })
+          // Après la règle croisée, et non avant : quand le numéro est connu,
+          // c'est elle qui nomme l'étape attendue, le message le plus utile
+          // des deux. Celle-ci reste le seul garde-fou quand le numéro est
+          // absent ou hors bornes — le cas que la règle croisée laisse passer.
+          .custom(isOneOf(STAGES)),
     }),
     defineField({
       name: 'title',

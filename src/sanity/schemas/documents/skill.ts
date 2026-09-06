@@ -1,4 +1,24 @@
 import {defineField, defineType} from 'sanity';
+import {isOneOf} from '../validation';
+
+/**
+ * Domaines et fréquences d'usage, chacun source unique de sa liste :
+ * `options.list` et la validation d'appartenance en dérivent tous deux —
+ * même motif que `STAGES` dans `service.ts`.
+ */
+const CATEGORIES = [
+  {title: 'Frontend', value: 'frontend'},
+  {title: 'Backend', value: 'backend'},
+  {title: 'Données & BI', value: 'data'},
+  {title: 'Cloud & DevOps', value: 'cloud'},
+  {title: 'Outils', value: 'tools'},
+] as const;
+
+const USAGES = [
+  {title: 'Au quotidien', value: 'daily'},
+  {title: 'Régulièrement', value: 'regular'},
+  {title: 'Notions', value: 'familiar'},
+] as const;
 
 /**
  * Pas de niveau en pourcentage : « JavaScript 95 % » n'est mesuré par rien
@@ -15,29 +35,15 @@ export const skill = defineType({
       name: 'category',
       title: 'Domaine',
       type: 'string',
-      options: {
-        list: [
-          {title: 'Frontend', value: 'frontend'},
-          {title: 'Backend', value: 'backend'},
-          {title: 'Données & BI', value: 'data'},
-          {title: 'Cloud & DevOps', value: 'cloud'},
-          {title: 'Outils', value: 'tools'},
-        ],
-      },
-      validation: (r) => r.required(),
+      options: {list: [...CATEGORIES]},
+      validation: (r) => r.required().custom(isOneOf(CATEGORIES)),
     }),
     defineField({
       name: 'usage',
       title: 'Fréquence d’usage',
       type: 'string',
-      options: {
-        list: [
-          {title: 'Au quotidien', value: 'daily'},
-          {title: 'Régulièrement', value: 'regular'},
-          {title: 'Notions', value: 'familiar'},
-        ],
-      },
-      validation: (r) => r.required(),
+      options: {list: [...USAGES]},
+      validation: (r) => r.required().custom(isOneOf(USAGES)),
     }),
     defineField({
       name: 'projects',
