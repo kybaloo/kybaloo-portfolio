@@ -22,6 +22,13 @@ export async function POST(request: NextRequest) {
     return new NextResponse('Corps sans _type', {status: 400});
   }
 
+  // L'étiquette purgée est le `_type` brut envoyé par Sanity. C'est aussi
+  // celle que `fetchContent` enregistre au point d'appel (voir
+  // `src/sanity/lib/fetch.ts`) : les deux côtés emploient le même nom sans
+  // transformation, précisément pour qu'aucune divergence ne puisse
+  // s'installer entre eux — une divergence ne se verrait qu'en production,
+  // sous la forme d'un contenu qui cesse de se mettre à jour.
+  //
   // Next.js 16 exige un second argument (profil de durée de vie).
   // `{expire: 0}` reproduit le comportement historique à un seul
   // argument : une invalidation immédiate, indispensable pour un webhook
