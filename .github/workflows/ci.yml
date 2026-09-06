@@ -14,6 +14,15 @@ concurrency:
 jobs:
   verify:
     runs-on: ubuntu-latest
+    # Valeurs de repli : suffisantes tant qu'aucune page ne récupère de
+    # contenu à la construction (le Studio et les pages ne font que
+    # s'initialiser). Remplacer par de vraies valeurs en secrets du dépôt
+    # dès qu'une étape aura besoin de lire du vrai contenu Sanity.
+    env:
+      NEXT_PUBLIC_SANITY_PROJECT_ID: ${{ secrets.NEXT_PUBLIC_SANITY_PROJECT_ID || 'ci000000' }}
+      NEXT_PUBLIC_SANITY_DATASET: ${{ secrets.NEXT_PUBLIC_SANITY_DATASET || 'production' }}
+      SANITY_API_READ_TOKEN: ${{ secrets.SANITY_API_READ_TOKEN || 'ci-placeholder-token' }}
+      SANITY_REVALIDATE_SECRET: ${{ secrets.SANITY_REVALIDATE_SECRET || 'ci-placeholder-secret' }}
     steps:
       - uses: actions/checkout@v4
 
