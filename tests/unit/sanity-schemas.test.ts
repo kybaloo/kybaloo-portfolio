@@ -12,7 +12,12 @@ import {profile} from '@/sanity/schemas/documents/profile';
 import {project} from '@/sanity/schemas/documents/project';
 import {service} from '@/sanity/schemas/documents/service';
 import {experience} from '@/sanity/schemas/documents/experience';
-import {SINGLETON_TYPES, singletonActions, singletonNewDocumentOptions} from '@/sanity/structure';
+import {
+  DOCUMENT_INTERNATIONALIZED_TYPES,
+  SINGLETON_TYPES,
+  singletonActions,
+  singletonNewDocumentOptions,
+} from '@/sanity/structure';
 
 const byName = (name: string) => schemaTypes.find((t) => t.name === name);
 
@@ -334,5 +339,59 @@ describe('service — numéro unique : deux services ne peuvent pas se disputer 
 
   it('accepte un numéro qu’aucun autre service n’utilise', async () => {
     await expect(validateNumber(1, true)).resolves.toBe(true);
+  });
+});
+
+describe('articles', () => {
+  it('déclare le type post', () => {
+    expect(byName('post')).toBeDefined();
+  });
+
+  it('porte un champ language, requis par l’internationalisation documentaire', () => {
+    const post = byName('post') as {fields: Array<{name: string}>};
+    expect(post.fields.map((f) => f.name)).toContain('language');
+  });
+
+  it('stocke le corps en Portable Text et non en chaîne', () => {
+    const post = byName('post') as {fields: Array<{name: string; type: string}>};
+    expect(post.fields.find((f) => f.name === 'body')?.type).toBe('array');
+  });
+});
+
+/**
+ * `post` est le SEUL type internationalisé au niveau document : un article
+ * peut n'exister qu'en une langue et son texte diverge réellement d'une
+ * langue à l'autre, dupliquer le document est ici l'objectif. Tous les
+ * autres types (profile, settings, project, service, experience, skill)
+ * restent internationalisés au niveau champ, via
+ * `internationalizedArrayString`/`internationalizedArrayText` — les
+ * dupliquer forcerait l'éditeur à re-téléverser chaque image et à
+ * maintenir deux versions qui se désynchroniseraient.
+ *
+ * Ces tests protègent cette frontière dans la durée contre deux dérives :
+ * étendre le plugin `@sanity/document-internationalization` à d'autres
+ * types (première puce), ou introduire par erreur un champ
+ * `internationalizedArray*` dans `post` — Sanity refuse qu'un tableau
+ * contienne directement un autre tableau, et `internationalizedArrayString`
+ * EST un tableau (seconde puce).
+ */
+describe('internationalisation documentaire — post et lui seul', () => {
+  it('déclare exactement `post` comme type internationalisé au niveau document', () => {
+    expect(DOCUMENT_INTERNATIONALIZED_TYPES).toEqual(['post']);
+  });
+
+  it("n'utilise aucun champ internationalisé au niveau champ — c'est le document entier qui est traduit", () => {
+    const post = byName('post') as {fields: Array<{name: string; type: string}>};
+    const offenders = post.fields
+      .filter((f) => f.type.startsWith('internationalizedArray'))
+      .map((f) => f.name);
+    expect(
+      offenders,
+      `champ(s) internationalisé(s) au niveau champ dans post : ${offenders.join(', ')}`,
+    ).toEqual([]);
+  });
+
+  it("n'est pas un singleton : il doit rester créable et supprimable normalement", () => {
+    expect(SINGLETON_TYPES.has('post')).toBe(false);
   });
 });

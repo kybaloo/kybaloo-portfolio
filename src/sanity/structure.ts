@@ -9,6 +9,25 @@ import type {StructureResolver} from 'sanity/structure';
 export const SINGLETON_TYPES = new Set(['profile', 'settings']);
 
 /**
+ * Types dont l'internationalisation se fait au niveau document plutôt
+ * qu'au niveau champ, via `@sanity/document-internationalization`
+ * (configuré dans `sanity.config.ts`, qui importe cette même constante
+ * plutôt que de répéter la liste). `post` est seul concerné : un article
+ * peut n'exister qu'en une langue et son texte diverge réellement d'une
+ * langue à l'autre, dupliquer le document est ici l'objectif plutôt qu'un
+ * coût. Les autres documents (`profile`, `settings`, `project`, `service`,
+ * `experience`, `skill`) restent internationalisés au niveau champ, via
+ * `internationalizedArrayString`/`internationalizedArrayText` : ils
+ * partagent leurs images, leur stack et leurs dates, que dupliquer
+ * obligerait l'éditeur à re-téléverser et à maintenir en double.
+ *
+ * `post` n'est délibérément pas ajouté à `SINGLETON_TYPES` ci-dessus : les
+ * deux frontières sont indépendantes, et un article reste un document
+ * créable et supprimable normalement.
+ */
+export const DOCUMENT_INTERNATIONALIZED_TYPES = ['post'];
+
+/**
  * Retire dupliquer, dépublier et supprimer sur un document singleton déjà
  * ouvert. Ne couvre qu'un chemin parmi deux : un document ouvert par la
  * structure personnalisée. Le bouton global « + New document » de la barre
