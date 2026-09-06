@@ -198,9 +198,24 @@ test.describe('cycle complet activation / désactivation (bon secret)', () => {
     expect(draftCookieAfterEnable?.value).toBeTruthy();
 
     // 2. Visiter /fr avec ce cookie : la connexion live doit s'établir.
+    //
+    // L'attente porte sur l'événement lui-même, pas sur un délai fixe. Une
+    // assertion POSITIVE derrière `waitForTimeout` échoue au hasard dès que
+    // la connexion met plus longtemps que prévu à s'ouvrir — ce test a été
+    // observé rouge une exécution complète sur deux, vert isolément et au
+    // second essai. Un test qui échoue au hasard est un test auquel on
+    // cesse de croire.
+    //
+    // L'attente est armée AVANT la navigation : armée après, la requête
+    // pourrait déjà être partie et l'attente expirerait sur un événement
+    // pourtant survenu.
+    //
+    // Les attentes fixes des assertions NÉGATIVES (« aucune requête
+    // observée », ici et dans le test du visiteur anonyme) restent des
+    // délais : prouver qu'un événement n'a pas lieu suppose d'attendre.
+    const liveConnection = page.waitForRequest(/api\.sanity\.io/, {timeout: 15_000});
     await page.goto('/fr', {waitUntil: 'load'});
-    await page.waitForTimeout(2000);
-    expect(sanityRequests.length).toBeGreaterThan(0);
+    expect((await liveConnection).url()).toContain('api.sanity.io');
 
     // 3. Désactiver — sans secret, volontairement (voir la route).
     sanityRequests.length = 0;
