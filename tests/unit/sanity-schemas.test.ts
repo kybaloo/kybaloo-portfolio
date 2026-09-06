@@ -356,6 +356,46 @@ describe('articles', () => {
     const post = byName('post') as {fields: Array<{name: string; type: string}>};
     expect(post.fields.find((f) => f.name === 'body')?.type).toBe('array');
   });
+
+  /**
+   * `codeBlock.language` était un champ texte libre : rien n'empêchait un
+   * article d'écrire « ts », le suivant « TypeScript », un troisième
+   * « typescript ». Comme pour `service.stage` (arc Understand → Improve),
+   * une liste de valeurs proposées remplace le texte libre. Ce test protège
+   * cette liste dans la durée — même principe que le test sur l'arc des
+   * services.
+   */
+  it('propose une liste de langages pour le bloc de code plutôt qu’un texte libre', () => {
+    const post = byName('post') as {
+      fields: Array<{
+        name: string;
+        of?: Array<{
+          name?: string;
+          fields?: Array<{
+            name: string;
+            type: string;
+            options?: {list?: Array<{value: string}>};
+          }>;
+        }>;
+      }>;
+    };
+    const body = post.fields.find((f) => f.name === 'body');
+    const codeBlock = body?.of?.find((member) => member.name === 'codeBlock');
+    const language = codeBlock?.fields?.find((f) => f.name === 'language');
+    expect(language?.type).toBe('string');
+    expect(language?.options?.list?.map((o) => o.value)).toEqual([
+      'typescript',
+      'tsx',
+      'javascript',
+      'json',
+      'bash',
+      'css',
+      'html',
+      'yaml',
+      'markdown',
+      'text',
+    ]);
+  });
 });
 
 /**
