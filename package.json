@@ -18,6 +18,7 @@
     "test:watch": "vitest",
     "test:e2e": "playwright test",
     "validate:archive": "node scripts/validate-archive.mjs",
+    "import:archive": "node --env-file=.env.local scripts/import-archive.mjs",
     "typegen": "sanity schema extract --enforce-required-fields --force && sanity typegen generate",
     "typegen:check": "npm run typegen && git diff --exit-code sanity.types.ts",
     "prepare": "husky"
