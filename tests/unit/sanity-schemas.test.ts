@@ -129,3 +129,39 @@ describe('SINGLETON_TYPES', () => {
     expect([...SINGLETON_TYPES].sort()).toEqual(['profile', 'settings']);
   });
 });
+
+describe('documents structurés', () => {
+  it('déclare les quatre types de contenu', () => {
+    for (const name of ['project', 'service', 'experience', 'skill']) {
+      expect(byName(name), `type manquant : ${name}`).toBeDefined();
+    }
+  });
+
+  it('donne au projet les champs d’architecture qui portent le positionnement', () => {
+    const project = byName('project') as {fields: Array<{name: string}>};
+    const names = project.fields.map((f) => f.name);
+    for (const field of ['context', 'constraint', 'decisions', 'outcomes']) {
+      expect(names, `champ d’architecture manquant : ${field}`).toContain(field);
+    }
+  });
+
+  it('relie chaque compétence aux projets qui la prouvent', () => {
+    const skill = byName('skill') as {fields: Array<{name: string; type: string}>};
+    const projects = skill.fields.find((f) => f.name === 'projects');
+    expect(projects?.type).toBe('array');
+  });
+
+  it('ordonne les services sur l’arc Understand → Improve', () => {
+    const service = byName('service') as {
+      fields: Array<{name: string; options?: {list?: Array<{value: string}>}}>;
+    };
+    const stage = service.fields.find((f) => f.name === 'stage');
+    expect(stage?.options?.list?.map((o) => o.value)).toEqual([
+      'understand',
+      'architect',
+      'build',
+      'measure',
+      'improve',
+    ]);
+  });
+});

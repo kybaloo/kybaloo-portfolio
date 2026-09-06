@@ -4,6 +4,10 @@ import {link} from './objects/link';
 import {outcome} from './objects/outcome';
 import {profile} from './documents/profile';
 import {settings} from './documents/settings';
+import {project} from './documents/project';
+import {service} from './documents/service';
+import {experience} from './documents/experience';
+import {skill} from './documents/skill';
 
 export const schemaTypes: SchemaTypeDefinition[] = [
   // Objets réutilisables
@@ -13,4 +17,9 @@ export const schemaTypes: SchemaTypeDefinition[] = [
   // Singletons
   profile,
   settings,
+  // Documents structurés
+  project,
+  service,
+  experience,
+  skill,
 ];
