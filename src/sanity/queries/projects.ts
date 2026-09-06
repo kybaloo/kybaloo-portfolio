@@ -15,7 +15,10 @@ export const PROJECTS_QUERY = defineQuery(`
     "role": role[language == $language][0].value,
     featured,
     stack,
-    "cover": images[0],
+    "cover": images[0]{
+      ...,
+      "alt": alt[language == $language][0].value
+    },
     links
   }
 `);
@@ -42,7 +45,10 @@ export const PROJECT_BY_SLUG_QUERY = defineQuery(`
     client,
     "role": role[language == $language][0].value,
     stack,
-    images,
+    images[]{
+      ...,
+      "alt": alt[language == $language][0].value
+    },
     links,
     "context": context[language == $language][0].value,
     "constraint": constraint[language == $language][0].value,

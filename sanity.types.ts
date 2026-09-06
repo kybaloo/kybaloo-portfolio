@@ -560,7 +560,7 @@ export type POST_BY_SLUG_QUERY_RESULT = {
 
 // Source: src/sanity/queries/profile.ts
 // Variable: PROFILE_QUERY
-// Query: *[_type == "profile"][0] {    name,    "role": role[language == $language][0].value,    location,    "bio": bio[language == $language][0].value,    photo,    available,    links,    resumeFr,    resumeEn  }
+// Query: *[_type == "profile"][0] {    name,    "role": role[language == $language][0].value,    location,    "bio": bio[language == $language][0].value,    "photo": photo{      ...,      "alt": alt[language == $language][0].value    },    available,    links,    resumeFr,    resumeEn  }
 export type PROFILE_QUERY_RESULT = {
   name: string;
   role: string | null;
@@ -571,7 +571,7 @@ export type PROFILE_QUERY_RESULT = {
     media?: unknown;
     hotspot?: SanityImageHotspot;
     crop?: SanityImageCrop;
-    alt: InternationalizedArrayString;
+    alt: string | null;
     _type: 'image';
   } | null;
   available: boolean | null;
@@ -594,7 +594,7 @@ export type PROFILE_QUERY_RESULT = {
 
 // Source: src/sanity/queries/projects.ts
 // Variable: PROJECTS_QUERY
-// Query: *[_type == "project"] | order(order asc, year desc) {    _id,    title,    "slug": slug.current,    "summary": summary[language == $language][0].value,    year,    client,    "role": role[language == $language][0].value,    featured,    stack,    "cover": images[0],    links  }
+// Query: *[_type == "project"] | order(order asc, year desc) {    _id,    title,    "slug": slug.current,    "summary": summary[language == $language][0].value,    year,    client,    "role": role[language == $language][0].value,    featured,    stack,    "cover": images[0]{      ...,      "alt": alt[language == $language][0].value    },    links  }
 export type PROJECTS_QUERY_RESULT = Array<{
   _id: string;
   title: string;
@@ -610,7 +610,7 @@ export type PROJECTS_QUERY_RESULT = Array<{
     media?: unknown;
     hotspot?: SanityImageHotspot;
     crop?: SanityImageCrop;
-    alt?: InternationalizedArrayString;
+    alt: string | null;
     _type: 'image';
     _key: string;
   } | null;
@@ -636,7 +636,7 @@ export type FEATURED_PROJECTS_QUERY_RESULT = Array<{
 
 // Source: src/sanity/queries/projects.ts
 // Variable: PROJECT_BY_SLUG_QUERY
-// Query: *[_type == "project" && slug.current == $slug][0] {    _id,    title,    "slug": slug.current,    "summary": summary[language == $language][0].value,    year,    client,    "role": role[language == $language][0].value,    stack,    images,    links,    "context": context[language == $language][0].value,    "constraint": constraint[language == $language][0].value,    "decisions": decisions[]{ "text": text[language == $language][0].value },    outcomes[]{      value,      "label": label[language == $language][0].value    }  }
+// Query: *[_type == "project" && slug.current == $slug][0] {    _id,    title,    "slug": slug.current,    "summary": summary[language == $language][0].value,    year,    client,    "role": role[language == $language][0].value,    stack,    images[]{      ...,      "alt": alt[language == $language][0].value    },    links,    "context": context[language == $language][0].value,    "constraint": constraint[language == $language][0].value,    "decisions": decisions[]{ "text": text[language == $language][0].value },    outcomes[]{      value,      "label": label[language == $language][0].value    }  }
 export type PROJECT_BY_SLUG_QUERY_RESULT = {
   _id: string;
   title: string;
@@ -651,7 +651,7 @@ export type PROJECT_BY_SLUG_QUERY_RESULT = {
     media?: unknown;
     hotspot?: SanityImageHotspot;
     crop?: SanityImageCrop;
-    alt?: InternationalizedArrayString;
+    alt: string | null;
     _type: 'image';
     _key: string;
   }> | null;
@@ -688,10 +688,10 @@ declare global {
   interface SanityQueries {
     '\n  *[_type == "post" && language == $language && defined(publishedAt)]\n    | order(pinned desc, publishedAt desc) {\n    _id,\n    title,\n    "slug": slug.current,\n    summary,\n    publishedAt,\n    tags,\n    pinned,\n    cover\n  }\n': POSTS_QUERY_RESULT;
     '\n  *[_type == "post" && language == $language && slug.current == $slug][0] {\n    _id,\n    title,\n    "slug": slug.current,\n    summary,\n    publishedAt,\n    tags,\n    cover,\n    body\n  }\n': POST_BY_SLUG_QUERY_RESULT;
-    '\n  *[_type == "profile"][0] {\n    name,\n    "role": role[language == $language][0].value,\n    location,\n    "bio": bio[language == $language][0].value,\n    photo,\n    available,\n    links,\n    resumeFr,\n    resumeEn\n  }\n': PROFILE_QUERY_RESULT;
-    '\n  *[_type == "project"] | order(order asc, year desc) {\n    _id,\n    title,\n    "slug": slug.current,\n    "summary": summary[language == $language][0].value,\n    year,\n    client,\n    "role": role[language == $language][0].value,\n    featured,\n    stack,\n    "cover": images[0],\n    links\n  }\n': PROJECTS_QUERY_RESULT;
+    '\n  *[_type == "profile"][0] {\n    name,\n    "role": role[language == $language][0].value,\n    location,\n    "bio": bio[language == $language][0].value,\n    "photo": photo{\n      ...,\n      "alt": alt[language == $language][0].value\n    },\n    available,\n    links,\n    resumeFr,\n    resumeEn\n  }\n': PROFILE_QUERY_RESULT;
+    '\n  *[_type == "project"] | order(order asc, year desc) {\n    _id,\n    title,\n    "slug": slug.current,\n    "summary": summary[language == $language][0].value,\n    year,\n    client,\n    "role": role[language == $language][0].value,\n    featured,\n    stack,\n    "cover": images[0]{\n      ...,\n      "alt": alt[language == $language][0].value\n    },\n    links\n  }\n': PROJECTS_QUERY_RESULT;
     '\n  *[_type == "project" && featured == true] | order(order asc, year desc) [0...4] {\n    _id,\n    title,\n    "slug": slug.current,\n    "summary": summary[language == $language][0].value,\n    year,\n    client,\n    stack\n  }\n': FEATURED_PROJECTS_QUERY_RESULT;
-    '\n  *[_type == "project" && slug.current == $slug][0] {\n    _id,\n    title,\n    "slug": slug.current,\n    "summary": summary[language == $language][0].value,\n    year,\n    client,\n    "role": role[language == $language][0].value,\n    stack,\n    images,\n    links,\n    "context": context[language == $language][0].value,\n    "constraint": constraint[language == $language][0].value,\n    "decisions": decisions[]{ "text": text[language == $language][0].value },\n    outcomes[]{\n      value,\n      "label": label[language == $language][0].value\n    }\n  }\n': PROJECT_BY_SLUG_QUERY_RESULT;
+    '\n  *[_type == "project" && slug.current == $slug][0] {\n    _id,\n    title,\n    "slug": slug.current,\n    "summary": summary[language == $language][0].value,\n    year,\n    client,\n    "role": role[language == $language][0].value,\n    stack,\n    images[]{\n      ...,\n      "alt": alt[language == $language][0].value\n    },\n    links,\n    "context": context[language == $language][0].value,\n    "constraint": constraint[language == $language][0].value,\n    "decisions": decisions[]{ "text": text[language == $language][0].value },\n    outcomes[]{\n      value,\n      "label": label[language == $language][0].value\n    }\n  }\n': PROJECT_BY_SLUG_QUERY_RESULT;
     '\n  *[_type == "service"] | order(number asc) {\n    _id,\n    number,\n    stage,\n    title,\n    "description": description[language == $language][0].value,\n    keywords\n  }\n': SERVICES_QUERY_RESULT;
   }
 }
