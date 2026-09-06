@@ -25,6 +25,18 @@ const OPEN_REDIRECT_ATTACKS = [
   },
   {name: 'URL absolue (https://evil.com)', slug: 'https://evil.com'},
   {name: 'schéma exotique (javascript:alert(1))', slug: 'javascript:alert(1)'},
+  {
+    name: 'segment point avant // (/.//evil.com)',
+    slug: '/.//evil.com',
+  },
+  {
+    name: 'segment point-point avant // (/..//evil.com)',
+    slug: '/..//evil.com',
+  },
+  {
+    name: 'segment point-point imbriqué avant // (/a/..//evil.com)',
+    slug: '/a/..//evil.com',
+  },
 ] as const;
 
 // Représente ce qu'un attaquant enverrait tel quel sur le fil, sans passer
@@ -34,14 +46,14 @@ const PERCENT_ENCODED_ATTACK_QUERY = 'slug=%2F%2Fevil.com';
 
 test('la prévisualisation refuse une requête sans secret', async ({request}) => {
   const response = await request.get('/api/draft-mode/enable', {maxRedirects: 0});
-  expect([401, 400]).toContain(response.status());
+  expect(response.status()).toBe(401);
 });
 
 test('la prévisualisation refuse un secret erroné', async ({request}) => {
   const response = await request.get('/api/draft-mode/enable?secret=faux&slug=/fr', {
     maxRedirects: 0,
   });
-  expect([401, 400]).toContain(response.status());
+  expect(response.status()).toBe(401);
 });
 
 test('le webhook de revalidation refuse une signature absente', async ({request}) => {
@@ -107,10 +119,16 @@ test.describe('validation du chemin de redirection — activation (bon secret)',
   ];
 
   for (const {slug, expectedLocation} of legitimateCases) {
-    test(`redirige vers le chemin interne légitime ${slug}`, async ({request}) => {
+    test(`redirige vers le chemin interne légitime ${slug}`, async ({request, baseURL}) => {
       const response = await request.get(urlWithSlug(slug), {maxRedirects: 0});
       expect(response.status()).toBe(307);
-      expect(response.headers()['location']).toBe(expectedLocation);
+      const location = response.headers()['location'];
+      expect(location).toBe(expectedLocation);
+      // La propriété qui compte n'est pas le texte de l'en-tête mais
+      // l'origine vers laquelle un navigateur le résoudrait : c'est ce
+      // contrôle qui aurait détecté une redirection ouverte même si le
+      // texte brut ressemblait à un chemin interne.
+      expect(new URL(location!, baseURL).origin).toBe(new URL(baseURL!).origin);
     });
   }
 
@@ -140,12 +158,17 @@ test.describe('validation du chemin de redirection — désactivation', () => {
     expect(response.status()).toBe(400);
   });
 
-  test('redirige vers le chemin interne légitime après désactivation', async ({request}) => {
+  test('redirige vers le chemin interne légitime après désactivation', async ({
+    request,
+    baseURL,
+  }) => {
     const response = await request.get('/api/draft-mode/disable?slug=/fr/travaux', {
       maxRedirects: 0,
     });
     expect(response.status()).toBe(307);
-    expect(response.headers()['location']).toBe('/fr/travaux');
+    const location = response.headers()['location'];
+    expect(location).toBe('/fr/travaux');
+    expect(new URL(location!, baseURL).origin).toBe(new URL(baseURL!).origin);
   });
 });
 

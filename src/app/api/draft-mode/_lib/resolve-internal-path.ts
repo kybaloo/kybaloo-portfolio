@@ -28,6 +28,13 @@ const INTERNAL_ORIGIN = 'http://internal.invalid';
  * `\`, une URL absolue (`https://evil.com`) ou un schéma exotique
  * (`javascript:`, `file:`) — change l'origine résolue et échoue donc à ce
  * contrôle, sans liste de cas particuliers à maintenir.
+ *
+ * Un second contrôle, identique, porte sur la valeur émise : `url.pathname`
+ * a déjà appliqué la suppression des segments point (`/.//evil.com` devient
+ * `//evil.com`), donc un chemin qui passait le premier contrôle peut
+ * ressortir protocole-relatif après normalisation. Le premier contrôle
+ * rejette l'entrée hostile, le second rejette ce que la normalisation a
+ * fabriqué à partir d'une entrée qui semblait sûre.
  */
 export function resolveInternalRedirectPath(slug: string): string | null {
   if (!slug.startsWith('/')) {
@@ -45,5 +52,11 @@ export function resolveInternalRedirectPath(slug: string): string | null {
     return null;
   }
 
-  return `${url.pathname}${url.search}${url.hash}`;
+  const path = `${url.pathname}${url.search}${url.hash}`;
+
+  if (new URL(path, INTERNAL_ORIGIN).origin !== INTERNAL_ORIGIN) {
+    return null;
+  }
+
+  return path;
 }
