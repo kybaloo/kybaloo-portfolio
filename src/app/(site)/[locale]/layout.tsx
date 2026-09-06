@@ -75,8 +75,23 @@ export default async function LocaleLayout({
             <SiteFooter />
           </NextIntlClientProvider>
         </ThemeProvider>
-        <SanityLive includeDrafts={isDraft} />
-        {isDraft && <VisualEditing />}
+        {isDraft && (
+          <>
+            {/*
+              `SanityLive` ouvre sa connexion au montage, quelle que soit la
+              valeur de `includeDrafts` : ce prop ne filtre que le contenu
+              des événements reçus, pas l'établissement de la connexion elle-
+              même (voir node_modules/next-sanity/dist/SanityLive.js). Le
+              monter inconditionnellement enverrait donc une requête vers
+              l'API Sanity et chargerait son bundle client pour chaque
+              visiteur anonyme, alors que le site est statique et revalidé
+              par webhook — la mise à jour en direct ne sert qu'à la
+              prévisualisation.
+            */}
+            <SanityLive includeDrafts />
+            <VisualEditing />
+          </>
+        )}
       </body>
     </html>
   );
