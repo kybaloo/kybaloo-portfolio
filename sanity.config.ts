@@ -4,7 +4,7 @@ import {structureTool} from 'sanity/structure';
 import {internationalizedArray} from 'sanity-plugin-internationalized-array';
 import {apiVersion, dataset, projectId} from './src/sanity/env';
 import {schemaTypes} from './src/sanity/schemas';
-import {SINGLETON_TYPES, structure} from './src/sanity/structure';
+import {singletonActions, singletonNewDocumentOptions, structure} from './src/sanity/structure';
 
 export default defineConfig({
   name: 'default',
@@ -26,11 +26,7 @@ export default defineConfig({
     }),
   ],
   document: {
-    actions: (input, context) =>
-      SINGLETON_TYPES.has(context.schemaType)
-        ? input.filter(
-            ({action}) => action !== 'unpublish' && action !== 'duplicate' && action !== 'delete',
-          )
-        : input,
+    actions: singletonActions,
+    newDocumentOptions: singletonNewDocumentOptions,
   },
 });

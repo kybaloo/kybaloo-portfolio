@@ -5,12 +5,17 @@ export const link = defineType({
   title: 'Lien',
   type: 'object',
   fields: [
-    defineField({name: 'label', title: 'Libellé', type: 'string'}),
+    defineField({
+      name: 'label',
+      title: 'Libellé',
+      type: 'string',
+      validation: (rule) => rule.required(),
+    }),
     defineField({
       name: 'url',
       title: 'URL',
       type: 'url',
-      validation: (rule) => rule.uri({scheme: ['http', 'https', 'mailto']}),
+      validation: (rule) => rule.required().uri({scheme: ['http', 'https', 'mailto']}),
     }),
   ],
   preview: {select: {title: 'label', subtitle: 'url'}},

@@ -29,6 +29,7 @@ export const profile = defineType({
           name: 'alt',
           title: 'Texte alternatif',
           type: 'internationalizedArrayString',
+          validation: (r) => r.required(),
         }),
       ],
     }),
@@ -39,8 +40,18 @@ export const profile = defineType({
       initialValue: true,
     }),
     defineField({name: 'links', title: 'Liens', type: 'array', of: [{type: 'link'}]}),
-    defineField({name: 'resumeFr', title: 'CV français (PDF)', type: 'file'}),
-    defineField({name: 'resumeEn', title: 'CV anglais (PDF)', type: 'file'}),
+    defineField({
+      name: 'resumeFr',
+      title: 'CV français (PDF)',
+      type: 'file',
+      options: {accept: 'application/pdf'},
+    }),
+    defineField({
+      name: 'resumeEn',
+      title: 'CV anglais (PDF)',
+      type: 'file',
+      options: {accept: 'application/pdf'},
+    }),
   ],
   preview: {select: {title: 'name'}, prepare: ({title}) => ({title: title ?? 'Profil'})},
 });
