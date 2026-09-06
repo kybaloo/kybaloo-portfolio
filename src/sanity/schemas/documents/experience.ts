@@ -47,7 +47,19 @@ export const experience = defineType({
     }),
   ],
   orderings: [
-    {title: 'Plus récent d’abord', name: 'recent', by: [{field: 'startDate', direction: 'desc'}]},
+    {
+      title: 'Plus récent d’abord',
+      name: 'recent',
+      by: [
+        // `startDate` est optionnel (Step 3 du brief) : sans `nulls: 'last'`,
+        // Sanity place les valeurs manquantes en tête en ordre décroissant —
+        // l'inverse de « une fiche incomplète affiche moins ». `_id` départage
+        // les dates identiques ou également manquantes, pour un ordre stable
+        // d'une requête à l'autre.
+        {field: 'startDate', direction: 'desc', nulls: 'last'},
+        {field: '_id', direction: 'asc'},
+      ],
+    },
   ],
   preview: {
     select: {title: 'position.0.value', subtitle: 'organisation'},

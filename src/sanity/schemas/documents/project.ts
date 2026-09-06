@@ -106,7 +106,14 @@ export const project = defineType({
     {
       title: 'Ordre d’affichage',
       name: 'displayOrder',
-      by: [{field: 'order', direction: 'asc'}],
+      // `order` est optionnel et peut rester vide longtemps (Step 3 du
+      // brief) : sans départage, deux projets à `order` égal ou absent
+      // n'ont pas de position relative définie, et peuvent changer de
+      // place d'une requête à l'autre. `_id` est stable et toujours présent.
+      by: [
+        {field: 'order', direction: 'asc'},
+        {field: '_id', direction: 'asc'},
+      ],
     },
   ],
   preview: {
