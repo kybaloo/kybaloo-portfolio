@@ -165,3 +165,24 @@ describe('documents structurés', () => {
     ]);
   });
 });
+
+describe('compétence — pas de niveau chiffré (décision de positionnement)', () => {
+  /**
+   * L'ancien site affichait « JavaScript 95 % », un chiffre que rien ne
+   * mesure et qui signale un portfolio junior au public technique visé.
+   * `usage` (fréquence) et les projets référencés remplacent délibérément
+   * toute notion de niveau chiffré. Ce test protège cette décision de
+   * positionnement contre un retour discret sous un autre nom — la même
+   * idée porterait aussi bien `proficiency`, `percentage`, `rating` ou
+   * `mastery` que `level`. Il vise l'intention derrière le nom du champ,
+   * pas une chaîne de caractères précise, mais reste ciblé sur ce
+   * vocabulaire pour ne pas gêner un futur champ légitime comme `icon` ou
+   * `notes`.
+   */
+  it("n'introduit aucun champ évoquant un niveau ou un pourcentage", () => {
+    const skill = byName('skill') as {fields: Array<{name: string}>};
+    const levelLike = /level|proficiency|percent|rating|mastery/i;
+    const offenders = skill.fields.map((f) => f.name).filter((name) => levelLike.test(name));
+    expect(offenders, `champ(s) évoquant un niveau chiffré : ${offenders.join(', ')}`).toEqual([]);
+  });
+});
