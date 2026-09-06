@@ -36,6 +36,9 @@ jobs:
       - name: Vérification des types
         run: npm run typecheck
 
+      - name: Types Sanity à jour
+        run: npm run typegen:check
+
       - name: Tests unitaires
         run: npm test
 

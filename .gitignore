@@ -41,6 +41,10 @@ yarn-error.log*
 *.tsbuildinfo
 next-env.d.ts
 
+# Sanity — artefact intermédiaire régénéré par `npm run typegen` ;
+# `sanity.types.ts`, lui, est commité.
+/schema.json
+
 # IDEs
 .idea/
 .vscode/*
