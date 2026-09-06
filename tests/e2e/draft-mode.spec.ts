@@ -3,7 +3,7 @@ import {expect, test} from '@playwright/test';
 // `.env.local` n'est jamais commité (voir .gitignore) : il n'existe qu'en
 // développement local. Les tests ci-dessous qui ont besoin du vrai secret
 // pour dépasser le contrôle d'authentification sont sautés quand il est
-// absent (typiquement en CI, où `SANITY_REVALIDATE_SECRET` n'est pas
+// absent (typiquement en CI, où `SANITY_PREVIEW_SECRET` n'est pas
 // encore provisionné) plutôt que d'échouer sur une variable manquante.
 try {
   process.loadEnvFile('.env.local');
@@ -11,7 +11,7 @@ try {
   // Pas de .env.local : rien à charger.
 }
 
-const secret = process.env.SANITY_REVALIDATE_SECRET;
+const secret = process.env.SANITY_PREVIEW_SECRET;
 
 // Cas d'attaque partagés entre `enable` et `disable` : les deux routes
 // valident `slug` avec la même `resolveInternalRedirectPath`, donc la même
@@ -85,10 +85,7 @@ test('un visiteur anonyme ne déclenche aucune requête vers l’API Sanity', as
 });
 
 test.describe('validation du chemin de redirection — activation (bon secret)', () => {
-  test.skip(
-    !secret,
-    '.env.local absent : SANITY_REVALIDATE_SECRET indisponible pour ces tests (CI)',
-  );
+  test.skip(!secret, '.env.local absent : SANITY_PREVIEW_SECRET indisponible pour ces tests (CI)');
 
   // Chaque cas simule une tentative de redirection ouverte : le secret est
   // correct (l'attaquant a obtenu un lien de prévisualisation légitime),
@@ -173,10 +170,7 @@ test.describe('validation du chemin de redirection — désactivation', () => {
 });
 
 test.describe('cycle complet activation / désactivation (bon secret)', () => {
-  test.skip(
-    !secret,
-    '.env.local absent : SANITY_REVALIDATE_SECRET indisponible pour ces tests (CI)',
-  );
+  test.skip(!secret, '.env.local absent : SANITY_PREVIEW_SECRET indisponible pour ces tests (CI)');
 
   test('active la connexion live puis la coupe à la désactivation, et retire le cookie', async ({
     page,
