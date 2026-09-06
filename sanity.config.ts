@@ -8,7 +8,7 @@ import {schemaTypes} from './src/sanity/schemas';
 import {
   DOCUMENT_INTERNATIONALIZED_TYPES,
   singletonActions,
-  singletonNewDocumentOptions,
+  restrictedNewDocumentOptions,
   structure,
 } from './src/sanity/structure';
 
@@ -43,6 +43,6 @@ export default defineConfig({
   ],
   document: {
     actions: singletonActions,
-    newDocumentOptions: singletonNewDocumentOptions,
+    newDocumentOptions: restrictedNewDocumentOptions,
   },
 });

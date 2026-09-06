@@ -6,6 +6,7 @@ import type {
   NewDocumentOptionsContext,
   TemplateItem,
 } from 'sanity';
+import type {StructureBuilder} from 'sanity/structure';
 import {schemaTypes} from '@/sanity/schemas';
 import {link} from '@/sanity/schemas/objects/link';
 import {profile} from '@/sanity/schemas/documents/profile';
@@ -14,9 +15,12 @@ import {service} from '@/sanity/schemas/documents/service';
 import {experience} from '@/sanity/schemas/documents/experience';
 import {
   DOCUMENT_INTERNATIONALIZED_TYPES,
+  PLUGIN_MANAGED_TYPES,
   SINGLETON_TYPES,
+  isEditorManagedType,
+  restrictedNewDocumentOptions,
   singletonActions,
-  singletonNewDocumentOptions,
+  structure,
 } from '@/sanity/structure';
 
 const byName = (name: string) => schemaTypes.find((t) => t.name === name);
@@ -107,7 +111,7 @@ describe('verrou de création des singletons (menu global "+ New document")', ()
     const prev = asTemplates(['profile', 'settings', 'link', 'outcome']);
     const context = {creationContext: {type: 'global'}} as unknown as NewDocumentOptionsContext;
 
-    const result = singletonNewDocumentOptions(prev, context);
+    const result = restrictedNewDocumentOptions(prev, context);
 
     const ids = result.map((item) => item.templateId);
     expect(ids).not.toContain('profile');
@@ -121,7 +125,7 @@ describe('verrou de création des singletons (menu global "+ New document")', ()
       creationContext: {type: 'document', documentId: 'profile', schemaType: 'profile'},
     } as unknown as NewDocumentOptionsContext;
 
-    const result = singletonNewDocumentOptions(prev, context);
+    const result = restrictedNewDocumentOptions(prev, context);
 
     expect(result).toEqual(prev);
   });
@@ -153,6 +157,98 @@ describe('verrou des actions sur un document singleton déjà ouvert', () => {
 describe('SINGLETON_TYPES', () => {
   it('contient exactement profile et settings', () => {
     expect([...SINGLETON_TYPES].sort()).toEqual(['profile', 'settings']);
+  });
+});
+
+describe('types gérés par un plugin — l’éditeur ne doit ni les voir ni en créer', () => {
+  /**
+   * Fausse `StructureBuilder`, réduite aux méthodes que `structure` appelle
+   * réellement. Elle capture la liste finale d'items pour qu'on puisse
+   * vérifier ce que la structure expose — plutôt que de tester le seul
+   * prédicat de filtrage, qui resterait vert même si `structure` cessait de
+   * l'appeler.
+   */
+  const itemsOfStructure = (documentTypeNames: string[]): string[] => {
+    let captured: Array<{__id?: string}> = [];
+    const listBuilder = {
+      title: () => listBuilder,
+      items: (items: Array<{__id?: string}>) => {
+        captured = items;
+        return listBuilder;
+      },
+    };
+    const childBuilder = {schemaType: () => childBuilder, documentId: () => childBuilder};
+    const fakeS = {
+      list: () => listBuilder,
+      listItem: () => {
+        const itemBuilder: {__id?: string} & Record<string, unknown> = {
+          title: () => itemBuilder,
+          id: (value: string) => {
+            itemBuilder.__id = value;
+            return itemBuilder;
+          },
+          child: () => itemBuilder,
+        };
+        return itemBuilder;
+      },
+      document: () => childBuilder,
+      divider: () => ({__divider: true}),
+      documentTypeListItems: () =>
+        documentTypeNames.map((name) => ({__id: name, getId: () => name})),
+    };
+
+    structure(fakeS as unknown as StructureBuilder, undefined as never);
+
+    return captured.map((item) => item.__id).filter((id): id is string => id !== undefined);
+  };
+
+  it('ne recense que translation.metadata', () => {
+    expect([...PLUGIN_MANAGED_TYPES]).toEqual(['translation.metadata']);
+  });
+
+  /**
+   * Les deux ensembles répondent à des questions différentes :
+   * `SINGLETON_TYPES` désigne des documents uniques que l'éditeur édite bel
+   * et bien (mais qu'il ne doit ni dupliquer ni supprimer),
+   * `PLUGIN_MANAGED_TYPES` des documents qu'un plugin écrit pour son propre
+   * compte et auxquels l'éditeur ne doit pas toucher du tout. Les confondre
+   * ferait apparaître un singleton là où on veut cacher un type de plugin,
+   * ou l'inverse.
+   */
+  it('reste disjoint des singletons', () => {
+    for (const type of PLUGIN_MANAGED_TYPES) {
+      expect(SINGLETON_TYPES.has(type), `${type} est aussi déclaré singleton`).toBe(false);
+    }
+  });
+
+  it('retire translation.metadata de la liste générique de la structure', () => {
+    const ids = itemsOfStructure(['project', 'post', 'translation.metadata']);
+    expect(ids).not.toContain('translation.metadata');
+    expect(ids).toContain('project');
+    expect(ids).toContain('post');
+  });
+
+  it('laisse les singletons hors de la liste générique, mais garde leurs entrées dédiées', () => {
+    const ids = itemsOfStructure(['profile', 'settings', 'project']);
+    // 'profile' et 'settings' n'apparaissent qu'une fois chacun : l'entrée
+    // dédiée en tête de structure, jamais le doublon de la liste générique.
+    expect(ids.filter((id) => id === 'profile')).toHaveLength(1);
+    expect(ids.filter((id) => id === 'settings')).toHaveLength(1);
+  });
+
+  it('retire translation.metadata du menu de création globale', () => {
+    const prev = [{templateId: 'translation.metadata'}, {templateId: 'post'}] as TemplateItem[];
+    const context = {creationContext: {type: 'global'}} as unknown as NewDocumentOptionsContext;
+
+    const result = restrictedNewDocumentOptions(prev, context);
+
+    expect(result.map((item) => item.templateId)).toEqual(['post']);
+  });
+
+  it('accorde le prédicat de listage aux deux ensembles', () => {
+    expect(isEditorManagedType('project')).toBe(true);
+    expect(isEditorManagedType('profile')).toBe(false);
+    expect(isEditorManagedType('translation.metadata')).toBe(false);
   });
 });
 
