@@ -31,13 +31,40 @@ export async function generateMetadata({
 
   return {
     metadataBase: new URL(siteUrl),
-    title: t('title'),
+    title: {
+      default: t('title'),
+      template: '%s — Florentin Tchangai',
+    },
     description: t('description'),
+    authors: [{name: 'Florentin Tchangai', url: siteUrl}],
+    creator: 'Florentin Tchangai',
     alternates: {
       canonical: getPathname({href: '/', locale}),
       languages: Object.fromEntries(
         routing.locales.map((l) => [l, getPathname({href: '/', locale: l})]),
       ),
+    },
+    openGraph: {
+      title: t('title'),
+      description: t('description'),
+      url: `${siteUrl}${getPathname({href: '/', locale})}`,
+      siteName: 'Florentin Tchangai',
+      locale: locale === 'fr' ? 'fr_FR' : 'en_US',
+      type: 'website',
+      images: [
+        {
+          url: `${siteUrl}/about-me.png`,
+          width: 1200,
+          height: 630,
+          alt: 'Florentin Tchangai — Technology Architect',
+        },
+      ],
+    },
+    twitter: {
+      card: 'summary_large_image',
+      title: t('title'),
+      description: t('description'),
+      images: [`${siteUrl}/about-me.png`],
     },
   };
 }
@@ -59,6 +86,38 @@ export default async function LocaleLayout({
 
   return (
     <html lang={locale} className={fontVariables} suppressHydrationWarning>
+      <head>
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{
+            __html: JSON.stringify({
+              '@context': 'https://schema.org',
+              '@type': 'Person',
+              name: 'Florentin Tchangai',
+              jobTitle: 'Technology Architect',
+              url: siteUrl,
+              image: `${siteUrl}/about-me.png`,
+              sameAs: [
+                'https://github.com/kybaloo',
+                'https://linkedin.com/in/kybaloo',
+                'https://www.npmjs.com/~kybaloo',
+              ],
+            }),
+          }}
+        />
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{
+            __html: JSON.stringify({
+              '@context': 'https://schema.org',
+              '@type': 'WebSite',
+              name: 'Florentin Tchangai — Portfolio',
+              url: siteUrl,
+              inLanguage: ['fr', 'en'],
+            }),
+          }}
+        />
+      </head>
       <body className="flex min-h-screen flex-col bg-paper text-ink">
         <ThemeProvider
           attribute="class"

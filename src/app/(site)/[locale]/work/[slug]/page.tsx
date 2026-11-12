@@ -2,9 +2,11 @@ import type {Metadata} from 'next';
 import Image from 'next/image';
 import {notFound} from 'next/navigation';
 import {getTranslations, setRequestLocale} from 'next-intl/server';
-import {Link} from '@/i18n/navigation';
+import {Link, getPathname} from '@/i18n/navigation';
 import {routing} from '@/i18n/routing';
 import {getProjectBySlug, PROJECTS} from '@/lib/projects-data';
+import {getProjectJsonLd, getBreadcrumbJsonLd} from '@/lib/json-ld';
+import {siteUrl} from '@/lib/site';
 
 export function generateStaticParams() {
   const params: {locale: string; slug: string}[] = [];
@@ -27,10 +29,40 @@ export async function generateMetadata({
 
   const isFr = locale === 'fr';
   const summary = isFr ? project.summary.fr : project.summary.en;
+  const href = {pathname: '/work/[slug]', params: {slug}} as const;
+  const canonicalUrl = `${siteUrl}${getPathname({href, locale})}`;
 
   return {
-    title: `${project.title} — Florentin Tchangai`,
+    title: project.title,
     description: summary,
+    alternates: {
+      canonical: canonicalUrl,
+      languages: Object.fromEntries(
+        routing.locales.map((l) => [l, `${siteUrl}${getPathname({href, locale: l})}`]),
+      ),
+    },
+    openGraph: {
+      title: `${project.title} — Florentin Tchangai`,
+      description: summary,
+      url: canonicalUrl,
+      type: 'article',
+      images: project.cover
+        ? [
+            {
+              url: `${siteUrl}${project.cover}`,
+              width: 1200,
+              height: 630,
+              alt: project.title,
+            },
+          ]
+        : undefined,
+    },
+    twitter: {
+      card: 'summary_large_image',
+      title: `${project.title} — Florentin Tchangai`,
+      description: summary,
+      images: project.cover ? [`${siteUrl}${project.cover}`] : undefined,
+    },
   };
 }
 
@@ -52,9 +84,26 @@ export default async function ProjectDetailPage({
   const archText = isFr ? project.architecture.fr : project.architecture.en;
 
   const caseStudy = project.caseStudy;
+  const projectJsonLd = getProjectJsonLd(project, locale);
+  const breadcrumbJsonLd = getBreadcrumbJsonLd([
+    {name: isFr ? 'Accueil' : 'Home', url: `${siteUrl}/${locale}`},
+    {name: isFr ? 'Travaux' : 'Work', url: `${siteUrl}${getPathname({href: '/work', locale})}`},
+    {
+      name: project.title,
+      url: `${siteUrl}${getPathname({href: {pathname: '/work/[slug]', params: {slug}}, locale})}`,
+    },
+  ]);
 
   return (
     <div className="py-12 md:py-20">
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{__html: JSON.stringify(projectJsonLd)}}
+      />
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{__html: JSON.stringify(breadcrumbJsonLd)}}
+      />
       <div className="mx-auto max-w-5xl px-6">
         {/* Back Link */}
         <div className="mb-8">
