@@ -14,6 +14,15 @@ const securityHeaders = [
 const nextConfig: NextConfig = {
   reactStrictMode: true,
 
+  // Variables d'environnement de repli pour la compilation (notamment sur Vercel et CI)
+  // lorsque les secrets Sanity ne sont pas encore définis dans les variables de projet.
+  env: {
+    NEXT_PUBLIC_SANITY_PROJECT_ID: process.env.NEXT_PUBLIC_SANITY_PROJECT_ID || 'ci000000',
+    NEXT_PUBLIC_SANITY_DATASET: process.env.NEXT_PUBLIC_SANITY_DATASET || 'production',
+    SANITY_API_READ_TOKEN: process.env.SANITY_API_READ_TOKEN || 'ci-placeholder-token',
+    SANITY_REVALIDATE_SECRET: process.env.SANITY_REVALIDATE_SECRET || 'ci-placeholder-secret',
+  },
+
   // Le paquet `sanity` (et `@sanity/vision`) est un monolithe pensé pour un
   // bundle client unique : son export racine tire des hooks React (via
   // `swr`) même dans les chemins jamais exécutés côté serveur. Importé
