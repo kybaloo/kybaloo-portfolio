@@ -73,7 +73,9 @@ export function StackLayers() {
           <div className="mb-2 font-mono text-xs tracking-widest text-accent uppercase">
             {t('stackTag')}
           </div>
-          <h2 className="font-serif text-3xl text-ink sm:text-4xl">{t('stackTitle')}</h2>
+          <h2 className="font-sans text-3xl font-bold tracking-tight text-ink sm:text-4xl">
+            {t('stackTitle')}
+          </h2>
           <p className="mt-2 max-w-2xl text-base text-muted">{t('stackSubtitle')}</p>
         </div>
 
@@ -82,15 +84,17 @@ export function StackLayers() {
           {layers.map((layer) => (
             <div
               key={layer.layerId}
-              className="rounded-sm border border-line bg-paper p-5 transition-all duration-200 hover:border-accent/40 sm:p-6"
+              className="rounded-2xl border border-line bg-paper/80 p-5 shadow-2xs backdrop-blur-xs transition-all duration-300 hover:border-accent/40 hover:shadow-md sm:p-6"
             >
               {/* Layer Title Row */}
               <div className="flex flex-col justify-between gap-2 border-b border-line/60 pb-4 sm:flex-row sm:items-center">
                 <div className="flex items-center gap-3">
-                  <span className="rounded-xs border border-accent/20 bg-accent/10 px-2 py-0.5 font-mono text-xs font-semibold text-accent">
+                  <span className="rounded-full border border-accent/20 bg-accent/10 px-2.5 py-0.5 font-mono text-xs font-semibold text-accent">
                     L-{layer.layerId}
                   </span>
-                  <h3 className="font-serif text-lg text-ink sm:text-xl">{t(layer.titleKey)}</h3>
+                  <h3 className="font-sans text-lg font-bold tracking-tight text-ink sm:text-xl">
+                    {t(layer.titleKey)}
+                  </h3>
                 </div>
                 <span className="font-mono text-xs tracking-wider text-muted/70">
                   [{layer.name}]
@@ -102,7 +106,7 @@ export function StackLayers() {
                 {layer.technologies.map((tech) => (
                   <div
                     key={tech.name}
-                    className="flex flex-col justify-center rounded-sm border border-line/50 bg-paper/60 px-3.5 py-2 transition-colors hover:border-line hover:bg-paper"
+                    className="flex flex-col justify-center rounded-xl border border-line/60 bg-paper/70 px-3.5 py-2.5 shadow-2xs transition-colors hover:border-ink/30 hover:bg-paper"
                   >
                     <div className="flex items-center justify-between">
                       <span className="font-mono text-xs font-medium text-ink">{tech.name}</span>

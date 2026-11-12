@@ -118,7 +118,7 @@ export default async function LocaleLayout({
           }}
         />
       </head>
-      <body className="flex min-h-screen flex-col bg-paper text-ink">
+      <body className="bg-grid-dots flex min-h-screen flex-col bg-paper text-ink">
         <ThemeProvider
           attribute="class"
           defaultTheme="system"

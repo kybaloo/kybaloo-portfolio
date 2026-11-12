@@ -24,13 +24,13 @@ export function ContactCta() {
   return (
     <section id="contact-cta" className="py-20 md:py-24">
       <div className="mx-auto max-w-5xl px-6">
-        <div className="relative overflow-hidden rounded-sm border border-line bg-paper/60 p-8 sm:p-12">
+        <div className="relative overflow-hidden rounded-2xl border border-line bg-paper/80 p-8 shadow-2xs backdrop-blur-xs sm:p-12">
           <div className="grid grid-cols-1 items-start gap-8 lg:grid-cols-12">
             <div className="lg:col-span-8">
-              <div className="mb-2 font-mono text-xs tracking-widest text-accent uppercase">
+              <div className="mb-2 font-mono text-xs font-medium tracking-widest text-accent uppercase">
                 {t('contactTag')}
               </div>
-              <h2 className="font-serif text-3xl leading-tight text-ink sm:text-4xl lg:text-5xl">
+              <h2 className="font-sans text-3xl leading-tight font-bold tracking-tight text-ink sm:text-4xl lg:text-5xl">
                 {t('contactTitle')}
               </h2>
               <p className="mt-4 max-w-xl font-sans text-base leading-relaxed text-muted sm:text-lg">
@@ -41,11 +41,11 @@ export function ContactCta() {
               <div className="mt-8 flex flex-wrap items-center gap-4">
                 <Link
                   href="/contact"
-                  className="inline-flex items-center justify-center rounded-sm bg-ink px-6 py-3 font-sans text-sm font-medium text-paper transition-all hover:scale-[1.01] hover:bg-ink/85 active:scale-[0.99]"
+                  className="inline-flex items-center justify-center gap-2 rounded-full bg-ink px-6 py-3 font-sans text-sm font-semibold text-paper shadow-sm transition-all hover:scale-[1.02] hover:bg-ink/85 active:scale-[0.98]"
                 >
-                  {t('ctaContact')}
+                  <span>{t('ctaContact')}</span>
                   <svg
-                    className="ml-2 h-4 w-4"
+                    className="h-4 w-4"
                     viewBox="0 0 24 24"
                     fill="none"
                     stroke="currentColor"
@@ -59,7 +59,7 @@ export function ContactCta() {
                 <button
                   type="button"
                   onClick={copyEmail}
-                  className="inline-flex items-center gap-2 rounded-sm border border-line bg-paper px-4 py-3 font-mono text-xs text-ink transition-colors hover:border-accent hover:text-accent"
+                  className="inline-flex items-center gap-2 rounded-full border border-line bg-paper/80 px-5 py-3 font-mono text-xs text-ink shadow-2xs transition-colors hover:border-ink/40 hover:text-ink active:scale-95"
                 >
                   <svg
                     className="h-4 w-4 text-muted"
@@ -80,7 +80,7 @@ export function ContactCta() {
             </div>
 
             {/* Metadata / Workspace Card */}
-            <div className="space-y-4 rounded-sm border border-line/80 bg-paper p-5 lg:col-span-4">
+            <div className="space-y-4 rounded-xl border border-line/80 bg-paper/90 p-5 shadow-2xs lg:col-span-4">
               <div className="border-b border-line/60 pb-2 font-mono text-xs text-muted/80">
                 SYSTEM_METADATA
               </div>

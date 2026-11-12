@@ -57,7 +57,9 @@ export function PhilosophyReading() {
           <div className="mb-2 font-mono text-xs tracking-widest text-accent uppercase">
             {t('philosophyTag')}
           </div>
-          <h2 className="font-serif text-3xl text-ink sm:text-4xl">{t('philosophyTitle')}</h2>
+          <h2 className="font-sans text-3xl font-bold tracking-tight text-ink sm:text-4xl">
+            {t('philosophyTitle')}
+          </h2>
           <p className="mt-2 max-w-2xl text-base text-muted">{t('philosophySubtitle')}</p>
         </div>
 
@@ -66,11 +68,11 @@ export function PhilosophyReading() {
           {principles.map((p) => (
             <div
               key={p.num}
-              className="flex flex-col justify-between rounded-sm border border-line bg-paper/50 p-6 transition-colors hover:border-ink/30"
+              className="flex flex-col justify-between rounded-2xl border border-line bg-paper/80 p-6 shadow-2xs backdrop-blur-xs transition-all duration-300 hover:border-accent/40 hover:shadow-md"
             >
               <div>
                 <span className="font-mono text-xs font-semibold text-accent">§ {p.num}</span>
-                <h3 className="mt-3 mb-2 font-serif text-lg text-ink">{t(p.titleKey)}</h3>
+                <h3 className="mt-3 mb-2 font-sans text-lg font-bold text-ink">{t(p.titleKey)}</h3>
                 <p className="font-sans text-sm leading-relaxed text-muted">{t(p.descKey)}</p>
               </div>
             </div>
@@ -91,17 +93,17 @@ export function PhilosophyReading() {
             {books.map((book) => (
               <div
                 key={book.title}
-                className="group flex items-start justify-between gap-4 rounded-sm border border-line/60 bg-paper/30 p-4 transition-all hover:border-line hover:bg-paper"
+                className="group flex items-start justify-between gap-4 rounded-xl border border-line/70 bg-paper/70 p-4 shadow-2xs backdrop-blur-xs transition-all hover:border-accent/40 hover:bg-paper"
               >
                 <div>
-                  <h4 className="font-serif text-base text-ink transition-colors group-hover:text-accent">
+                  <h4 className="font-sans text-base font-semibold text-ink transition-colors group-hover:text-accent">
                     {book.title}
                   </h4>
                   <p className="mt-0.5 font-sans text-xs text-muted">
                     {book.author} — <span className="font-mono text-muted/80">{book.topic}</span>
                   </p>
                 </div>
-                <span className="shrink-0 rounded-xs border border-line/50 px-1.5 py-0.5 font-mono text-[11px] text-muted/70">
+                <span className="shrink-0 rounded-full border border-line/60 px-2 py-0.5 font-mono text-[11px] text-muted/80">
                   {book.year}
                 </span>
               </div>

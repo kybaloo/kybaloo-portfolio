@@ -10,7 +10,8 @@
     "work": "Work",
     "about": "About",
     "writing": "Writing",
-    "contact": "Contact"
+    "contact": "Contact",
+    "bookCall": "Book a call"
   },
   "theme": {
     "toggle": "Toggle theme",

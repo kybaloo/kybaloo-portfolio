@@ -4,6 +4,8 @@ export const SITE = {
   location: 'Lomé, Togo',
   github: 'https://github.com/kybaloo',
   linkedin: 'https://linkedin.com/in/kybaloo',
+  twitter: 'https://x.com/kybaloo',
+  email: 'tchangaiflorentin6@gmail.com',
 } as const;
 
 /** URL canonique. Vercel fournit VERCEL_PROJECT_PRODUCTION_URL en production. */

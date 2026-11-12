@@ -50,7 +50,9 @@ export function ServicesSection() {
           <div className="mb-2 font-mono text-xs tracking-widest text-accent uppercase">
             {t('servicesTag')}
           </div>
-          <h2 className="font-serif text-3xl text-ink sm:text-4xl">{t('servicesTitle')}</h2>
+          <h2 className="font-sans text-3xl font-bold tracking-tight text-ink sm:text-4xl">
+            {t('servicesTitle')}
+          </h2>
           <p className="mt-2 max-w-2xl text-base text-muted">{t('servicesSubtitle')}</p>
         </div>
 
@@ -59,7 +61,7 @@ export function ServicesSection() {
           {services.map((service) => (
             <article
               key={service.number}
-              className="group relative flex flex-col justify-between rounded-sm border border-line bg-paper/40 p-6 transition-all duration-200 hover:border-ink/40 hover:bg-paper hover:shadow-xs sm:p-7"
+              className="group relative flex flex-col justify-between rounded-2xl border border-line bg-paper/80 p-6 shadow-2xs backdrop-blur-xs transition-all duration-300 hover:border-accent/40 hover:shadow-md sm:p-7"
             >
               <div>
                 {/* Number & Accent header */}
@@ -70,7 +72,7 @@ export function ServicesSection() {
                   <div className="ml-4 h-px flex-1 bg-line/60 transition-colors group-hover:bg-line" />
                 </div>
 
-                <h3 className="font-serif text-xl leading-snug text-ink transition-colors group-hover:text-accent sm:text-2xl">
+                <h3 className="font-sans text-xl leading-snug font-bold tracking-tight text-ink transition-colors group-hover:text-accent sm:text-2xl">
                   {t(service.titleKey)}
                 </h3>
 
@@ -79,9 +81,9 @@ export function ServicesSection() {
                 </p>
 
                 {/* Focus / Deliverables Callout */}
-                <div className="mt-4 rounded-sm border-l-2 border-accent/40 bg-muted/5 py-1.5 pl-3">
+                <div className="mt-4 rounded-lg border-l-2 border-accent/60 bg-accent/5 py-2 pl-3">
                   <p className="font-mono text-xs leading-normal text-ink/80">
-                    <span className="mr-1.5 text-muted select-none">→</span>
+                    <span className="mr-1.5 text-accent select-none">→</span>
                     {t(service.focusKey)}
                   </p>
                 </div>
@@ -92,7 +94,7 @@ export function ServicesSection() {
                 {service.tags.map((tag) => (
                   <span
                     key={tag}
-                    className="rounded-xs border border-line bg-paper/60 px-2 py-0.5 font-mono text-[11px] text-muted/90"
+                    className="rounded-full border border-line/70 bg-paper/60 px-2.5 py-0.5 font-mono text-[11px] text-muted"
                   >
                     {tag}
                   </span>

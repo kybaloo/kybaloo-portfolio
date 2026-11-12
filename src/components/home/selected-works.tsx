@@ -85,12 +85,14 @@ export function SelectedWorks() {
             <div className="mb-2 font-mono text-xs tracking-widest text-accent uppercase">
               01 / PORTFOLIO
             </div>
-            <h2 className="font-serif text-3xl text-ink sm:text-4xl">{t('worksTitle')}</h2>
+            <h2 className="font-sans text-3xl font-bold tracking-tight text-ink sm:text-4xl">
+              {t('worksTitle')}
+            </h2>
             <p className="mt-2 max-w-xl text-base text-muted">{t('worksSubtitle')}</p>
           </div>
           <Link
             href="/work"
-            className="inline-flex items-center gap-1.5 font-mono text-xs tracking-wider text-muted uppercase transition-colors hover:text-ink"
+            className="inline-flex items-center gap-1.5 rounded-full border border-line bg-paper/80 px-4 py-1.5 font-mono text-xs text-muted transition-colors hover:border-ink/40 hover:text-ink"
           >
             Tous les projets
             <span aria-hidden>→</span>
@@ -102,11 +104,14 @@ export function SelectedWorks() {
           {projects.map((project) => (
             <article
               key={project.id}
-              className="group flex flex-col justify-between overflow-hidden rounded-sm border border-line bg-paper transition-all duration-200 hover:border-accent/40"
+              className="group flex flex-col justify-between overflow-hidden rounded-2xl border border-line bg-paper/80 shadow-2xs backdrop-blur-xs transition-all duration-300 hover:border-accent/40 hover:shadow-md"
             >
               <div>
                 {/* Visual Thumbnail */}
-                <div className="relative h-52 w-full overflow-hidden border-b border-line bg-muted/10">
+                <Link
+                  href={{pathname: '/work/[slug]', params: {slug: project.id}}}
+                  className="relative block h-52 w-full overflow-hidden border-b border-line bg-muted/10"
+                >
                   <Image
                     src={project.image}
                     alt={project.title}
@@ -115,27 +120,29 @@ export function SelectedWorks() {
                     sizes="(max-width: 768px) 100vw, 50vw"
                   />
                   {project.metric && (
-                    <div className="absolute top-3 right-3 rounded-sm border border-line bg-paper/95 px-2.5 py-1 font-mono text-xs text-ink shadow-xs backdrop-blur-sm">
+                    <div className="absolute top-3 right-3 rounded-full border border-line bg-paper/95 px-3 py-1 font-mono text-xs text-ink shadow-2xs backdrop-blur-sm">
                       {project.metric}
                     </div>
                   )}
-                </div>
+                </Link>
 
                 {/* Body Content */}
                 <div className="p-6">
-                  <div className="mb-1.5 font-mono text-[11px] tracking-wider text-accent uppercase">
+                  <div className="mb-1.5 font-mono text-[11px] font-medium tracking-wider text-accent uppercase">
                     {project.category}
                   </div>
-                  <h3 className="mb-3 font-serif text-xl text-ink transition-colors group-hover:text-accent">
-                    {project.title}
-                  </h3>
+                  <Link href={{pathname: '/work/[slug]', params: {slug: project.id}}}>
+                    <h3 className="mb-3 font-sans text-xl font-bold tracking-tight text-ink transition-colors group-hover:text-accent">
+                      {project.title}
+                    </h3>
+                  </Link>
                   <p className="mb-4 font-sans text-sm leading-relaxed text-muted">
                     {project.description}
                   </p>
 
                   {/* Architecture Highlight (Style B touch) */}
-                  <div className="mb-4 rounded-xs border-l-2 border-accent bg-muted/5 p-3">
-                    <span className="mb-0.5 block font-mono text-[11px] tracking-wider text-muted uppercase">
+                  <div className="mb-4 rounded-lg border-l-2 border-accent bg-accent/5 p-3">
+                    <span className="mb-0.5 block font-mono text-[11px] font-semibold tracking-wider text-accent uppercase">
                       {t('architectureLabel')}
                     </span>
                     <span className="font-sans text-xs text-ink/90">{project.architecture}</span>
@@ -146,7 +153,7 @@ export function SelectedWorks() {
                     {project.stack.map((item) => (
                       <span
                         key={item}
-                        className="rounded-xs bg-muted/10 px-2 py-0.5 font-mono text-[11px] text-muted"
+                        className="rounded-full border border-line/60 bg-paper/60 px-2.5 py-0.5 font-mono text-[11px] text-muted"
                       >
                         {item}
                       </span>
@@ -157,31 +164,38 @@ export function SelectedWorks() {
 
               {/* Action Footer */}
               <div className="flex items-center justify-between border-t border-line px-6 py-3 font-mono text-xs">
-                {project.liveUrl && project.liveUrl !== '#' ? (
-                  <a
-                    href={project.liveUrl}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="inline-flex items-center gap-1.5 text-ink transition-colors hover:text-accent"
-                  >
-                    <span>{t('viewLive')}</span>
-                    <span aria-hidden>↗</span>
-                  </a>
-                ) : (
-                  <span className="text-muted/60">Usage interne / confidentiel</span>
-                )}
+                <Link
+                  href={{pathname: '/work/[slug]', params: {slug: project.id}}}
+                  className="inline-flex items-center gap-1 font-sans text-xs font-semibold text-ink transition-colors hover:text-accent"
+                >
+                  Étude d&apos;architecture →
+                </Link>
 
-                {project.githubUrl && project.githubUrl !== '#' && (
-                  <a
-                    href={project.githubUrl}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="inline-flex items-center gap-1.5 text-muted transition-colors hover:text-ink"
-                  >
-                    <span>{t('viewCode')}</span>
-                    <span aria-hidden>↗</span>
-                  </a>
-                )}
+                <div className="flex items-center gap-3">
+                  {project.liveUrl && project.liveUrl !== '#' && (
+                    <a
+                      href={project.liveUrl}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="inline-flex items-center gap-1 text-muted transition-colors hover:text-accent"
+                    >
+                      <span>{t('viewLive')}</span>
+                      <span aria-hidden>↗</span>
+                    </a>
+                  )}
+
+                  {project.githubUrl && project.githubUrl !== '#' && (
+                    <a
+                      href={project.githubUrl}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="inline-flex items-center gap-1 text-muted transition-colors hover:text-ink"
+                    >
+                      <span>{t('viewCode')}</span>
+                      <span aria-hidden>↗</span>
+                    </a>
+                  )}
+                </div>
               </div>
             </article>
           ))}

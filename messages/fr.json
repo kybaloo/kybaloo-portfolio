@@ -10,7 +10,8 @@
     "work": "Travaux",
     "about": "Parcours",
     "writing": "Écrits",
-    "contact": "Contact"
+    "contact": "Contact",
+    "bookCall": "Prendre rendez-vous"
   },
   "theme": {
     "toggle": "Changer de thème",
