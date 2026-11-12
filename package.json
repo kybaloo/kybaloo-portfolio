@@ -38,7 +38,8 @@
     "sanity": "^6.12.0",
     "sanity-plugin-internationalized-array": "^5.2.4",
     "server-only": "^0.0.1",
-    "styled-components": "^6.5.3"
+    "styled-components": "^6.5.3",
+    "zod": "^4.6.7"
   },
   "devDependencies": {
     "@playwright/test": "^1.50.0",
